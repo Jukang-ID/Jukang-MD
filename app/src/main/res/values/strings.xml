@@ -2,7 +2,7 @@
     <string name="app_name">Jukang</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Artikel</string>
-    <string name="title_notifications">User</string>
+    <string name="title_notifications">Profil</string>
     <string name="default_web_client_id">301188152057-daqoka0p8nav6inf2v5lnu900s4qouhk.apps.googleusercontent.com</string>
 
 </resources>

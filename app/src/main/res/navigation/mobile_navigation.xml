@@ -8,7 +8,14 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.jukang.view.dashboard.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_notifications"
+            app:destination="@id/navigation_notifications" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_user"
+            app:destination="@id/navigation_notifications" /> <!-- Sesuaikan dengan ID fragmen user -->
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -17,6 +24,6 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.jukang.view.dashboard.ui.user.NotificationsFragment"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.example.jukang.view.dashboard.ui.user.UserFragment"
+        tools:layout="@layout/fragment_user" />
 </navigation>

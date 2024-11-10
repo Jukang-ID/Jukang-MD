@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/btnGoogle"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".view.auth.welcome.WelcomeActivity">
 
@@ -14,26 +15,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="92dp"
         android:backgroundTint="@color/primary_button"
         android:text="Masuk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.938" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
         app:srcCompat="@drawable/welcome" />
 
     <TextView
@@ -41,13 +39,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/ppreguler"
         android:text="belum punya akun ?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGoogleWelcome"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textRegis"
@@ -63,6 +61,28 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnGoogleWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:elevation="10dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/cardgradient"
+        android:fontFamily="@font/ppreguler"
+        android:text="Login with Google"
+        app:icon="@drawable/google"
+        app:iconSize="20dp"
+        app:iconTint="@null"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

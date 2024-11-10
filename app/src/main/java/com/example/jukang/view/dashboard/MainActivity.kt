@@ -1,5 +1,6 @@
 package com.example.jukang.view.dashboard
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -17,6 +18,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.jukang.R
 import com.example.jukang.databinding.ActivityMainBinding
+import com.example.jukang.view.auth.login.LoginActivity
+import com.example.jukang.view.auth.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +28,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        checkStatusLogin()
         setContentView(binding.root)
+
 
         supportActionBar?.hide()
         val navView: BottomNavigationView = binding.navView
@@ -40,5 +45,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+    }
+    private fun checkStatusLogin(){
+        val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val token = sharedPreferences.getString("TOKEN", null)
+        if (token == null){
+            val intent = Intent(this, WelcomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 }

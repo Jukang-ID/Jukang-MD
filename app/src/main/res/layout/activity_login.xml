@@ -81,6 +81,7 @@
     <Button
         android:id="@+id/btnLogin"
         style="@style/CustomButton"
+        android:fontFamily="@font/ppreguler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -94,18 +95,6 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordInput"
         app:layout_constraintVertical_bias="0.015" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/materialDivider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
@@ -115,17 +104,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/copyright" />
-
-    <Button
-        android:id="@+id/btnLoginGoogle"
-        style="@style/CustomButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="google"
-        app:layout_constraintEnd_toEndOf="@+id/materialDivider"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/materialDivider"
-        app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
