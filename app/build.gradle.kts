@@ -66,19 +66,21 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
 //    Glide
-    implementation (libs.glide)
+    implementation(libs.glide)
 
 // retrofit
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.retrofit.mock)
     implementation(libs.logging.interceptor)
     implementation(libs.mockwebserver)
 
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation ("com.google.android.gms:play-services-auth:21.2.0")
-    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    implementation("com.github.razaghimahdi:Android-Loading-Dots:1.3.2")
 
 
 }

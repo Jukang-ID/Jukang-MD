@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
             .circleCrop()
             .into(binding.photourl)
 
-        binding.progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
 
         binding.greeting.text = name
         binding.emailcard.text = email
