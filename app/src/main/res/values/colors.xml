@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_button">#980000</color>
     <color name="font_second">#3F3D56</color>
+    <color name="font_des">#52525b</color>
 </resources>

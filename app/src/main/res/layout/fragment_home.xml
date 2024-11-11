@@ -7,8 +7,6 @@
     android:fitsSystemWindows="false"
     tools:context=".view.dashboard.ui.home.HomeFragment">
 
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/profilecard"
         android:layout_width="match_parent"
