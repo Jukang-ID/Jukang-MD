@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.jukang.databinding.FragmentUserBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
@@ -26,6 +27,23 @@ class UserFragment : Fragment() {
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val pref = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
+        val nama = pref.getString("NAME", "Tidak Diketahui")
+        val email = pref.getString("EMAIL", "Tidak Diketahui")
+        val id = pref.getString("UID", "123456789987")
+        val photo = pref.getString(
+            "PHOTO",
+            "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+        )
+
+        binding.namaprofile.text = nama
+        binding.emailprofile.text = email
+        binding.iduser.text = "Id : $id"
+        Glide.with(requireContext())
+            .load(photo)
+            .into(binding.profilephoto)
+
+
         binding.logout.setOnClickListener {
             logout()
         }
@@ -33,7 +51,7 @@ class UserFragment : Fragment() {
         return root
     }
 
-    private fun logout(){
+    private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.clear()

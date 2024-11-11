@@ -47,7 +47,7 @@
                 android:fontFamily="@font/ppmedium"
                 android:text="TextView"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                app:layout_constraintEnd_toStartOf="@+id/btnRiwayat"
                 app:layout_constraintStart_toEndOf="@+id/photourl"
                 app:layout_constraintTop_toTopOf="@+id/photourl" />
 
@@ -73,7 +73,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/greeting" />
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/btnRiwayat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -137,6 +137,25 @@
                 android:src="@drawable/baseline_keyboard_arrow_right_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:padding="6dp"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:ellipsize="end"
+                android:id="@+id/point"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/ppbold"
+                android:text="0"
+                android:textColor="@color/font_second"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintHorizontal_bias="0.69"
+                app:layout_constraintStart_toEndOf="@+id/imageView9"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

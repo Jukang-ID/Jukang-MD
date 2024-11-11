@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.jukang.databinding.FragmentHomeBinding
+import java.text.NumberFormat
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -42,6 +44,14 @@ class HomeFragment : Fragment() {
 
         binding.greeting.text = name
         binding.emailcard.text = email
+
+        binding.btnRiwayat.setOnClickListener {
+
+        }
+
+        val number = 0
+        val currencyFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID")) // Locale Indonesia
+        binding.point.text = currencyFormat.format(number)
 
         binding.profilecard.setOnClickListener {
 
