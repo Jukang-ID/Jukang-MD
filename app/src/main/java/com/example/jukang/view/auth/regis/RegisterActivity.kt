@@ -1,6 +1,7 @@
 package com.example.jukang.view.auth.regis
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,8 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.loading.visibility = View.GONE
+
         viewModel = RegisterViewModel()
 
         binding.btnBackRegis.setOnClickListener {
@@ -43,6 +46,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerForm(name: String,notelp: String ,email: String, password: String) {
+        binding.loading.visibility = View.VISIBLE
         val request = registerRequest(name, notelp, email, password)
         val call = RetrofitClient.Jukang.register(request)
 
@@ -50,7 +54,8 @@ class RegisterActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Register>, response: Response<Register>) {
                 if(response.isSuccessful){
                     val res = response.body()
-                    Toast.makeText(this@RegisterActivity, res?.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@RegisterActivity, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                    binding.loading.visibility = View.GONE
                     finish()
                 }
             }
