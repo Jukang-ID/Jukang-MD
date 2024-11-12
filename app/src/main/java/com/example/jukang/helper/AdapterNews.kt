@@ -65,9 +65,9 @@ class AdapterNews(private val listNews : List<PostsItem>) : RecyclerView.Adapter
 
         shareButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND, Uri.parse(link))
-            intent.putExtra(Intent.EXTRA_TEXT, "$link \n $title")
+            intent.putExtra(Intent.EXTRA_TEXT, "$link \n \n $title \n \n $description")
             intent.type = "text/plain"
-            context.startActivity(Intent.createChooser(intent, "Share to"))
+            context.startActivity(Intent.createChooser(intent, "bagikan ke "))
         }
 
         bottomSheetDialog.setContentView(customView)
