@@ -25,9 +25,9 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun checkStatusLogin() {
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val token = pref.getString("TOKEN", "")
+        val id = pref.getString("UID", "")
 
-        if (token == "") {
+        if (id == "") {
             startActivity(Intent(this, WelcomeActivity::class.java))
             finish()
         } else {

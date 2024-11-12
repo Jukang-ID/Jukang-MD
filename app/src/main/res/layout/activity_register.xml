@@ -64,14 +64,15 @@
         app:layout_constraintTop_toBottomOf="@+id/fieldNama">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notelpon"
             android:layout_width="match_parent"
-            android:inputType="number"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInput"
+        android:id="@+id/lay"
         android:layout_width="match_parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxCornerRadiusBottomEnd="50dp"
@@ -87,10 +88,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NoTelepon">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.jukang.helper.costum.editTextfield
+            android:id="@+id/emailInputs"
             android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,12 +112,13 @@
         app:passwordToggleEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput">
+        app:layout_constraintTop_toBottomOf="@+id/lay">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +135,7 @@
         app:srcCompat="@drawable/ic_back" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegis"
         style="@style/CustomButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -152,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegis"
         app:layout_constraintVertical_bias="0.87"
         app:srcCompat="@drawable/copyright" />
 

@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
     private fun checkStatusLogin(){
         val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token = sharedPreferences.getString("TOKEN", null)
-        if (token == null){
+        val id = sharedPreferences.getString("UID",null)
+        if (id == null){
             val intent = Intent(this, WelcomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

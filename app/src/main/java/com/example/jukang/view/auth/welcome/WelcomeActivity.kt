@@ -59,7 +59,8 @@ class WelcomeActivity : AppCompatActivity() {
     private fun checkStatusLogin() {
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token = pref.getString("TOKEN", null)
-        if(token != null) {
+        val id = pref.getString("UID",null)
+        if(token != null || id != null){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

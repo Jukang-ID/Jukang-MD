@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.jukang.R
+import com.example.jukang.data.RetrofitClient
+import com.example.jukang.data.response.Login
+import com.example.jukang.data.response.loginRequest
 import com.example.jukang.databinding.ActivityLoginBinding
+import com.example.jukang.helper.loading.LoadingActivity
 import com.example.jukang.view.dashboard.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -19,16 +23,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private lateinit var viewModel : loginViewModel
 
-
-    companion object {
-        private const val RC_SIGN_IN = 9001
-        private const val TAG = "LoginActivity"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +46,48 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+        binding.btnRegis.setOnClickListener {
+            val email = binding.email.text.toString().trim()
+            val password = binding.password.text.toString().trim()
+            login(email, password)
         }
 
+    }
+
+    private fun login(email:String, password:String){
+        val req = loginRequest(email, password)
+        val call = RetrofitClient.Jukang.login(req)
+
+        call.enqueue(object : Callback<Login> {
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                if(response.isSuccessful){
+                    val res = response.body()
+                    Toast.makeText(this@LoginActivity, res?.message, Toast.LENGTH_SHORT).show()
+                    if(res != null){
+                        val id = res.data?.user?.userId
+                        val name = res.data?.user?.namalengkap
+                        val email = res.data?.user?.email
+                        val phone = res.data?.user?.nomortelp
+
+                        val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
+                        val editor = pref.edit()
+                        editor.putString("UID", id)
+                        editor.putString("NAME", name)
+                        editor.putString("EMAIL", email)
+                        editor.putString("PHONE", phone)
+                        editor.apply()
+
+                        val intent = Intent(this@LoginActivity, LoadingActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+
+            }
+        })
     }
 
 }
