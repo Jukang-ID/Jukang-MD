@@ -47,7 +47,7 @@ class UserFragment : Fragment() {
         return root
     }
 
-    fun getUserData() {
+    private fun getUserData() {
         val pref = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val nama = pref.getString("NAME", "Tidak Diketahui")
         val email = pref.getString("EMAIL", "Tidak Diketahui")

@@ -82,5 +82,7 @@ dependencies {
 
     implementation("com.github.razaghimahdi:Android-Loading-Dots:1.3.2")
 
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
+
 
 }
