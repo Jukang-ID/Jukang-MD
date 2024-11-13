@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jukang.databinding.FragmentArtikelBinding
-import com.example.jukang.helper.AdapterNews
+import com.example.jukang.helper.adapter.AdapterNews
 
 class DashboardFragment : Fragment() {
 

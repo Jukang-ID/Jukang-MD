@@ -101,7 +101,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/btnBackDetail"
+        android:id="@+id/btnBAckPay"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
@@ -114,7 +114,7 @@
         app:srcCompat="@drawable/arrowleft" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnbookDet"
         style="@style/CustomButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -135,10 +135,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Harga"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/btnbookDet"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button4" />
+        app:layout_constraintTop_toTopOf="@+id/btnbookDet" />
 
     <TextView
         android:id="@+id/pricedetail"
@@ -148,7 +148,7 @@
         android:fontFamily="@font/ppbold"
         android:text="Harga"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button4"
+        app:layout_constraintBottom_toBottomOf="@+id/btnbookDet"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 

@@ -1,5 +1,6 @@
 package com.example.jukang.view.detailTukang
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -11,19 +12,35 @@ import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.databinding.ActivityDetailBinding
+import com.example.jukang.view.payment.PaymentActivity
 import kotlinx.coroutines.launch
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailBinding
+    private var photoUrl:String? = null
+    private var status:Boolean = false
+    private var idTukang:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnBackDetail.setOnClickListener {
+        binding.btnBAckPay.setOnClickListener {
             finish()
+        }
+
+        binding.btnbookDet.setOnClickListener {
+            val intent = Intent(this, PaymentActivity::class.java)
+            intent.putExtra(PaymentActivity.namaTukang, binding.nmTukang.text.toString())
+            intent.putExtra(PaymentActivity.harga, binding.pricedetail.text.toString())
+            intent.putExtra(PaymentActivity.spesialis, binding.spesialisDetail.text.toString())
+            intent.putExtra(PaymentActivity.gambarTukang,photoUrl)
+            intent.putExtra(PaymentActivity.booked,status)
+            intent.putExtra(PaymentActivity.rating, binding.ratingdetail.text.toString())
+            intent.putExtra(PaymentActivity.idTukang,idTukang )
+            startActivity(intent)
         }
 
         val id = intent.getStringExtra(EXTRA_ID)
@@ -44,6 +61,10 @@ class DetailActivity : AppCompatActivity() {
                 binding.spesialisDetail.text = response.detailTukang?.spesialis
                 binding.pricedetail.text = response.detailTukang?.priceRupiah
                 binding.ratingdetail.text = response.detailTukang?.review
+
+                photoUrl = response.detailTukang?.photoUrl
+                status = response.detailTukang?.booked == true
+                idTukang = response.detailTukang?.tukangId
                 Glide.with(this@DetailActivity)
                     .load(response.detailTukang?.photoUrl)
                     .into(binding.photodetial)

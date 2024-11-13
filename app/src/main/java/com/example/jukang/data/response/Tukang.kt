@@ -34,3 +34,10 @@ data class TukangItem(
 	@field:SerializedName("priceRupiah")
 	val priceRupiah: String? = null
 )
+
+data class TukangReq(
+	val namatukang: String?,
+	val spesialis: String?,
+	val review: String?,
+	val booked: Boolean?
+)

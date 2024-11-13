@@ -26,6 +26,11 @@ class HomeViewModel : ViewModel() {
                 val dataTukang = response.tukang?.filter { tukang ->
                     tukang?.booked == false // Memfilter tukang yang booked = false
                 }
+
+                if (dataTukang.isNullOrEmpty()){
+                    _loadingHome.value = true
+                    return@launch
+                }
                 _loadingHome.value = false
                 _dataTukang.value = dataTukang as List<TukangItem>?
 

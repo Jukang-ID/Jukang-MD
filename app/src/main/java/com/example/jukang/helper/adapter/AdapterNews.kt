@@ -1,4 +1,4 @@
-package com.example.jukang.helper
+package com.example.jukang.helper.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -27,12 +27,12 @@ class AdapterNews(private val listNews : List<PostsItem>) : RecyclerView.Adapter
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterNews.ViewHolders {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolders {
         val binding = CardberitaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolders(binding)
     }
 
-    override fun onBindViewHolder(holder: AdapterNews.ViewHolders, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolders, position: Int) {
         holder.bind(listNews[position])
 
         holder.itemView.setOnClickListener{

@@ -2,10 +2,15 @@ package com.example.jukang.data
 
 import com.example.jukang.data.response.BeritaResponse
 import com.example.jukang.data.response.DetailTukang
+import com.example.jukang.data.response.History
 import com.example.jukang.data.response.Login
+import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Register
+import com.example.jukang.data.response.Transaksi
 import com.example.jukang.data.response.Tukang
+import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.loginRequest
+import com.example.jukang.data.response.paymentReq
 import com.example.jukang.data.response.registerRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -37,4 +42,19 @@ interface ApiService2 {
         @Path("id") id:String
     ):DetailTukang
 
+    @POST("addtransaksi")
+     fun addtransaksi(
+        @Body transaksi: paymentReq
+    ): Call<Payment>
+
+     @POST("tukang/{id}")
+     fun updateTukang(
+         @Body tukang: TukangReq,
+         @Path("id") idTukang:String
+     ): Call<Tukang>
+
+     @GET("riwayat/{id}")
+        suspend fun getTransaksi(
+            @Path("id") idUser:String
+        ): History
 }
