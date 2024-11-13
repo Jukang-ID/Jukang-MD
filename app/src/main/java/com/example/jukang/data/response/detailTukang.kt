@@ -2,16 +2,13 @@ package com.example.jukang.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Tukang(
+data class DetailTukang(
 
-	@field:SerializedName("tukang")
-	val tukang: List<TukangItem?>? = null,
+	@field:SerializedName("detailTukang")
+	val detailTukang: DetailTukang? = null,
 
 	@field:SerializedName("status")
-	val status: String? = null
-)
-
-data class TukangItem(
+	val status: String? = null,
 
 	@field:SerializedName("tukang_id")
 	val tukangId: String? = null,

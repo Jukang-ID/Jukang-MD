@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/photourls"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/cornergambar"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/NamaTukang"
+            android:layout_width="0dp"
+            android:fontFamily="@font/ppbold"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/photourls"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.198" />
+
+        <TextView
+            android:id="@+id/Spesialis"
+            android:layout_width="0dp"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"
+            android:textColor="#03A9F4"
+            android:fontFamily="@font/ppmedium"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/NamaTukang"
+            app:layout_constraintEnd_toEndOf="@+id/NamaTukang"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/NamaTukang"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/ppbold"
+            android:maxLines="1"
+            android:text="Rp. 5.000.000,00"
+            android:textColor="#f09f2f"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            app:layout_constraintEnd_toEndOf="@+id/NamaTukang"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/NamaTukang"
+            app:layout_constraintTop_toBottomOf="@+id/NamaTukang"
+            app:layout_constraintVertical_bias="0.352" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="44dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photourls" />
+
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/start" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Rating Pelanggan"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/star"
+            app:layout_constraintTop_toTopOf="@+id/star" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView8"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btnBooking"
+            style="@style/CustomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/primary_button"
+            android:fontFamily="@font/ppbold"
+            android:text="Booking"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintVertical_bias="1.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

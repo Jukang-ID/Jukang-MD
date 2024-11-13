@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.jukang.databinding.FragmentHomeBinding
+import com.example.jukang.helper.AdapterTukang
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -17,6 +21,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var homeView: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +30,33 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.listTukang.layoutManager = LinearLayoutManager(requireContext())
+
+        homeView = HomeViewModel()
+
+        homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading->
+            if(loading){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
+        })
+
+        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
+            if (list != null){
+                val adapter = AdapterTukang(list)
+                binding.listTukang.adapter = adapter
+            }
+        })
+
+        homeView.error.observe(viewLifecycleOwner, Observer { error ->
+            if (error != null){
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        homeView.fetchTukang()
 
         val sharedPreferences = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val imageUrl = sharedPreferences.getString(
