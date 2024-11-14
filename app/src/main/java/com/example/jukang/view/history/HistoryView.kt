@@ -17,6 +17,9 @@ class HistoryView:ViewModel() {
     private val _loadingHistory = MutableLiveData<Boolean>()
     val loadingHistory: MutableLiveData<Boolean> get() = _loadingHistory
 
+    private val _error = MutableLiveData<String?>()
+    val error: MutableLiveData<String?> get() = _error
+
     fun fetchDataHistory(id:String){
         viewModelScope.launch {
             try {
@@ -29,6 +32,7 @@ class HistoryView:ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 _loadingHistory.value = true
+                _error.value = "belum ada transaksi"
             }
         }
     }

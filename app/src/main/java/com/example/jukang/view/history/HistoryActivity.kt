@@ -24,6 +24,9 @@ class HistoryActivity : AppCompatActivity() {
         val binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.error.visibility = View.GONE
+        binding.cat.visibility = View.GONE
+
         viewModel = HistoryView()
 
         viewModel.loadingHistory.observe(this, {
@@ -31,6 +34,15 @@ class HistoryActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
+            }
+        })
+
+        viewModel.error.observe(this,{ errpr ->
+            if(errpr != null){
+                binding.progressBar.visibility = View.GONE
+                binding.error.visibility = View.VISIBLE
+                binding.error.text = errpr
+                binding.cat.visibility = View.VISIBLE
             }
         })
 
@@ -45,7 +57,7 @@ class HistoryActivity : AppCompatActivity() {
 
 
         binding.listRiwayat.layoutManager = LinearLayoutManager(this)
-         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val id = pref.getString("UID", null)
 
         viewModel.fetchDataHistory(id.toString())

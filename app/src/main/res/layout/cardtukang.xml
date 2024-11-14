@@ -130,16 +130,19 @@
 
         <Button
             android:id="@+id/btnBooking"
-            style="@style/CustomButton"
+
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
+
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/primary_button"
             android:fontFamily="@font/ppbold"
             android:text="Booking"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider"

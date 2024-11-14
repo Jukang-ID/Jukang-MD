@@ -36,23 +36,23 @@ class HomeFragment : Fragment() {
 
         homeView = HomeViewModel()
 
-        homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading->
-            if(loading){
+        homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
+            if (loading) {
                 binding.progressBar.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.progressBar.visibility = View.GONE
             }
         })
 
         homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
-            if (list != null){
+            if (list != null) {
                 val adapter = AdapterTukang(list)
                 binding.listTukang.adapter = adapter
             }
         })
 
         homeView.error.observe(viewLifecycleOwner, Observer { error ->
-            if (error != null){
+            if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
         })
@@ -84,7 +84,8 @@ class HomeFragment : Fragment() {
         }
 
         val number = 0
-        val currencyFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID")) // Locale Indonesia
+        val currencyFormat =
+            NumberFormat.getCurrencyInstance(Locale("id", "ID")) // Locale Indonesia
         binding.point.text = currencyFormat.format(number)
 
         binding.profilecard.setOnClickListener {
@@ -99,6 +100,12 @@ class HomeFragment : Fragment() {
                 dialog.dismiss()
             }
             dialogBuild.show()
+        }
+
+
+        binding.swipeContainer.setOnRefreshListener {
+            homeView.fetchTukang()
+            binding.swipeContainer.isRefreshing = false
         }
 
 

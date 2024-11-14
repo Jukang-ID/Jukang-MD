@@ -74,8 +74,8 @@ class PaymentActivity : AppCompatActivity() {
             val alamat = binding.Alamat.text.toString().trim()
 
             Log.d(Tag, "onCreate: $status")
-            update(namatukang, spesialis, rating, status,idTukang)
-            paymentMethod(id, nama, namatukang,idTukang ,spesialis, deskripsi, tanggal, alamat, tunai, harga)
+
+            paymentMethod(id, nama, namatukang,idTukang ,spesialis, deskripsi, tanggal, alamat, tunai, harga,status)
         }
 
 //        checkStatus()
@@ -112,7 +112,8 @@ class PaymentActivity : AppCompatActivity() {
         tanggal: String,
         alamat: String,
         metodePembayaran: String,
-        total: String
+        total: String,
+        status: Boolean
     ) {
         val request = paymentReq(
             user_id,
@@ -133,6 +134,7 @@ class PaymentActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Payment>, response: Response<Payment>) {
                 if (response.isSuccessful){
                     binding.progressBar2.visibility = View.GONE
+                    update(namatukang, spesialis, rating, status,idTukang)
                     Toast.makeText(this@PaymentActivity, "Berhasil", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PaymentActivity, StrukActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -145,11 +147,12 @@ class PaymentActivity : AppCompatActivity() {
                     finish()
                 } else {
                     Toast.makeText(this@PaymentActivity, "Gagal : ${response.message()}", Toast.LENGTH_SHORT).show()
+                    binding.progressBar2.visibility = View.GONE
                 }
             }
 
             override fun onFailure(call: Call<Payment>, t: Throwable) {
-                Toast.makeText(this@PaymentActivity, "Gagal : ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PaymentActivity, "Barang sudah di booking orang", Toast.LENGTH_SHORT).show()
                 Log.e("TAG", "onFailure: ${t.localizedMessage}")
             }
         })
