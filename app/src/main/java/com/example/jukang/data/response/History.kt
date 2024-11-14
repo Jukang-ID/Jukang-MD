@@ -28,6 +28,9 @@ data class DataItem(
 	@field:SerializedName("namatukang")
 	val namatukang: String? = null,
 
+	@field:SerializedName("tukang_id")
+	val idTukang: String? = null,
+
 	@field:SerializedName("metodePembayaran")
 	val metodePembayaran: String? = null,
 

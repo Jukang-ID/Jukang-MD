@@ -60,6 +60,7 @@ data class paymentReq (
 	val user_id: String,
 	val namalengkap: String,
 	val namatukang: String,
+	val tukang_id: String,
 	val spesialis: String,
 	val deskripsi: String,
 	val tanggal: String,

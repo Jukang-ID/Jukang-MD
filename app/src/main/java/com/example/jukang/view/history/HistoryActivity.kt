@@ -1,6 +1,7 @@
 package com.example.jukang.view.history
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,6 +25,14 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = HistoryView()
+
+        viewModel.loadingHistory.observe(this, {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
 
         viewModel.dataHistory.observe(this, {
             val adapter = it?.let { it1 -> AdapterHistory(it1) }

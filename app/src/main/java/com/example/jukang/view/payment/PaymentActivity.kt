@@ -18,6 +18,7 @@ import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
+import com.example.jukang.helper.struk.StrukActivity
 import com.example.jukang.view.dashboard.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,7 +75,7 @@ class PaymentActivity : AppCompatActivity() {
 
             Log.d(Tag, "onCreate: $status")
             update(namatukang, spesialis, rating, status,idTukang)
-            paymentMethod(id, nama, namatukang, spesialis, deskripsi, tanggal, alamat, tunai, harga)
+            paymentMethod(id, nama, namatukang,idTukang ,spesialis, deskripsi, tanggal, alamat, tunai, harga)
         }
 
 //        checkStatus()
@@ -105,6 +106,7 @@ class PaymentActivity : AppCompatActivity() {
         user_id: String,
         namalengkap: String,
         namatukang: String,
+        id_tukang: String,
         spesialis: String,
         deskripsi: String,
         tanggal: String,
@@ -116,6 +118,7 @@ class PaymentActivity : AppCompatActivity() {
             user_id,
             namalengkap,
             namatukang,
+            id_tukang,
             spesialis,
             deskripsi,
             tanggal,
@@ -131,8 +134,13 @@ class PaymentActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     binding.progressBar2.visibility = View.GONE
                     Toast.makeText(this@PaymentActivity, "Berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@PaymentActivity, MainActivity::class.java)
+                    val intent = Intent(this@PaymentActivity, StrukActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    intent.putExtra(StrukActivity.namatukangs, namatukang)
+                    intent.putExtra(StrukActivity.method, metodePembayaran)
+                    intent.putExtra(StrukActivity.total, total)
+                    intent.putExtra(StrukActivity.tanggal, tanggal)
+                    intent.putExtra(StrukActivity.id, id_tukang)
                     startActivity(intent)
                     finish()
                 } else {
