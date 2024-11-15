@@ -17,6 +17,7 @@ class AdapterHistory(private val listHistory: List<DataItem>) :RecyclerView.Adap
             binding.Method.text = history.metodePembayaran
             binding.idTukangHis.text = history.idTukang
             binding.spesialisHis.text = history.spesialis
+            binding.tanggalCreate.text = "tanggal dibuat : "+history.createdAt
         }
 
     }
@@ -41,6 +42,7 @@ class AdapterHistory(private val listHistory: List<DataItem>) :RecyclerView.Adap
             intent.putExtra(DetailHistory.metode, listHistory[position].metodePembayaran)
             intent.putExtra(DetailHistory.total, listHistory[position].total)
             intent.putExtra(DetailHistory.spesialis, listHistory[position].spesialis)
+            intent.putExtra(DetailHistory.tanggalDibuat, listHistory[position].createdAt)
             holder.itemView.context.startActivity(intent)
         }
     }

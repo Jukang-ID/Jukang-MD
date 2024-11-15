@@ -85,6 +85,10 @@ dependencies {
     implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    implementation("androidx.datastore:datastore:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-core:1.1.1")
+
 
 
 }

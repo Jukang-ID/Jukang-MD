@@ -15,12 +15,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:fontFamily="@font/ppbold"
             android:text="Nama Tukang"
             android:textColor="@color/font_second"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spesialis_his"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/id_tukang_his" />
 
@@ -32,7 +31,8 @@
             android:layout_marginBottom="12dp"
             android:text="Total"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tanggal_create" />
 
         <TextView
             android:id="@+id/totalHistr"
@@ -66,15 +66,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
             android:fontFamily="@font/ppbold"
             android:text="Metode"
             android:textColor="#3F51B5"
-            app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintEnd_toEndOf="@+id/tanggalhist"
             app:layout_constraintStart_toStartOf="@+id/tanggalhist"
-            app:layout_constraintTop_toBottomOf="@+id/tanggalhist"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tanggalhist" />
 
         <TextView
             android:id="@+id/id_tukang_his"
@@ -101,14 +98,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:fontFamily="@font/ppbold"
+            android:textSize="14sp"
+            android:textColor="#00BCD4"
             android:id="@+id/spesialis_his"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
             android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/tanggalhist"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.937"
-            app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toTopOf="@+id/textView15" />
+            app:layout_constraintTop_toTopOf="@+id/NamaTukangHistory" />
+
+        <TextView
+            android:id="@+id/tanggal_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Method" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
