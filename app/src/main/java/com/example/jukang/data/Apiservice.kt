@@ -29,6 +29,9 @@ interface ApiService2 {
         @Body registerReq : registerRequest
     ): Call<Register>
 
+    @GET("register")
+    fun getRegister(): Call<Register>
+
     @POST("users/login")
     fun login(
         @Body loginReq : loginRequest

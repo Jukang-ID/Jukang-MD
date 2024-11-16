@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jukang.R
+import com.example.jukang.data.RetrofitClient
+import com.example.jukang.data.response.Register
+import com.example.jukang.data.response.registerRequest
 import com.example.jukang.databinding.ActivityWelcomeBinding
 import com.example.jukang.helper.loading.LoadingActivity
 import com.example.jukang.view.auth.login.LoginActivity
@@ -19,6 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -114,6 +120,7 @@ class WelcomeActivity : AppCompatActivity() {
             }
     }
 
+
     private fun saveData(token: String, email: String, name: String, photo: String, uid: String){
         val sharedPref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val edit = sharedPref.edit()
@@ -124,7 +131,24 @@ class WelcomeActivity : AppCompatActivity() {
         edit.putString("UID", uid)
 
         edit.apply()
+
+//        val request = registerRequest(name,"Belum ada data",email,token)
+//        val call = RetrofitClient.Jukang.register(request)
+//
+//        call.enqueue(object : Callback<Register>{
+//            override fun onResponse(call: Call<Register>, response: Response<Register>) {
+//                if(response.isSuccessful){
+//                    Log.d(TAG, "onResponse: ${response.body()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Register>, t: Throwable) {
+//
+//            }
+//
+//        })
     }
+
 
     companion object {
         private const val RC_SIGN_IN = 9001

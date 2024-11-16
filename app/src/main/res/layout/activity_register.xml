@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldNama">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.jukang.helper.costum.editnumberfield
             android:id="@+id/notelpon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

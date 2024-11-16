@@ -12,3 +12,4 @@ interface historycheckDAO {
     @Query("SELECT * FROM riwayat WHERE namaUser = :namaUser AND tanggal = :tanggal LIMIT 1")
     suspend fun checkHistory(namaUser:String, tanggal:String):historyRiwayat
 }
+

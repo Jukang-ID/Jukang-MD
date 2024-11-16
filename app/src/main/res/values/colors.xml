@@ -10,5 +10,6 @@
     <color name="primary_button">#980000</color>
     <color name="font_second">#3F3D56</color>
     <color name="font_des">#52525b</color>
+    <color name="font_textDes">#5A5757</color>
     <color name="red">#F44336</color>
 </resources>

@@ -26,3 +26,26 @@ abstract class Database:RoomDatabase() {
     }
 
 }
+
+@androidx.room.Database(entities = [Alamat::class], version = 1, exportSchema = false)
+abstract class AlamatDatabase:RoomDatabase(){
+    abstract fun alamatdao():AlamatDao
+
+    companion object{
+        @Volatile
+        private var INSTANCE: AlamatDatabase? = null
+
+        fun getDatabase(context: Context): AlamatDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AlamatDatabase::class.java,
+                    "alamat_database"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}
+

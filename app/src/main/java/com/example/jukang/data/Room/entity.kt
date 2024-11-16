@@ -9,3 +9,10 @@ data class historyRiwayat(
     val namaUser : String,
     val tanggal : String,
 )
+
+@Entity(tableName = "alamat")
+data class Alamat(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val namaUser : String,
+    val alamat : String,
+)

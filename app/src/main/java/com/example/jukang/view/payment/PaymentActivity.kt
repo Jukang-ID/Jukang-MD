@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
+import com.example.jukang.data.Room.AlamatDao
+import com.example.jukang.data.Room.AlamatDatabase
 import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
@@ -20,6 +22,10 @@ import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
 import com.example.jukang.helper.struk.StrukActivity
 import com.example.jukang.view.dashboard.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +35,8 @@ import kotlin.math.log
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
+    private lateinit var db : AlamatDatabase
+    private lateinit var alamatdao : AlamatDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -48,7 +56,10 @@ class PaymentActivity : AppCompatActivity() {
         val status = intent.getBooleanExtra(booked, false)
         val rating = intent.getStringExtra(rating).toString()
         val idTukang = intent.getStringExtra(idTukang).toString()
+        val email = pref.getString("EMAIL", "").toString()
 
+        db = AlamatDatabase.getDatabase(this)
+        alamatdao = db.alamatdao()
 
 
         Glide.with(this@PaymentActivity)
@@ -79,6 +90,12 @@ class PaymentActivity : AppCompatActivity() {
         }
 
 //        checkStatus()
+        CoroutineScope(Dispatchers.IO).launch {
+            val alamat = alamatdao.getAlamat(email)
+            withContext(Dispatchers.Main){
+                binding.Alamat.setText(alamat.alamat)
+            }
+        }
 
 
     }
