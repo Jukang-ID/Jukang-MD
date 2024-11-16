@@ -17,8 +17,13 @@ class ProfileActivity : AppCompatActivity() {
 
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val name = pref.getString("NAME", "")
+        val email = pref.getString("EMAIL", "")
+        val phone = pref.getString("PHONE", "-")
 
         binding.NamaPenguuna.text = name
+        binding.profilenama.text = name
+        binding.emailfield.text = email
+        binding.nofield.text = phone
 
         binding.backdragon.setOnClickListener {
             finish()

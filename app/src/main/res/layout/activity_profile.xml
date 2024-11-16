@@ -13,7 +13,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/materialToolbar"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
@@ -49,16 +49,16 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nama"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
 
             <ImageView
-                android:id="@+id/imageView15"
+                android:id="@+id/icon_user"
                 android:layout_width="41dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
@@ -68,15 +68,158 @@
                 app:srcCompat="@drawable/ic_person_24" />
 
             <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
+                android:id="@+id/labelnama"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/imageView15"
-                app:layout_constraintTop_toTopOf="@+id/imageView15" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Nama Pengguna"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toStartOf="@+id/goname"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/icon_user"
+                app:layout_constraintTop_toTopOf="@+id/icon_user" />
+
+            <TextView
+                android:id="@+id/profilenama"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ppbold"
+
+                android:text="nama pengguna"
+                android:textColor="@color/font_second"
+                app:layout_constraintBottom_toBottomOf="@+id/icon_user"
+                app:layout_constraintEnd_toEndOf="@+id/labelnama"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/labelnama"
+                app:layout_constraintTop_toBottomOf="@+id/labelnama" />
+
+            <ImageView
+                android:id="@+id/goname"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/profilenama"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/labelnama"
+                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/phone"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nama">
+
+            <ImageView
+                android:id="@+id/ic_no"
+                android:layout_width="41dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_phone_android_24" />
+
+            <TextView
+                android:id="@+id/nolabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="Nomor Telepon"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toStartOf="@+id/gonomor"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ic_no"
+                app:layout_constraintTop_toTopOf="@+id/ic_no" />
+
+            <TextView
+                android:id="@+id/nofield"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ppbold"
+                android:text="+62 000 000 0000"
+                android:textColor="@color/font_second"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_no"
+                app:layout_constraintEnd_toEndOf="@+id/nolabel"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/nolabel"
+                app:layout_constraintTop_toBottomOf="@+id/nolabel"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/gonomor"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/nofield"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nolabel"
+                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone">
+
+            <ImageView
+                android:id="@+id/ic_email"
+                android:layout_width="41dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_attach_email_24" />
+
+            <TextView
+                android:id="@+id/emaillabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Email Pengguna"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toStartOf="@+id/goemail"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ic_email"
+                app:layout_constraintTop_toTopOf="@+id/ic_email" />
+
+            <TextView
+                android:id="@+id/emailfield"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ppbold"
+                android:text="example@custom.com"
+                android:textColor="@color/font_second"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_email"
+                app:layout_constraintEnd_toEndOf="@+id/emaillabel"
+                app:layout_constraintStart_toStartOf="@+id/emaillabel"
+                app:layout_constraintTop_toBottomOf="@+id/emaillabel"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/goemail"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/emailfield"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/emaillabel"
+                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
