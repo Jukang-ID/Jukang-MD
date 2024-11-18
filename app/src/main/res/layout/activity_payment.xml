@@ -70,12 +70,22 @@
                     android:id="@+id/spesialis_tk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="Keahlian"
                     app:layout_constraintEnd_toEndOf="@+id/tukang_nm"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/tukang_nm"
                     app:layout_constraintTop_toBottomOf="@+id/tukang_nm" />
+
+                <TextView
+                    android:id="@+id/posisi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/spesialis_tk"
+                    app:layout_constraintTop_toBottomOf="@+id/spesialis_tk" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

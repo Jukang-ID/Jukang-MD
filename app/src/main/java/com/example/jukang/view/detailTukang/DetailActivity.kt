@@ -40,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra(PaymentActivity.booked,status)
             intent.putExtra(PaymentActivity.rating, binding.ratingdetail.text.toString())
             intent.putExtra(PaymentActivity.idTukang,idTukang )
+            intent.putExtra(PaymentActivity.domisili, binding.PosisiDetail.text.toString())
             startActivity(intent)
         }
 
@@ -61,6 +62,7 @@ class DetailActivity : AppCompatActivity() {
                 binding.spesialisDetail.text = response.detailTukang?.spesialis
                 binding.pricedetail.text = response.detailTukang?.priceRupiah
                 binding.ratingdetail.text = response.detailTukang?.review
+                binding.PosisiDetail.text = response.detailTukang?.domisili
 
                 photoUrl = response.detailTukang?.photoUrl
                 status = response.detailTukang?.booked == true

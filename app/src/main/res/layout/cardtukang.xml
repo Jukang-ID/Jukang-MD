@@ -27,14 +27,14 @@
         <TextView
             android:id="@+id/NamaTukang"
             android:layout_width="0dp"
-            android:fontFamily="@font/ppbold"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:fontFamily="@font/ppbold"
+            android:maxLines="1"
+            android:text="Nama"
             android:textSize="16sp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -44,14 +44,14 @@
 
         <TextView
             android:id="@+id/Spesialis"
-            android:layout_width="0dp"
-            android:textSize="14sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#03A9F4"
             android:fontFamily="@font/ppmedium"
-            android:text="TextView"
+            android:text="Kategori"
+            android:textColor="#03A9F4"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/NamaTukang"
-            app:layout_constraintEnd_toEndOf="@+id/NamaTukang"
+            app:layout_constraintEnd_toStartOf="@+id/lokasi"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/NamaTukang"
             app:layout_constraintTop_toTopOf="parent"
@@ -147,6 +147,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider"
             app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/lokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="Lokasi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/Spesialis" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

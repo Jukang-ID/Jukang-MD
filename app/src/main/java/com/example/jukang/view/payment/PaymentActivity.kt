@@ -50,6 +50,7 @@ class PaymentActivity : AppCompatActivity() {
         val rating = intent.getStringExtra(rating).toString()
         val idTukang = intent.getStringExtra(idTukang).toString()
         val email = pref.getString("EMAIL", "").toString()
+        val domisili = intent.getStringExtra(domisili).toString()
 
         db = AlamatLengkapDatabase.getDatabase(this)
         alamatdao = db.alamatLengkapDao()
@@ -62,6 +63,7 @@ class PaymentActivity : AppCompatActivity() {
         binding.tukangNm.text = namatukang
         binding.harga.text = harga
         binding.spesialisTk.text = spesialis
+        binding.posisi.text = domisili
 
         binding.btnBAckPay.setOnClickListener {
             finish()
@@ -208,5 +210,6 @@ class PaymentActivity : AppCompatActivity() {
         const val rating = "rating"
         const val booked = "status"
         const val idTukang = "id"
+        const val domisili = "domisili"
     }
 }

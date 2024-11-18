@@ -18,6 +18,7 @@ class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adap
             binding.Spesialis.text = tukang.spesialis
             binding.price.text = tukang.priceRupiah
             binding.rating.text = tukang.review
+            binding.lokasi.text = tukang.domisili
             Glide.with(itemView.context)
                 .load(tukang.photoUrl)
 
@@ -57,6 +58,7 @@ class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adap
             val harga = listTukang[position].priceRupiah
             val rating = listTukang[position].review
             val booked = listTukang[position].booked
+            val domisili = listTukang[position].domisili
 
             val intent = Intent(holder.itemView.context,PaymentActivity::class.java)
 
@@ -67,6 +69,7 @@ class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adap
             intent.putExtra(PaymentActivity.harga,harga)
             intent.putExtra(PaymentActivity.rating,rating)
             intent.putExtra(PaymentActivity.booked,booked)
+            intent.putExtra(PaymentActivity.domisili,domisili)
 
 
             holder.itemView.context.startActivity(intent)

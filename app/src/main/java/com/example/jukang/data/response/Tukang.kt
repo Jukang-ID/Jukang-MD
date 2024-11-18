@@ -32,7 +32,10 @@ data class TukangItem(
 	val spesialis: String? = null,
 
 	@field:SerializedName("priceRupiah")
-	val priceRupiah: String? = null
+	val priceRupiah: String? = null,
+
+	@field:SerializedName("domisili")
+	val domisili: String? = null,
 )
 
 data class TukangReq(
