@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.Room.AlamatDao
 import com.example.jukang.data.Room.AlamatDatabase
+import com.example.jukang.data.Room.AlamatLengkapDao
+import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.databinding.FragmentUserBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
@@ -30,8 +32,8 @@ class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: AlamatDatabase
-    private lateinit var alamatdao: AlamatDao
+    private lateinit var db: AlamatLengkapDatabase
+    private lateinit var alamatdao: AlamatLengkapDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +44,8 @@ class UserFragment : Fragment() {
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        db = AlamatDatabase.getDatabase(requireContext())
-        alamatdao = db.alamatdao()
+        db = AlamatLengkapDatabase.getDatabase(requireContext())
+        alamatdao = db.alamatLengkapDao()
 
         binding.progressBar2.visibility = View.GONE
 
@@ -98,8 +100,9 @@ class UserFragment : Fragment() {
                 try {
                     binding.progressBar2.visibility = View.GONE
                     alamatdao.getAlamat(namauser).let {
-                        binding.alamatPengguna.text = it.alamat
+                        binding.alamatPengguna.text = "${it.kota}, ${it.alamat}"
                     }
+
                 }catch (e: Exception) {
                     e.printStackTrace()
                 }

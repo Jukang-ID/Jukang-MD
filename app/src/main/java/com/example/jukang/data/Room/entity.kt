@@ -16,3 +16,11 @@ data class Alamat(
     val namaUser : String,
     val alamat : String,
 )
+
+@Entity(tableName = "alamatlengkap")
+data class AlamatLengkap(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val namaUser : String,
+    val alamat : String,
+    val kota : String,
+)

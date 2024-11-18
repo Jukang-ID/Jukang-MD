@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.jukang.R
 import com.example.jukang.data.Room.Alamat
 import com.example.jukang.data.Room.AlamatDao
 import com.example.jukang.data.Room.AlamatDatabase
+import com.example.jukang.data.Room.AlamatLengkap
+import com.example.jukang.data.Room.AlamatLengkapDao
+import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.databinding.BottomSheetAlamatBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,8 +28,8 @@ import kotlinx.coroutines.withContext
 class CustomButtom : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetAlamatBinding
-    private lateinit var db: AlamatDatabase
-    private lateinit var alamatdao: AlamatDao
+    private lateinit var db: AlamatLengkapDatabase
+    private lateinit var alamatdao: AlamatLengkapDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +38,8 @@ class CustomButtom : BottomSheetDialogFragment() {
     ): View? {
         binding = BottomSheetAlamatBinding.inflate(inflater, container, false)
 
-        db = AlamatDatabase.getDatabase(requireContext())
-        alamatdao = db.alamatdao()
+        db = AlamatLengkapDatabase.getDatabase(requireContext())
+        alamatdao = db.alamatLengkapDao()
 
         return binding.root
     }
@@ -46,12 +50,32 @@ class CustomButtom : BottomSheetDialogFragment() {
         val namauser = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
             .getString("EMAIL", "")
 
+        val kotaJabodetabek = listOf(
+            "Jakarta Pusat",
+            "Jakarta Utara",
+            "Jakarta Barat",
+            "Jakarta Selatan",
+            "Jakarta Timur",
+            "Bogor",
+            "Depok",
+            "Tangerang",
+            "Bekasi"
+        )
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, kotaJabodetabek)
+
+        binding.DomisiliInput.setAdapter(adapter)
+        binding.DomisiliInput.setOnItemClickListener { adapterView, view, i, l ->
+            binding.DomisiliInput.setText(adapterView.getItemAtPosition(i).toString())
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val dataalamats = alamatdao.getAlamat(namauser.toString())
             withContext(Dispatchers.Main) {
                 if (dataalamats != null) {
                     binding.AlamatInput.setText(dataalamats.alamat)
                     binding.button3.text = "Update alamat"
+                    binding.DomisiliInput.setText(dataalamats.kota)
                 }
             }
         }
@@ -64,7 +88,7 @@ class CustomButtom : BottomSheetDialogFragment() {
                     if (dataalamat != null) {
                            try {
                                alamatdao.update(
-                                   dataalamat.copy(alamat = binding.AlamatInput.text.toString())
+                                   dataalamat.copy(alamat = binding.AlamatInput.text.toString(), kota = binding.DomisiliInput.text.toString())
                                )
 
                            }catch (e: Exception){
@@ -73,7 +97,11 @@ class CustomButtom : BottomSheetDialogFragment() {
                            }
                     } else {
                         alamatdao.insert(
-                            Alamat(0, namauser.toString(), binding.AlamatInput.text.toString())
+                            AlamatLengkap(
+                                namaUser = namauser.toString(),
+                                alamat = binding.AlamatInput.text.toString(),
+                                kota = binding.DomisiliInput.text.toString()
+                            )
                         )
 
                     }

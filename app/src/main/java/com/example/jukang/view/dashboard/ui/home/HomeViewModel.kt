@@ -24,12 +24,12 @@ class HomeViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.Jukang.getTukang()
                 val dataTukang = response.tukang?.filter { tukang ->
-                    tukang?.booked == false // Memfilter tukang yang booked = false
+                    tukang?.booked == false
                 }
 
                 if (dataTukang.isNullOrEmpty()){
-                    _loadingHome.value = true
-                    return@launch
+                    _loadingHome.value = false
+                    _error.value = "Tidak ada Transaksi"
                 }
                 _loadingHome.value = false
                 _dataTukang.value = dataTukang as List<TukangItem>?
@@ -37,7 +37,7 @@ class HomeViewModel : ViewModel() {
             }catch (e:Exception){
                 e.printStackTrace()
                 _loadingHome.value = true
-                _error.value = "Failed to fetch data"
+                _error.value = "Tidak ada Transaksi"
             }
         }
     }

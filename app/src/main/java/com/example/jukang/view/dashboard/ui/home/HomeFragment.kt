@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
         binding.listTukang.layoutManager = LinearLayoutManager(requireContext())
 
         homeView = HomeViewModel()
+        binding.erromes.visibility = View.GONE
+        binding.caterror.visibility = View.GONE
 
         homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
             if (loading) {
@@ -51,9 +53,12 @@ class HomeFragment : Fragment() {
             }
         })
 
+
         homeView.error.observe(viewLifecycleOwner, Observer { error ->
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                binding.erromes.visibility = View.VISIBLE
+                binding.caterror.visibility = View.VISIBLE
+                binding.erromes.text = error
             }
         })
 

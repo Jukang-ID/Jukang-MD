@@ -6,22 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
-import com.example.jukang.data.Room.AlamatDao
-import com.example.jukang.data.Room.AlamatDatabase
+import com.example.jukang.data.Room.AlamatLengkapDao
+import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
 import com.example.jukang.helper.struk.StrukActivity
-import com.example.jukang.view.dashboard.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,14 +24,12 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Tag
 import java.util.Calendar
-import kotlin.math.log
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var db : AlamatDatabase
-    private lateinit var alamatdao : AlamatDao
+    private lateinit var db : AlamatLengkapDatabase
+    private lateinit var alamatdao : AlamatLengkapDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -58,8 +51,8 @@ class PaymentActivity : AppCompatActivity() {
         val idTukang = intent.getStringExtra(idTukang).toString()
         val email = pref.getString("EMAIL", "").toString()
 
-        db = AlamatDatabase.getDatabase(this)
-        alamatdao = db.alamatdao()
+        db = AlamatLengkapDatabase.getDatabase(this)
+        alamatdao = db.alamatLengkapDao()
 
 
         Glide.with(this@PaymentActivity)
@@ -89,11 +82,10 @@ class PaymentActivity : AppCompatActivity() {
             paymentMethod(id, nama, namatukang,idTukang ,spesialis, deskripsi, tanggal, alamat, tunai, harga,status)
         }
 
-//        checkStatus()
         CoroutineScope(Dispatchers.IO).launch {
             val alamat = alamatdao.getAlamat(email)
             withContext(Dispatchers.Main){
-                binding.Alamat.setText(alamat.alamat)
+                binding.Alamat.setText("${alamat.kota}, ${alamat.alamat}")
             }
         }
 
