@@ -87,7 +87,11 @@ class PaymentActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val alamat = alamatdao.getAlamat(email)
             withContext(Dispatchers.Main){
-                binding.Alamat.setText("${alamat.kota}, ${alamat.alamat}")
+                if (alamat != null ) {
+                    binding.Alamat.setText("${alamat.kota}, ${alamat.alamat}")
+                }else{
+                    binding.Alamat.setText("")
+                }
             }
         }
 

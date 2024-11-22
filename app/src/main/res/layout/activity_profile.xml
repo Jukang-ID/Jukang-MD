@@ -73,10 +73,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="Nama Pengguna"
                 android:textSize="8sp"
-                app:layout_constraintEnd_toStartOf="@+id/goname"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon_user"
                 app:layout_constraintTop_toTopOf="@+id/icon_user" />
 
@@ -92,17 +92,9 @@
                 app:layout_constraintEnd_toEndOf="@+id/labelnama"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/labelnama"
-                app:layout_constraintTop_toBottomOf="@+id/labelnama" />
+                app:layout_constraintTop_toBottomOf="@+id/labelnama"
+                app:layout_constraintVertical_bias="0.666" />
 
-            <ImageView
-                android:id="@+id/goname"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/profilenama"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/labelnama"
-                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -130,10 +122,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
                 android:text="Nomor Telepon"
                 android:textSize="8sp"
-                app:layout_constraintEnd_toStartOf="@+id/gonomor"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ic_no"
                 app:layout_constraintTop_toTopOf="@+id/ic_no" />
 
@@ -151,15 +143,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/nolabel"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/gonomor"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/nofield"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/nolabel"
-                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -186,10 +169,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="16dp"
                 android:text="Email Pengguna"
                 android:textSize="8sp"
-                app:layout_constraintEnd_toStartOf="@+id/goemail"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ic_email"
                 app:layout_constraintTop_toTopOf="@+id/ic_email" />
 
@@ -206,17 +189,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/emaillabel"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/goemail"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/emailfield"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/emaillabel"
-                app:srcCompat="@drawable/baseline_keyboard_arrow_right_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="320dp"
+            android:background="@drawable/cornergambar"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.54"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+            app:layout_constraintVertical_bias="0.948"
+            app:srcCompat="@drawable/ic_article_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,8 @@ import com.example.jukang.data.Room.AlamatDao
 import com.example.jukang.data.Room.AlamatDatabase
 import com.example.jukang.data.Room.AlamatLengkapDao
 import com.example.jukang.data.Room.AlamatLengkapDatabase
+import com.example.jukang.data.Room.profileDAO
+import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.databinding.FragmentUserBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
@@ -24,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -34,6 +37,9 @@ class UserFragment : Fragment() {
 
     private lateinit var db: AlamatLengkapDatabase
     private lateinit var alamatdao: AlamatLengkapDao
+
+    private lateinit var dbProfile: profileDatabase
+    private lateinit var profiledao: profileDAO
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +52,9 @@ class UserFragment : Fragment() {
 
         db = AlamatLengkapDatabase.getDatabase(requireContext())
         alamatdao = db.alamatLengkapDao()
+
+        dbProfile = profileDatabase.getDatabase(requireContext())
+        profiledao = dbProfile.profiledao()
 
         binding.progressBar2.visibility = View.GONE
 
@@ -123,11 +132,24 @@ class UserFragment : Fragment() {
 
         val phoneFormatIdn = phone?.replaceFirst("0", "+62")
 
-        binding.namaprofile.text = nama
-        binding.emailprofile.text = email
-        Glide.with(requireContext())
-            .load(photo)
-            .into(binding.profilephoto)
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = profiledao.checkProfile(id.toString())
+            withContext(Dispatchers.Main) {
+                if (data != null) {
+                    binding.namaprofile.text = data.namaUser
+                    binding.emailprofile.text = data.email
+                    Glide.with(requireContext())
+                        .load(data.profilePhoto)
+                        .into(binding.profilephoto)
+                }else{
+                    binding.namaprofile.text = nama
+                    binding.emailprofile.text = email
+                    Glide.with(requireContext())
+                        .load(photo)
+                        .into(binding.profilephoto)
+                }
+            }
+        }
     }
 
 

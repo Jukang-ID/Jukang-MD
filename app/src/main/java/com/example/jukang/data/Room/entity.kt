@@ -24,3 +24,13 @@ data class AlamatLengkap(
     val alamat : String,
     val kota : String,
 )
+
+@Entity(tableName = "profile")
+data class profileLengkap(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val id_user : String,
+    val namaUser : String,
+    val nomorTelp : String,
+    val email : String,
+    val profilePhoto : String,
+)

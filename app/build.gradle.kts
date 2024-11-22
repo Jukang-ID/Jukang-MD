@@ -79,6 +79,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.firebase:firebase-storage:21.0.1")
+
 
     implementation("com.github.razaghimahdi:Android-Loading-Dots:1.3.2")
 

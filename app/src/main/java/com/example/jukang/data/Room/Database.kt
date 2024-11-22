@@ -73,3 +73,25 @@ abstract class AlamatLengkapDatabase:RoomDatabase(){
     }
 
 }
+
+@androidx.room.Database(entities = [profileLengkap::class], version = 1, exportSchema = false)
+abstract class profileDatabase:RoomDatabase(){
+    abstract fun profiledao():profileDAO
+
+    companion object{
+        @Volatile
+        private var INSTANCE: profileDatabase? = null
+
+        fun getDatabase(Context: Context): profileDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    Context.applicationContext,
+                    profileDatabase::class.java,
+                    "profile_database"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}

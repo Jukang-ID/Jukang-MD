@@ -62,7 +62,11 @@ class CustomButtom : BottomSheetDialogFragment() {
             "Bekasi"
         )
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, kotaJabodetabek)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            kotaJabodetabek
+        )
 
         binding.DomisiliInput.setAdapter(adapter)
         binding.DomisiliInput.setOnItemClickListener { adapterView, view, i, l ->
@@ -86,15 +90,19 @@ class CustomButtom : BottomSheetDialogFragment() {
                 try {
                     val dataalamat = alamatdao.getAlamat(namauser.toString())
                     if (dataalamat != null) {
-                           try {
-                               alamatdao.update(
-                                   dataalamat.copy(alamat = binding.AlamatInput.text.toString(), kota = binding.DomisiliInput.text.toString())
-                               )
+                        try {
+                            alamatdao.update(
+                                dataalamat.copy(
+                                    alamat = binding.AlamatInput.text.toString(),
+                                    kota = binding.DomisiliInput.text.toString()
+                                )
+                            )
 
-                           }catch (e: Exception){
-                               e.printStackTrace()
-                               Toast.makeText(requireContext(), "gagal update", Toast.LENGTH_SHORT).show()
-                           }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Toast.makeText(requireContext(), "gagal update", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     } else {
                         alamatdao.insert(
                             AlamatLengkap(
