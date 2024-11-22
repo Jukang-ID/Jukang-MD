@@ -96,6 +96,9 @@ class UserFragment : Fragment() {
 
         binding.alamat.setOnClickListener {
             val bottomsheet = CustomButtom()
+            bottomsheet.updatedListenerUser = {
+                checkStatusProfil(namauser.toString())
+            }
             bottomsheet.show(requireActivity().supportFragmentManager, "BottomSheet")
         }
 

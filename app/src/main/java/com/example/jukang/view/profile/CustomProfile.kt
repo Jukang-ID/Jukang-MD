@@ -16,6 +16,7 @@ import com.example.jukang.data.Room.profileDAO
 import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.data.Room.profileLengkap
 import com.example.jukang.databinding.BottomSheetProfileBinding
+import com.example.jukang.helper.OnProfileUpdatedListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -34,7 +35,9 @@ class CustomProfile : BottomSheetDialogFragment() {
     private lateinit var db: profileDatabase
     private lateinit var profiledao: profileDAO
 
+//    val profileUpdateListener : OnProfileUpdatedListener? = null
 
+    var profileUpdatedListener: (() -> Unit)? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -112,12 +115,12 @@ class CustomProfile : BottomSheetDialogFragment() {
                             )
                         )
                         showToast("Profile berhasil diupdate")
-                        dismiss()
                     } else {
                         profiledao.insertdata(request)
                         showToast("Profile berhasil dibuat")
-                        dismiss()
                     }
+                    profileUpdatedListener?.invoke()
+                    dismiss()
                 }
             }
 

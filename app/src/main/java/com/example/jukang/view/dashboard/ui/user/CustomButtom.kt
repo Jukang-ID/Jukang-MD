@@ -31,6 +31,8 @@ class CustomButtom : BottomSheetDialogFragment() {
     private lateinit var db: AlamatLengkapDatabase
     private lateinit var alamatdao: AlamatLengkapDao
 
+    var updatedListenerUser : (() -> Unit)? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -113,11 +115,14 @@ class CustomButtom : BottomSheetDialogFragment() {
                         )
 
                     }
+
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                 }
             }
+            updatedListenerUser?.invoke()
             dismiss()
         }
 

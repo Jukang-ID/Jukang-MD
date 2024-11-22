@@ -41,10 +41,16 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.Edit.setOnClickListener {
             val custom = CustomProfile()
+            custom.profileUpdatedListener ={
+                dataUser()
+            }
             custom.show(supportFragmentManager, "CustomProfile")
+
         }
 
     }
+
+
 
     fun dataUser(){
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
