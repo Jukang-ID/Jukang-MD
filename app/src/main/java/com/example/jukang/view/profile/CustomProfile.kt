@@ -57,7 +57,7 @@ class CustomProfile : BottomSheetDialogFragment() {
         val id = pref.getString("UID", "")
         val nameuser = pref.getString("NAME", "")
         val emailuser = pref.getString("EMAIL", "")
-        val phoneuser = pref.getString("PHONE", "")
+        val phoneuser = pref.getString("PHONE", "-")
         val photo = pref.getString(
             "PHOTO",
             "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
@@ -73,7 +73,7 @@ class CustomProfile : BottomSheetDialogFragment() {
                     binding.photoUri.setText(data.profilePhoto)
                     binding.btnDragon.text = "Update Profile"
                 } else {
-                    binding.NohpInput.setText("-")
+                    binding.NohpInput.setText(phoneuser)
                     binding.Namainput.setText(nameuser)
                     binding.emailInputs.setText(emailuser)
                     binding.photoUri.setText(photo)
