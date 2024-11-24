@@ -12,9 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.jukang.data.Room.profileDAO
+import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.databinding.FragmentHomeBinding
 import com.example.jukang.helper.adapter.AdapterTukang
 import com.example.jukang.view.history.HistoryActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -23,6 +29,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeView: HomeViewModel
+
+    private lateinit var db: profileDatabase
+    private lateinit var profiledao : profileDAO
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +79,7 @@ class HomeFragment : Fragment() {
             "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
         )
         val email = sharedPreferences.getString("EMAIL", "null")
+        val id = sharedPreferences.getString("UID", "null")
 
         val (name, _) = getUserData()
 
@@ -78,10 +88,36 @@ class HomeFragment : Fragment() {
             .circleCrop()
             .into(binding.photourl)
 
+        db = profileDatabase.getDatabase(requireContext())
+        profiledao = db.profiledao()
+
         binding.progressBar.visibility = View.VISIBLE
 
-        binding.greeting.text = name
-        binding.emailcard.text = email
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = profiledao.checkProfile(id.toString())
+            withContext(Dispatchers.Main){
+                if(data != null){
+                    binding.greeting.text = data.namaUser
+                    binding.emailcard.text = data.email
+                    Glide.with(this@HomeFragment)
+                        .load(data.profilePhoto)
+                        .circleCrop()
+                        .into(binding.photourl)
+
+                }else{
+                    binding.greeting.text = name
+                    binding.emailcard.text = email
+                    Glide.with(this@HomeFragment)
+                        .load(imageUrl)
+                        .circleCrop()
+                        .into(binding.photourl)
+                }
+            }
+
+        }
+
+
+
 
         binding.btnRiwayat.setOnClickListener {
             val intent = Intent(requireContext(), HistoryActivity::class.java)
