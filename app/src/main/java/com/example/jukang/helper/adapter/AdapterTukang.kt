@@ -10,10 +10,10 @@ import com.example.jukang.databinding.CardtukangBinding
 import com.example.jukang.view.detailTukang.DetailActivity
 import com.example.jukang.view.payment.PaymentActivity
 
-class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adapter<AdapterTukang.ViewHolder>() {
+class AdapterTukang(private var listTukang: List<TukangItem>) : RecyclerView.Adapter<AdapterTukang.ViewHolder>() {
 
-    class ViewHolder(val binding: CardtukangBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(tukang:TukangItem){
+    class ViewHolder(val binding: CardtukangBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(tukang: TukangItem) {
             binding.NamaTukang.text = tukang.namatukang
             binding.Spesialis.text = tukang.spesialis
             binding.price.text = tukang.priceRupiah
@@ -21,16 +21,21 @@ class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adap
             binding.lokasi.text = tukang.domisili
             Glide.with(itemView.context)
                 .load(tukang.photoUrl)
-
                 .into(binding.photourls)
         }
+    }
+
+    // Update the list of tukang items and notify the adapter
+    fun updateList(newList: List<TukangItem>) {
+        listTukang = newList
+        notifyDataSetChanged()  // Notify that the data has changed
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardtukangBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         binding.btnBooking.setOnClickListener {
-
+            // Handle booking button click (if needed)
         }
 
         return ViewHolder(binding)
@@ -43,35 +48,25 @@ class AdapterTukang(private val listTukang: List<TukangItem>) :RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(listTukang[position])
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val id = listTukang[position].tukangId
-            val intent = Intent(holder.itemView.context,DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_ID,id)
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_ID, id)
             holder.itemView.context.startActivity(intent)
         }
 
         holder.binding.btnBooking.setOnClickListener {
-            val id = listTukang[position].tukangId
-            val nama = listTukang[position].namatukang
-            val spesialis = listTukang[position].spesialis
-            val gambar = listTukang[position].photoUrl
-            val harga = listTukang[position].priceRupiah
-            val rating = listTukang[position].review
-            val booked = listTukang[position].booked
-            val domisili = listTukang[position].domisili
-
-            val intent = Intent(holder.itemView.context,PaymentActivity::class.java)
-
-            intent.putExtra(PaymentActivity.idTukang,id)
-            intent.putExtra(PaymentActivity.namaTukang,nama)
-            intent.putExtra(PaymentActivity.spesialis,spesialis)
-            intent.putExtra(PaymentActivity.gambarTukang,gambar)
-            intent.putExtra(PaymentActivity.harga,harga)
-            intent.putExtra(PaymentActivity.rating,rating)
-            intent.putExtra(PaymentActivity.booked,booked)
-            intent.putExtra(PaymentActivity.domisili,domisili)
-
-
+            val tukangItem = listTukang[position]
+            val intent = Intent(holder.itemView.context, PaymentActivity::class.java).apply {
+                putExtra(PaymentActivity.idTukang, tukangItem.tukangId)
+                putExtra(PaymentActivity.namaTukang, tukangItem.namatukang)
+                putExtra(PaymentActivity.spesialis, tukangItem.spesialis)
+                putExtra(PaymentActivity.gambarTukang, tukangItem.photoUrl)
+                putExtra(PaymentActivity.harga, tukangItem.priceRupiah)
+                putExtra(PaymentActivity.rating, tukangItem.review)
+                putExtra(PaymentActivity.booked, tukangItem.booked)
+                putExtra(PaymentActivity.domisili, tukangItem.domisili)
+            }
             holder.itemView.context.startActivity(intent)
         }
     }

@@ -6,24 +6,45 @@
     android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
         tools:context=".view.dashboard.ui.home.HomeFragment">
 
+        <!-- Toolbar with SearchView -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/primary_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- SearchView inside Toolbar -->
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:queryHint="Search Tukang"
+                app:iconifiedByDefault="false" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Profile Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/profilecard"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/primary_button"
             app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -70,7 +91,6 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:text="TextView"
-
                     android:textColor="#d4d4d4"
                     app:layout_constraintBottom_toBottomOf="@+id/photourl"
                     app:layout_constraintEnd_toEndOf="@+id/greeting"
@@ -89,10 +109,9 @@
                     app:layout_constraintVertical_bias="0.714" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </androidx.cardview.widget.CardView>
 
+        <!-- Point Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/pointcard"
             android:layout_width="match_parent"
@@ -102,7 +121,6 @@
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profilecard">
 
@@ -159,14 +177,12 @@
                     android:textColor="@color/font_second"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                    app:layout_constraintHorizontal_bias="0.69"
                     app:layout_constraintStart_toEndOf="@+id/imageView9"
                     app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.cardview.widget.CardView>
 
+        <!-- Recomendation Section -->
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -189,10 +205,8 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <com.razzaghimahdi78.dotsloading.linear.LoadingBiggy
             android:id="@+id/progressBar"
@@ -200,7 +214,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:progressBackgroundTint="@null"
             app:dots_color="@color/primary_button"
             app:dots_duration="200"
             app:layout_constraintBottom_toBottomOf="@+id/listTukang"
@@ -224,7 +237,6 @@
             android:layout_height="100dp"
             app:layout_constraintBottom_toTopOf="@+id/erromes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/cat" />
 

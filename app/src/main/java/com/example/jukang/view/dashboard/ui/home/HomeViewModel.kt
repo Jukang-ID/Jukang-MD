@@ -18,28 +18,31 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    fun fetchTukang(){
-        _loadingHome.value =true
+    // Fungsi untuk mengambil data tukang
+    fun fetchTukang() {
+        _loadingHome.value = true
         viewModelScope.launch {
             try {
+                // Memanggil API untuk mendapatkan data tukang
                 val response = RetrofitClient.Jukang.getTukang()
                 val dataTukang = response.tukang?.filter { tukang ->
-                    tukang?.booked == false
+                    tukang?.booked == false // Filter tukang yang belum dibooking
                 }
 
-                if (dataTukang.isNullOrEmpty()){
+                // Memastikan data tidak kosong
+                if (dataTukang.isNullOrEmpty()) {
                     _loadingHome.value = false
-                    _error.value = "Tidak ada Transaksi"
+                    _error.value = "Tidak ada tukang tersedia"
+                } else {
+                    _loadingHome.value = false
+                    _dataTukang.value = dataTukang as List<TukangItem>?
                 }
-                _loadingHome.value = false
-                _dataTukang.value = dataTukang as List<TukangItem>?
 
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
-                _loadingHome.value = true
-                _error.value = "Tidak ada Transaksi"
+                _loadingHome.value = false
+                _error.value = "Terjadi kesalahan dalam pengambilan data"
             }
         }
     }
-
 }
