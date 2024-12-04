@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     private const val NEWS = "https://api-berita-indonesia.vercel.app/"
     private const val JUKANG = "https://jukang-api-177471570498.asia-southeast2.run.app/"
+    private const val MAPS = "https://api.openrouteservice.org/"
 
     val instance: Apiservice by lazy {
         Retrofit.Builder()
@@ -21,5 +22,12 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService2::class.java)
+    }
+    val maps: ApiService3 by lazy {
+        Retrofit.Builder()
+            .baseUrl(MAPS)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService3::class.java)
     }
 }

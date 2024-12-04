@@ -1,9 +1,12 @@
 package com.example.jukang.data
 
+import ORSResponse
+import RouteRequest
 import com.example.jukang.data.response.BeritaResponse
 import com.example.jukang.data.response.DetailTukang
 import com.example.jukang.data.response.History
 import com.example.jukang.data.response.Login
+import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Register
 import com.example.jukang.data.response.Transaksi
@@ -15,6 +18,7 @@ import com.example.jukang.data.response.registerRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -60,4 +64,10 @@ interface ApiService2 {
         suspend fun getTransaksi(
             @Path("id") idUser:String
         ): History
+}
+
+interface ApiService3 {
+    @Headers("Authorization: 5b3ce3597851110001cf6248b9ad4c9761324324805eeef615700410")
+    @POST("v2/directions/driving-car")
+    fun getRoute(@Body body: RouteRequest): Call<Orm>
 }
