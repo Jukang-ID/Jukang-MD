@@ -301,18 +301,36 @@ class HomeFragment : Fragment() {
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                return false // Tidak memproses input saat tombol submit ditekan
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter list tukang berdasarkan input pengguna
                 val filteredList = tukangList.filter { tukang ->
-                    tukang?.namatukang?.contains(newText ?: "", ignoreCase = true) == true
+                    tukang?.let {
+                        it.namatukang?.contains(newText ?: "", ignoreCase = true) == true ||
+                                it.domisili?.contains(newText ?: "", ignoreCase = true) == true ||
+                                it.spesialis?.contains(newText ?: "", ignoreCase = true) == true
+                    } == true
                 }
-                adapterTukang.updateList(filteredList.filterNotNull()) // Pastikan elemen null tidak dikirim ke adapter
+
+                // Periksa apakah hasil pencarian kosong
+                if (filteredList.isEmpty()) {
+                    // Tampilkan pesan pemberitahuan
+                    Toast.makeText(
+                        requireContext(),
+                        "Tidak ada layanan yang kamu cari",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                // Perbarui adapter dengan daftar hasil pencarian
+                adapterTukang.updateList(filteredList.filterNotNull())
                 return true
             }
         })
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
