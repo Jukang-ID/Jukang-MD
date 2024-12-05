@@ -130,11 +130,8 @@
 
         <Button
             android:id="@+id/btnBooking"
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/primary_button"

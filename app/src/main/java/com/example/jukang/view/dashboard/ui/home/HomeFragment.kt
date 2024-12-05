@@ -26,6 +26,7 @@ import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.data.Room.profileDAO
 import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.data.response.Orm
+import com.example.jukang.data.response.Query
 import com.example.jukang.data.response.TukangItem
 import com.example.jukang.databinding.FragmentHomeBinding
 import com.example.jukang.helper.adapter.AdapterTukang
@@ -55,6 +56,7 @@ class HomeFragment : Fragment() {
     private lateinit var alamatdao : AlamatLengkapDao
     private lateinit var adapterTukang: AdapterTukang
     private val tukangList: MutableList<TukangItem?> = mutableListOf()
+
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -196,40 +198,40 @@ class HomeFragment : Fragment() {
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 val data = alamatdao.getAlamat(email.toString())
-               withContext(Dispatchers.Main){
-                   if (data != null) {
-                       if (data.kota == "Jakarta Utara"){
-                           getCurrentLocation(-6.121435, 106.774124)
-                       } else if (data.kota == "Jakarta Pusat"){
-                           getCurrentLocation(-6.175110, 106.865036)
-                       } else if (data.kota == "Jakarta Barat"){
-                           getCurrentLocation(-6.161184, 106.770914)
-                       } else if (data.kota == "Jakarta Selatan"){
-                           getCurrentLocation(-6.261493, 106.810600)
-                       } else if (data.kota == "Jakarta Timur"){
-                           getCurrentLocation(-6.229386, 106.689431)
-                       } else if (data.kota == "Bogor"){
-                           getCurrentLocation(-6.5952, 106.7896)
-                       }else if(data.kota == "Depok") {
-                           getCurrentLocation(-6.402484, 106.794240)
-                       }else if(data.kota == "Bekasi") {
-                           getCurrentLocation(-6.2383, 106.9756)
-                       }else if(data.kota == "Tangerang") {
-                           getCurrentLocation(-6.1783, 106.6319)
-                       }
-                   }else{
-                       binding.jarak.text = "Silahkan Masukan Alamat"
-                       binding.jarak.setOnClickListener {
-                           val dialogBuild = AlertDialog.Builder(requireActivity())
-                           dialogBuild.setTitle("Pemberitahuan")
-                           dialogBuild.setMessage("Silahkan Masukan Alamat Anda")
-                           dialogBuild.setPositiveButton("OK") { dialog, which ->
-                               dialog.dismiss()
-                           }
-                           dialogBuild.show()
-                       }
-                   }
-               }
+                withContext(Dispatchers.Main){
+                    if (data != null) {
+                        if (data.kota == "Jakarta Utara"){
+                            getCurrentLocation(-6.121435, 106.774124)
+                        } else if (data.kota == "Jakarta Pusat"){
+                            getCurrentLocation(-6.175110, 106.865036)
+                        } else if (data.kota == "Jakarta Barat"){
+                            getCurrentLocation(-6.161184, 106.770914)
+                        } else if (data.kota == "Jakarta Selatan"){
+                            getCurrentLocation(-6.261493, 106.810600)
+                        } else if (data.kota == "Jakarta Timur"){
+                            getCurrentLocation(-6.229386, 106.689431)
+                        } else if (data.kota == "Bogor"){
+                            getCurrentLocation(-6.5952, 106.7896)
+                        }else if(data.kota == "Depok") {
+                            getCurrentLocation(-6.402484, 106.794240)
+                        }else if(data.kota == "Bekasi") {
+                            getCurrentLocation(-6.2383, 106.9756)
+                        }else if(data.kota == "Tangerang") {
+                            getCurrentLocation(-6.1783, 106.6319)
+                        }
+                    }else{
+                        binding.jarak.text = "Silahkan Masukan Alamat"
+                        binding.jarak.setOnClickListener {
+                            val dialogBuild = AlertDialog.Builder(requireActivity())
+                            dialogBuild.setTitle("Pemberitahuan")
+                            dialogBuild.setMessage("Silahkan Masukan Alamat Anda")
+                            dialogBuild.setPositiveButton("OK") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            dialogBuild.show()
+                        }
+                    }
+                }
             }
         }
 
@@ -301,22 +303,17 @@ class HomeFragment : Fragment() {
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false // Tidak memproses input saat tombol submit ditekan
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // Filter list tukang berdasarkan input pengguna
+                showLoading(true)
                 val filteredList = tukangList.filter { tukang ->
                     tukang?.let {
-                        it.namatukang?.contains(newText ?: "", ignoreCase = true) == true ||
-                                it.domisili?.contains(newText ?: "", ignoreCase = true) == true ||
-                                it.spesialis?.contains(newText ?: "", ignoreCase = true) == true
+                        it.namatukang?.contains(query ?: "", ignoreCase = true) == true ||
+                                it.domisili?.contains(query ?: "", ignoreCase = true) == true ||
+                                it.spesialis?.contains(query ?: "", ignoreCase = true) == true
                     } == true
                 }
 
                 // Periksa apakah hasil pencarian kosong
                 if (filteredList.isEmpty()) {
-                    // Tampilkan pesan pemberitahuan
                     Toast.makeText(
                         requireContext(),
                         "Tidak ada layanan yang kamu cari",
@@ -324,11 +321,45 @@ class HomeFragment : Fragment() {
                     ).show()
                 }
 
-                // Perbarui adapter dengan daftar hasil pencarian
                 adapterTukang.updateList(filteredList.filterNotNull())
+                showLoading(false)
                 return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    showDefaultListWithLoading()
+                }
+                return false
+            }
         })
+
+        binding.searchView.setOnCloseListener {
+            showDefaultListWithLoading()
+            false
+        }
+    }
+
+    private fun showDefaultListWithLoading() {
+        showLoading(true)
+        adapterTukang.updateList(tukangList.filterNotNull())
+        showLoading(false)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    // Tangani tombol "Back"
+//    override fun onBackPressed() {
+//        showDefaultListWithLoading()
+//        super.onBackPressed()
+//    }
+
+    // Tangani lifecycle aplikasi (untuk tombol "Home")
+    override fun onResume() {
+        super.onResume()
+        showDefaultListWithLoading()
     }
 
 

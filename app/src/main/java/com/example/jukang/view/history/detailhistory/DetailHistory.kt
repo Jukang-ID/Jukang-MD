@@ -97,7 +97,6 @@ class DetailHistory : AppCompatActivity() {
         }
     }
 
-
     fun saveStatus(tanggal: String, namaUser: String) {
         db = Database.getDatabase(this)
         history = db.historyDao()
