@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jukang.data.response.TukangItem
+import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.databinding.CardtukangBinding
 import com.example.jukang.view.detailTukang.DetailActivity
 import com.example.jukang.view.payment.PaymentActivity
 
-class AdapterTukang(private var listTukang: List<TukangItem>) : RecyclerView.Adapter<AdapterTukang.ViewHolder>() {
+class AdapterTukang(private var listTukang: List<TukangListItem>) : RecyclerView.Adapter<AdapterTukang.ViewHolder>() {
 
     class ViewHolder(val binding: CardtukangBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tukang: TukangItem) {
+        fun bind(tukang: TukangListItem) {
             binding.NamaTukang.text = tukang.namatukang
             binding.Spesialis.text = tukang.spesialis
             binding.price.text = tukang.priceRupiah
@@ -26,7 +27,7 @@ class AdapterTukang(private var listTukang: List<TukangItem>) : RecyclerView.Ada
     }
 
     // Update the list of tukang items and notify the adapter
-    fun updateList(newList: List<TukangItem>) {
+    fun updateList(newList: List<TukangListItem>) {
         listTukang = newList
         notifyDataSetChanged()  // Notify that the data has changed
     }

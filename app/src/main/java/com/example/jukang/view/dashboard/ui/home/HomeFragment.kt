@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.jukang.data.RetrofitClient
@@ -28,6 +30,7 @@ import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.Query
 import com.example.jukang.data.response.TukangItem
+import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.databinding.FragmentHomeBinding
 import com.example.jukang.helper.adapter.AdapterTukang
 import com.example.jukang.helper.util.SearchUtil
@@ -72,24 +75,16 @@ class HomeFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         // Inisialisasi ViewModel
-        homeView = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeView = HomeViewModel()
 
-        // Setup LayoutManager dan Adapter
-        binding.listTukang.layoutManager = LinearLayoutManager(requireContext())
-        adapterTukang = AdapterTukang(emptyList()) // Anda bisa mengganti dengan data awal jika diperlukan
-        binding.listTukang.adapter = adapterTukang
+        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
+            if (list != null) {
+                adapterTukang = AdapterTukang(list)
+                binding.listTukang.adapter = adapterTukang
+            }
 
-        //Setup SearchView
-        setupSearchView()
+        })
 
-        // Menyembunyikan error UI
-        binding.erromes.visibility = View.GONE
-        binding.caterror.visibility = View.GONE
-
-        dbalamat = AlamatLengkapDatabase.getDatabase(requireContext())
-        alamatdao = dbalamat.alamatLengkapDao()
-
-        // Observasi untuk loading
         homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
             if (loading) {
                 binding.progressBar.visibility = View.VISIBLE
@@ -98,34 +93,15 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // Observing ViewModel
-        homeView = ViewModelProvider(this).get(HomeViewModel::class.java)
-        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
-            tukangList.clear()
-            if (!list.isNullOrEmpty()) {
-                tukangList.addAll(list)
-            }
-            adapterTukang.updateList(tukangList.filterNotNull())
-        })
+        // Setup LayoutManager dan Adapter
+        binding.listTukang.layoutManager = LinearLayoutManager(requireContext())
 
+        // Menyembunyikan error UI
+        binding.erromes.visibility = View.GONE
+        binding.caterror.visibility = View.GONE
 
-        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
-            if (list != null) {
-                tukangList.clear()
-                tukangList.addAll(list) // Tidak perlu filter, karena tipe cocok
-                adapterTukang.updateList(tukangList.filterNotNull()) // Filter null di adapter
-            }
-        })
-
-        homeView.error.observe(viewLifecycleOwner, Observer { error ->
-            if (error != null) {
-                binding.erromes.visibility = View.VISIBLE
-                binding.caterror.visibility = View.VISIBLE
-                binding.erromes.text = error
-            }
-        })
-
-        homeView.fetchTukang()
+        dbalamat = AlamatLengkapDatabase.getDatabase(requireContext())
+        alamatdao = dbalamat.alamatLengkapDao()
 
         val sharedPreferences = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val imageUrl = sharedPreferences.getString(
@@ -136,6 +112,18 @@ class HomeFragment : Fragment() {
         val id = sharedPreferences.getString("UID", "null")
 
         val (name, _) = getUserData()
+
+        CoroutineScope(Dispatchers.IO).launch{
+            val dataalamat = alamatdao.getAlamat(email.toString())
+            withContext(Dispatchers.Main){
+                if (dataalamat != null){
+                    homeView.fetchTukang(dataalamat.kota)
+                }else{
+                    homeView.fetchTukang("")
+                }
+            }
+        }
+
 
         Glide.with(this)
             .load(imageUrl)
@@ -193,14 +181,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.swipeContainer.setOnRefreshListener {
-            homeView.fetchTukang()
             binding.swipeContainer.isRefreshing = false
         }
 
-        // Adding SearchView functionality
-        setupSearchView()
 
-        Toast.makeText(requireContext(), "Selamat Datang $name", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), "Selamat Datang $name", Toast.LENGTH_SHORT).show()
 
         // Memanggil fungsi getCurrentLocation
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -251,6 +236,7 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
 
     fun getCurrentLocation(destlat: Double, destlon: Double) {
         if (ActivityCompat.checkSelfPermission(
@@ -314,34 +300,33 @@ class HomeFragment : Fragment() {
     }
 
     // Function to setup SearchView
-    private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                updateSearchResults(query)
-                return true
-            }
+//    private fun setupSearchView() {
+//        binding.searchView.setOnQueryTextListener(object :
+//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                updateSearchResults(query)
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return false
+//            }
+//        })
+//
+//        binding.searchView.setOnCloseListener {
+//            adapterTukang.updateList(tukangList.filterNotNull())
+//            false
+//        }
+//    }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                updateSearchResults(newText)
-                return false
-            }
-        })
-
-        binding.searchView.setOnCloseListener {
-            adapterTukang.updateList(tukangList.filterNotNull())
-            false
-        }
-    }
-
-    private fun updateSearchResults(query: String?) {
-        val filteredList = SearchUtil.filterTukangList(query, tukangList)
-        adapterTukang.updateList(filteredList)
-
-        if (filteredList.isEmpty()) {
-            Toast.makeText(requireContext(), "Tidak ada layanan yang kamu cari", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun updateSearchResults(query: String?) {
+//        val filteredList = SearchUtil.filterTukangList(query, tukangList)
+//        adapterTukang.updateList(filteredList)
+//
+//        if (filteredList.isEmpty()) {
+//            Toast.makeText(requireContext(), "Tidak ada layanan yang kamu cari", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
 
 

@@ -11,6 +11,7 @@ import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Register
 import com.example.jukang.data.response.Transaksi
 import com.example.jukang.data.response.Tukang
+import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.loginRequest
 import com.example.jukang.data.response.paymentReq
@@ -21,6 +22,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface Apiservice {
     @GET("cnn/terbaru")
@@ -32,6 +34,11 @@ interface ApiService2 {
     fun register(
         @Body registerReq : registerRequest
     ): Call<Register>
+
+    @GET("tukangbylokasi")
+    suspend fun getTukangByLokasi(
+        @Query("domisili") domisili: String
+    ): TukangDomisili
 
     @GET("register")
     fun getRegister(): Call<Register>
