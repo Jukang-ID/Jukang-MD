@@ -27,8 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel = loginViewModel()
 
-
-
         binding.btnBackLogin.setOnClickListener {
             finish()
         }

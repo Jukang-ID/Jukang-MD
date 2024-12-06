@@ -30,6 +30,7 @@ import com.example.jukang.data.response.Query
 import com.example.jukang.data.response.TukangItem
 import com.example.jukang.databinding.FragmentHomeBinding
 import com.example.jukang.helper.adapter.AdapterTukang
+import com.example.jukang.helper.util.SearchUtil
 import com.example.jukang.view.history.HistoryActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -78,6 +79,9 @@ class HomeFragment : Fragment() {
         adapterTukang = AdapterTukang(emptyList()) // Anda bisa mengganti dengan data awal jika diperlukan
         binding.listTukang.adapter = adapterTukang
 
+        //Setup SearchView
+        setupSearchView()
+
         // Menyembunyikan error UI
         binding.erromes.visibility = View.GONE
         binding.caterror.visibility = View.GONE
@@ -94,6 +98,17 @@ class HomeFragment : Fragment() {
             }
         })
 
+        // Observing ViewModel
+        homeView = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
+            tukangList.clear()
+            if (!list.isNullOrEmpty()) {
+                tukangList.addAll(list)
+            }
+            adapterTukang.updateList(tukangList.filterNotNull())
+        })
+
+
         homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
             if (list != null) {
                 tukangList.clear()
@@ -101,7 +116,6 @@ class HomeFragment : Fragment() {
                 adapterTukang.updateList(tukangList.filterNotNull()) // Filter null di adapter
             }
         })
-
 
         homeView.error.observe(viewLifecycleOwner, Observer { error ->
             if (error != null) {
@@ -301,66 +315,34 @@ class HomeFragment : Fragment() {
 
     // Function to setup SearchView
     private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                showLoading(true)
-                val filteredList = tukangList.filter { tukang ->
-                    tukang?.let {
-                        it.namatukang?.contains(query ?: "", ignoreCase = true) == true ||
-                                it.domisili?.contains(query ?: "", ignoreCase = true) == true ||
-                                it.spesialis?.contains(query ?: "", ignoreCase = true) == true
-                    } == true
-                }
-
-                // Periksa apakah hasil pencarian kosong
-                if (filteredList.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Tidak ada layanan yang kamu cari",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                adapterTukang.updateList(filteredList.filterNotNull())
-                showLoading(false)
+                updateSearchResults(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrEmpty()) {
-                    showDefaultListWithLoading()
-                }
+                updateSearchResults(newText)
                 return false
             }
         })
 
         binding.searchView.setOnCloseListener {
-            showDefaultListWithLoading()
+            adapterTukang.updateList(tukangList.filterNotNull())
             false
         }
     }
 
-    private fun showDefaultListWithLoading() {
-        showLoading(true)
-        adapterTukang.updateList(tukangList.filterNotNull())
-        showLoading(false)
+    private fun updateSearchResults(query: String?) {
+        val filteredList = SearchUtil.filterTukangList(query, tukangList)
+        adapterTukang.updateList(filteredList)
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(requireContext(), "Tidak ada layanan yang kamu cari", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    // Tangani tombol "Back"
-//    override fun onBackPressed() {
-//        showDefaultListWithLoading()
-//        super.onBackPressed()
-//    }
-
-    // Tangani lifecycle aplikasi (untuk tombol "Home")
-    override fun onResume() {
-        super.onResume()
-        showDefaultListWithLoading()
-    }
 
 
     override fun onDestroyView() {
