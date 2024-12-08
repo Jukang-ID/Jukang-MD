@@ -27,7 +27,7 @@
             app:queryBackground="@drawable/searchview"
             android:background="@drawable/searchview"
             android:queryHint="Search Tukang"
-            app:iconifiedByDefault="false"
+            app:iconifiedByDefault="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

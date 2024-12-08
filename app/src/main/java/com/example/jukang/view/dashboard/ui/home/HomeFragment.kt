@@ -34,6 +34,7 @@ import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.databinding.FragmentHomeBinding
 import com.example.jukang.helper.adapter.AdapterTukang
 import com.example.jukang.helper.util.SearchUtil
+import com.example.jukang.view.dashboard.ui.search.SearchActivity
 import com.example.jukang.view.history.HistoryActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -184,8 +185,11 @@ class HomeFragment : Fragment() {
             binding.swipeContainer.isRefreshing = false
         }
 
+        binding.searchView.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
 
-//        Toast.makeText(requireContext(), "Selamat Datang $name", Toast.LENGTH_SHORT).show()
 
         // Memanggil fungsi getCurrentLocation
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -298,36 +302,6 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
-    // Function to setup SearchView
-//    private fun setupSearchView() {
-//        binding.searchView.setOnQueryTextListener(object :
-//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                updateSearchResults(query)
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                return false
-//            }
-//        })
-//
-//        binding.searchView.setOnCloseListener {
-//            adapterTukang.updateList(tukangList.filterNotNull())
-//            false
-//        }
-//    }
-
-//    private fun updateSearchResults(query: String?) {
-//        val filteredList = SearchUtil.filterTukangList(query, tukangList)
-//        adapterTukang.updateList(filteredList)
-//
-//        if (filteredList.isEmpty()) {
-//            Toast.makeText(requireContext(), "Tidak ada layanan yang kamu cari", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
 
 
     override fun onDestroyView() {

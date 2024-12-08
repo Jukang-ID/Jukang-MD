@@ -16,6 +16,7 @@ import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.loginRequest
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.data.response.registerRequest
+import com.example.jukang.data.response.requestTukang
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -67,10 +68,16 @@ interface ApiService2 {
          @Path("id") idTukang:String
      ): Call<Tukang>
 
+     @POST("/search")
+     fun search(
+         @Body search:requestTukang
+     ):Call<TukangDomisili>
+
      @GET("riwayat/{id}")
         suspend fun getTransaksi(
             @Path("id") idUser:String
         ): History
+
 }
 
 interface ApiService3 {

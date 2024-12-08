@@ -46,3 +46,8 @@ data class TukangListItem(
 	@field:SerializedName("domisili")
 	val domisili: String? = null
 )
+
+data class requestTukang(
+	@field:SerializedName("text")
+	val text: String?=null
+)
