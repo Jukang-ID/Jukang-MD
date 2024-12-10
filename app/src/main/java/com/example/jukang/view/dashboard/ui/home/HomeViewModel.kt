@@ -20,6 +20,10 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    private val _notifikasi = MutableLiveData<Boolean>()
+    val notifikasi: LiveData<Boolean> get() = _notifikasi
+
+
     // Fungsi untuk mengambil data tukang
     fun fetchTukang(domisli: String) {
         _loadingHome.value = true
@@ -45,6 +49,7 @@ class HomeViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 _loadingHome.value = false
+                _notifikasi.value = true
                 _error.value = "Terjadi kesalahan dalam pengambilan data"
             }
         }

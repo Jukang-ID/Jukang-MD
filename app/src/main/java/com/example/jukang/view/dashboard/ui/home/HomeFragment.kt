@@ -5,6 +5,7 @@ import RouteRequest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -91,6 +92,20 @@ class HomeFragment : Fragment() {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
+            }
+        })
+
+        homeView.error.observe(viewLifecycleOwner, Observer { error ->
+            if (error != null) {
+                binding.erromes.text = error
+            }
+        })
+
+        homeView.notifikasi.observe(viewLifecycleOwner, Observer { notif ->
+            if (notif) {
+                Toast.makeText(requireContext(), "Tidak ada Koneksi Internet", Toast.LENGTH_SHORT).show()
+                binding.caterror.visibility = View.VISIBLE
+                binding.erromes.visibility = View.VISIBLE
             }
         })
 
@@ -191,52 +206,52 @@ class HomeFragment : Fragment() {
         }
 
 
-        // Memanggil fungsi getCurrentLocation
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                1001
-            )
-        } else {
-            CoroutineScope(Dispatchers.IO).launch {
-                val data = alamatdao.getAlamat(email.toString())
-                withContext(Dispatchers.Main){
-                    if (data != null) {
-                        if (data.kota == "Jakarta Utara"){
-                            getCurrentLocation(-6.121435, 106.774124)
-                        } else if (data.kota == "Jakarta Pusat"){
-                            getCurrentLocation(-6.175110, 106.865036)
-                        } else if (data.kota == "Jakarta Barat"){
-                            getCurrentLocation(-6.161184, 106.770914)
-                        } else if (data.kota == "Jakarta Selatan"){
-                            getCurrentLocation(-6.261493, 106.810600)
-                        } else if (data.kota == "Jakarta Timur"){
-                            getCurrentLocation(-6.229386, 106.689431)
-                        } else if (data.kota == "Bogor"){
-                            getCurrentLocation(-6.5952, 106.7896)
-                        }else if(data.kota == "Depok") {
-                            getCurrentLocation(-6.402484, 106.794240)
-                        }else if(data.kota == "Bekasi") {
-                            getCurrentLocation(-6.2383, 106.9756)
-                        }else if(data.kota == "Tangerang") {
-                            getCurrentLocation(-6.1783, 106.6319)
-                        }
-                    }else{
-                        binding.jarak.text = "Silahkan Masukan Alamat"
-                        binding.jarak.setOnClickListener {
-                            val dialogBuild = AlertDialog.Builder(requireActivity())
-                            dialogBuild.setTitle("Pemberitahuan")
-                            dialogBuild.setMessage("Silahkan Masukan Alamat Anda")
-                            dialogBuild.setPositiveButton("OK") { dialog, which ->
-                                dialog.dismiss()
-                            }
-                            dialogBuild.show()
-                        }
-                    }
-                }
-            }
-        }
+//        // Memanggil fungsi getCurrentLocation
+//        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(
+//                requireActivity(),
+//                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+//                1001
+//            )
+//        } else {
+//            CoroutineScope(Dispatchers.IO).launch {
+//                val data = alamatdao.getAlamat(email.toString())
+//                withContext(Dispatchers.Main){
+//                    if (data != null) {
+//                        if (data.kota == "Jakarta Utara"){
+//                            getCurrentLocation(-6.121435, 106.774124)
+//                        } else if (data.kota == "Jakarta Pusat"){
+//                            getCurrentLocation(-6.175110, 106.865036)
+//                        } else if (data.kota == "Jakarta Barat"){
+//                            getCurrentLocation(-6.161184, 106.770914)
+//                        } else if (data.kota == "Jakarta Selatan"){
+//                            getCurrentLocation(-6.261493, 106.810600)
+//                        } else if (data.kota == "Jakarta Timur"){
+//                            getCurrentLocation(-6.229386, 106.689431)
+//                        } else if (data.kota == "Bogor"){
+//                            getCurrentLocation(-6.5952, 106.7896)
+//                        }else if(data.kota == "Depok") {
+//                            getCurrentLocation(-6.402484, 106.794240)
+//                        }else if(data.kota == "Bekasi") {
+//                            getCurrentLocation(-6.2383, 106.9756)
+//                        }else if(data.kota == "Tangerang") {
+//                            getCurrentLocation(-6.1783, 106.6319)
+//                        }
+//                    }else{
+//                        binding.jarak.text = "Silahkan Masukan Alamat"
+//                        binding.jarak.setOnClickListener {
+//                            val dialogBuild = AlertDialog.Builder(requireActivity())
+//                            dialogBuild.setTitle("Pemberitahuan")
+//                            dialogBuild.setMessage("Silahkan Masukan Alamat Anda")
+//                            dialogBuild.setPositiveButton("OK") { dialog, which ->
+//                                dialog.dismiss()
+//                            }
+//                            dialogBuild.show()
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         return root
     }
@@ -284,7 +299,8 @@ class HomeFragment : Fragment() {
                     val duration = routesItem?.summary?.duration
 
                     val inKm = distance as Double / 1000
-                    binding.jarak.text = "User berada ${inKm} KM"
+                    val address = getCityname(originLat, originLon)
+                    binding.jarak.text = address
                     binding.jarak.setOnClickListener {
                         val dialogBuild = AlertDialog.Builder(requireActivity())
                         dialogBuild.setTitle("Pemberitahuan")
@@ -301,6 +317,16 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Gagal : ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    fun getCityname (lat:Double,lon:Double):String?{
+        val geocoder = Geocoder(requireContext(),Locale.getDefault())
+        val address = geocoder.getFromLocation(lat,lon,1)
+        return if (address != null && address.size >0){
+            address[0].subAdminArea
+        }else{
+            "Lokasi Tidak Ditemukan"
+        }
     }
 
 
