@@ -82,7 +82,7 @@ class CustomProfile : BottomSheetDialogFragment() {
             }
         }
 
-        binding.uploudButton.setOnClickListener {
+        binding.uploadButton.setOnClickListener {
             gallery()
 
         }

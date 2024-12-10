@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.jukang.R
 import com.example.jukang.databinding.ActivityStrukBinding
 import com.example.jukang.view.dashboard.MainActivity
+import pl.droidsonroids.gif.GifImageView
 
 class StrukActivity : AppCompatActivity() {
 
@@ -19,11 +20,14 @@ class StrukActivity : AppCompatActivity() {
         binding = ActivityStrukBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val gifImageView: GifImageView = binding.gifImageView
+
         binding.selesaihistory.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
+
 
         val nama = intent.getStringExtra(namatukangs)
         val idtukang = intent.getStringExtra(id)

@@ -9,7 +9,6 @@ import com.example.jukang.R
 import com.example.jukang.databinding.ActivityHistoryBinding
 import com.example.jukang.helper.adapter.AdapterHistory
 import kotlinx.coroutines.launch
-import pl.droidsonroids.gif.GifImageView
 
 class HistoryActivity : AppCompatActivity() {
 

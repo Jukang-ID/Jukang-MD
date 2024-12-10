@@ -198,6 +198,12 @@ class HomeFragment : Fragment() {
 
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
+            CoroutineScope(Dispatchers.IO) .launch {
+            val data = alamatdao.getAlamat(email.toString())
+                withContext(Dispatchers.Main) {
+                    homeView.fetchTukang(data.kota)
+                }
+            }
         }
 
         binding.searchView.setOnClickListener {
