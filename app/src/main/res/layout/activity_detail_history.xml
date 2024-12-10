@@ -7,15 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".helper.struk.StrukActivity">
 
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="159dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdet"
-        app:srcCompat="@drawable/success" />
+        app:layout_constraintTop_toBottomOf="@id/backdet"
+        android:src="@drawable/creditcard" />
+
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView14"-->
+<!--        android:layout_width="159dp"-->
+<!--        android:layout_height="127dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/backdet"-->
+<!--        app:srcCompat="@drawable/creditcard"/>-->
 
     <Button
         android:id="@+id/selesaihistory"
@@ -39,11 +51,9 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="16dp"
-        app:cardPreventCornerOverlap="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView14">
+        app:layout_constraintTop_toBottomOf="@id/gifImageView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

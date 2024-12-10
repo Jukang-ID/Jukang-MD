@@ -2,68 +2,78 @@ package com.example.jukang.view.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jukang.R
-import com.example.jukang.data.RetrofitClient
 import com.example.jukang.databinding.ActivityHistoryBinding
 import com.example.jukang.helper.adapter.AdapterHistory
 import kotlinx.coroutines.launch
+import pl.droidsonroids.gif.GifImageView
 
 class HistoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHistoryBinding
-    private lateinit var viewModel : HistoryView
+    private lateinit var viewModel: HistoryView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityHistoryBinding.inflate(layoutInflater)
+        // Inflate layout with View Binding
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize ViewModel
+        viewModel = HistoryView()
+
+        // Hide error and placeholder by default
         binding.error.visibility = View.GONE
         binding.cat.visibility = View.GONE
 
-        viewModel = HistoryView()
+        // Correctly initialize GifImageView using View Binding
+//        val gifImageView: GifImageView = binding.gifImageView
 
-        viewModel.loadingHistory.observe(this, {
-            if (it) {
+        // Set the GIF resource to the GifImageView
+//        gifImageView.setImageResource(R.drawable.creditcard)
+
+        // Observe loading state
+        viewModel.loadingHistory.observe(this, { isLoading ->
+            if (isLoading) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
             }
         })
 
-        viewModel.error.observe(this,{ errpr ->
-            if(errpr != null){
+        // Observe error state
+        viewModel.error.observe(this, { error ->
+            if (error != null) {
                 binding.progressBar.visibility = View.GONE
                 binding.error.visibility = View.VISIBLE
-                binding.error.text = errpr
+                binding.error.text = error
                 binding.cat.visibility = View.VISIBLE
             }
         })
 
-        viewModel.dataHistory.observe(this, {
-            val adapter = it?.let { it1 -> AdapterHistory(it1) }
+        // Observe data history
+        viewModel.dataHistory.observe(this, { historyData ->
+            val adapter = historyData?.let { AdapterHistory(it) }
             binding.listRiwayat.adapter = adapter
         })
 
-        binding.btnBAckPay.setOnClickListener {
-            finish()
-        }
-
-
+        // Set up RecyclerView
         binding.listRiwayat.layoutManager = LinearLayoutManager(this)
+
+        // Fetch UID from SharedPreferences
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val id = pref.getString("UID", null)
 
+        // Fetch data history
         viewModel.fetchDataHistory(id.toString())
 
-
+        // Set back button listener
+        binding.btnBAckPay.setOnClickListener {
+            finish()  // Close the activity
+        }
     }
-
-
 }

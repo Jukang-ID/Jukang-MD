@@ -68,6 +68,9 @@ dependencies {
 //    Glide
     implementation(libs.glide)
 
+//    GIF
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
+
 // retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

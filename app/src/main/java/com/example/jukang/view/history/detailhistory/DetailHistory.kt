@@ -1,31 +1,28 @@
 package com.example.jukang.view.history.detailhistory
 
+import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.Room.Database
 import com.example.jukang.data.Room.historyRiwayat
 import com.example.jukang.data.Room.historycheckDAO
-import com.example.jukang.data.response.Data
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.databinding.ActivityDetailHistoryBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pl.droidsonroids.gif.GifImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class DetailHistory : AppCompatActivity() {
 
@@ -59,6 +56,10 @@ class DetailHistory : AppCompatActivity() {
         db = Database.getDatabase(this)
         history = db.historyDao()
 
+//         Correctly initialize GifImageView using View Binding
+        val gifImageView: GifImageView = binding.gifImageView
+
+
         binding.backdet.setOnClickListener {
             finish()
         }
@@ -80,7 +81,6 @@ class DetailHistory : AppCompatActivity() {
                 }
             }
         }
-
 
         binding.selesaihistory.setOnClickListener {
             val rating = binding.ratingBar.rating

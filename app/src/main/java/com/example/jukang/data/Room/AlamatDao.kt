@@ -8,7 +8,6 @@ import androidx.room.Update
 
 @Dao
 interface AlamatDao {
-
     @Insert
     suspend fun insert(data: Alamat)
 

@@ -12,7 +12,6 @@ data class Tukang(
 )
 
 data class TukangItem(
-
 	@field:SerializedName("tukang_id")
 	val tukangId: String? = null,
 

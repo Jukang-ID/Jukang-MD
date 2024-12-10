@@ -50,8 +50,6 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-
-
     fun dataUser(){
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val id = pref.getString("UID", "")
