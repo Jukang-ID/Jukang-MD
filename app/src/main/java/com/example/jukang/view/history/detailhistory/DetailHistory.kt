@@ -1,6 +1,5 @@
 package com.example.jukang.view.history.detailhistory
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
