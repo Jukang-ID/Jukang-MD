@@ -1,6 +1,7 @@
 package com.example.jukang.view.dashboard.ui.search
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +12,6 @@ import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.data.response.requestTukang
 import com.example.jukang.databinding.ActivitySearchBinding
 import com.example.jukang.helper.adapter.AdapterTukang
-import com.example.jukang.helper.util.SearchUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +27,15 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Back button logic
+        binding.backButton.setOnClickListener {
+            finish() // Close the activity
+        }
+
+        // Search View listener
         binding.searchView.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -36,16 +44,16 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                search(newText.toString())
+                return true
             }
         })
-
-
-
     }
 
+    private fun search(keyword: String) {
+        // Show loading
+        binding.progressBar.visibility = View.VISIBLE
 
-    fun search(keyword: String){
         val request = requestTukang(keyword)
         val call = RetrofitClient.Jukang.search(request)
 
@@ -53,28 +61,24 @@ class SearchActivity : AppCompatActivity() {
             override fun onResponse(call: Call<TukangDomisili>, response: Response<TukangDomisili>) {
                 if (response.isSuccessful) {
                     val tukang = response.body()
-                    val data = tukang?.tukangList
-                    if (tukang != null) {
-                        val adapter = AdapterTukang(data as List<TukangListItem>)
-                        binding.recyclerView.adapter = adapter
-                    }else{
+                    val data = tukang?.tukangList?.filterNotNull()
+                    if (!data.isNullOrEmpty()) {
+                        adapterTukang = AdapterTukang(data)
+                        binding.recyclerView.adapter = adapterTukang
+                    } else {
                         Toast.makeText(this@SearchActivity, "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this@SearchActivity, "Response tidak berhasil", Toast.LENGTH_SHORT).show()
                 }
             }
 
+
             override fun onFailure(call: Call<TukangDomisili>, t: Throwable) {
+                // Hide loading
+                binding.progressBar.visibility = View.GONE
                 Toast.makeText(this@SearchActivity, "Gagal mengambil data", Toast.LENGTH_SHORT).show()
             }
         })
     }
-
-//    private fun updateSearchResults(query: String?) {
-//        val filteredList = SearchUtil.filterTukangList(query, tukangList)
-//        adapterTukang.updateList(filteredList)
-//
-//        if (filteredList.isEmpty()) {
-//            Toast.makeText(this, "Tidak ada layanan yang kamu cari", Toast.LENGTH_SHORT).show()
-//        }
-//    }
 }
