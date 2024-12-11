@@ -1,5 +1,8 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Ukuran font standar untuk perangkat kecil -->
+    <dimen name="font_small">12sp</dimen>
+    <!-- Ukuran font standar untuk perangkat sedang -->
+    <dimen name="font_medium">16sp</dimen>
+    <!-- Ukuran font standar untuk perangkat besar -->
+    <dimen name="font_large">20sp</dimen>
 </resources>

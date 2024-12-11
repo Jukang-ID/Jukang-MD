@@ -9,14 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="240dp">
 
         <ImageView
             android:id="@+id/photourls"
-            android:layout_width="100dp"
+            android:layout_width="69dp"
             android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/cornergambar"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
@@ -29,52 +29,59 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:fontFamily="@font/ppbold"
             android:maxLines="1"
             android:text="Nama"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/photourls"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.198" />
+            app:layout_constraintTop_toBottomOf="@+id/Spesialis" />
+
+        <TextView
+            android:id="@+id/lokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/frame"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="Lokasi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/NamaTukang"
+            app:layout_constraintTop_toTopOf="@+id/photourls" />
 
         <TextView
             android:id="@+id/Spesialis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/ppmedium"
             android:text="Kategori"
             android:textColor="#03A9F4"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/NamaTukang"
-            app:layout_constraintEnd_toStartOf="@+id/lokasi"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/NamaTukang"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="@+id/lokasi"
+            app:layout_constraintTop_toBottomOf="@+id/lokasi" />
 
         <TextView
             android:id="@+id/price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/ppbold"
             android:maxLines="1"
             android:text="Rp. 0.000.000,00"
             android:textColor="#f09f2f"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="@+id/NamaTukang"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/NamaTukang"
-            app:layout_constraintTop_toBottomOf="@+id/NamaTukang"
-            app:layout_constraintVertical_bias="0.352" />
+            app:layout_constraintTop_toBottomOf="@+id/NamaTukang" />
 
         <View
             android:id="@+id/divider"
@@ -87,19 +94,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photourls" />
+            app:layout_constraintTop_toBottomOf="@+id/price" />
 
         <ImageView
             android:id="@+id/star"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/photourls"
             app:layout_constraintTop_toBottomOf="@+id/divider"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.082"
             app:srcCompat="@drawable/start" />
 
         <TextView
@@ -107,10 +113,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/ppbold"
-            android:textColor="@color/font_second"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/ppbold"
             android:text="Rating Pelanggan"
+            android:textColor="@color/font_second"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/star"
             app:layout_constraintTop_toTopOf="@+id/star" />
@@ -118,8 +124,8 @@
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/ppbold"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ppbold"
             android:text="5"
             android:textColor="@color/primary_button"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -137,22 +143,14 @@
             android:backgroundTint="@color/primary_button"
             android:fontFamily="@font/ppbold"
             android:text="Booking"
+            android:textColor="@color/white"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/star"
+            app:layout_constraintVertical_bias="0.178" />
 
-        <TextView
-            android:id="@+id/lokasi"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="Lokasi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/Spesialis" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
