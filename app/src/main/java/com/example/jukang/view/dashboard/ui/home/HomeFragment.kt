@@ -201,8 +201,12 @@ class HomeFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val data = alamatdao.getAlamat(email.toString())
                 withContext(Dispatchers.Main) {
-                    val kota = data.kota ?: ""
-                    homeView.fetchTukang(kota)
+                    if(data != null){
+                        homeView.fetchTukang(data.kota)
+                    }else{
+                        homeView.fetchTukang("")
+                    }
+
                 }
             }
         }
