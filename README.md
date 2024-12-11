@@ -36,6 +36,9 @@ Kami terbuka untuk kontribusi dari pengembang lain. Silakan buat pull request at
 ---
 
 
+![welcome](https://github.com/LangKingz/Md_capstone/blob/main/assets/gambar1.jpg)
+![dashboard](https://github.com/LangKingz/Md_capstone/blob/main/assets/gambar2.jpg)
+
 
 
 
