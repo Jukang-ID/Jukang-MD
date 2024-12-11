@@ -132,21 +132,6 @@ class WelcomeActivity : AppCompatActivity() {
 
         edit.apply()
 
-//        val request = registerRequest(name,"Belum ada data",email,token)
-//        val call = RetrofitClient.Jukang.register(request)
-//
-//        call.enqueue(object : Callback<Register>{
-//            override fun onResponse(call: Call<Register>, response: Response<Register>) {
-//                if(response.isSuccessful){
-//                    Log.d(TAG, "onResponse: ${response.body()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Register>, t: Throwable) {
-//
-//            }
-//
-//        })
     }
 
 
