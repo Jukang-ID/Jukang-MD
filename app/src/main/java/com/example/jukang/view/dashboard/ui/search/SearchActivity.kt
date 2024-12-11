@@ -40,6 +40,8 @@ class SearchActivity : AppCompatActivity() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding.searchView, InputMethodManager.SHOW_IMPLICIT)
 
+        binding.emptyPlaceholder.visibility = View.VISIBLE // Menampilkan placeholder "Mau cari tukang apa?"
+
         // Search View listener
         binding.searchView.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -59,7 +61,6 @@ class SearchActivity : AppCompatActivity() {
     // Pada metode search()
     private fun search(keyword: String) {
         // Menyembunyikan placeholder "Mau cari tukang apa?"
-        binding.emptyPlaceholder.visibility = View.GONE
         // Menampilkan LoadingBiggy
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
@@ -78,6 +79,7 @@ class SearchActivity : AppCompatActivity() {
 
                     if (!data.isNullOrEmpty()) {
                         // Menampilkan RecyclerView jika ada data
+                        binding.emptyPlaceholder.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
                         adapterTukang = AdapterTukang(data)
                         binding.recyclerView.adapter = adapterTukang
