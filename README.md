@@ -35,6 +35,12 @@ Kami terbuka untuk kontribusi dari pengembang lain. Silakan buat pull request at
 - Meirlansyah Rangga
 ---
 
+| **Bangkit ID**    | **Name**                   | **Learning Path**   | **University**                     | **LinkedIn**                                                                                                                                                 |
+|--------------------|----------------------------|---------------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| A529B4KY1624       | Gilang Arya Libna   | Mobile development    | Politeknik Negeri Pontianak | [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gilang-arya-libna-718578255/)         |
+| A529B4KY2457       | Meirlansyah Rangga       | Mobile development   | Politeknik Negeri Pontianak                 | [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/meirlansyahrangga/)                      |
+
+
 
 
 
