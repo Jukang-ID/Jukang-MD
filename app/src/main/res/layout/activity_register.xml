@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".view.auth.regis.RegisterActivity">
 
+    <!-- Loading Animation -->
     <com.razzaghimahdi78.dotsloading.linear.LoadingBiggy
         android:id="@+id/loading"
         app:dots_duration="200"
@@ -20,6 +21,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/btnBackRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <!-- Title Image -->
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
@@ -31,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnBackRegis"
         app:srcCompat="@drawable/registertext" />
 
+    <!-- Full Name Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fieldNama"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -44,7 +59,6 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:hint="Nama Lengkap"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4">
@@ -58,6 +72,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Phone Number Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/NoTelepon"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -68,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Nomor Telepon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +98,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Email Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lay"
         android:layout_width="match_parent"
@@ -93,7 +109,7 @@
         app:boxCornerRadiusTopStart="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Email"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,12 +124,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxCornerRadiusBottomEnd="50dp"
@@ -134,18 +151,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <ImageView
-        android:id="@+id/btnBackRegis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
-
+    <!-- Register Button -->
     <Button
         android:id="@+id/btnRegis"
         style="@style/CustomButton"
@@ -160,16 +166,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
+    <!-- Footer -->
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegis"
-        app:layout_constraintVertical_bias="0.87"
         app:srcCompat="@drawable/copyright" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
