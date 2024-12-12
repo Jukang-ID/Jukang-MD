@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.jukang.R
 import com.example.jukang.databinding.ActivitySplashScreenBinding
 import com.example.jukang.view.auth.welcome.WelcomeActivity
@@ -19,6 +21,11 @@ class SplashScreen : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        Glide.with(this)
+//            .load(R.drawable.splash)
+//            .override(Target.SIZE_ORIGINAL)
+//            .into(binding.splash)
 
 
         Handler().postDelayed({
