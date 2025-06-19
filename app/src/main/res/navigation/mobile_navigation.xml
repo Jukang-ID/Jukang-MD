@@ -26,4 +26,8 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.jukang.view.dashboard.ui.user.UserFragment"
         tools:layout="@layout/fragment_user" />
+    <activity
+        android:id="@+id/searchActivity"
+        android:name="com.example.jukang.view.dashboard.ui.search.SearchActivity"
+        android:label="SearchActivity" />
 </navigation>

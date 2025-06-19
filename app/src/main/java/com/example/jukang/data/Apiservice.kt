@@ -13,15 +13,19 @@ import com.example.jukang.data.response.Transaksi
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
+import com.example.jukang.data.response.Uploadfoto
 import com.example.jukang.data.response.loginRequest
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.data.response.registerRequest
 import com.example.jukang.data.response.requestTukang
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -77,6 +81,12 @@ interface ApiService2 {
         suspend fun getTransaksi(
             @Path("id") idUser:String
         ): History
+
+    @Multipart
+    @POST("upload")
+    fun uploadPhoto(
+        @Part photo: MultipartBody.Part
+    ): Call<Uploadfoto> // Ganti sesuai response-mu
 
 }
 

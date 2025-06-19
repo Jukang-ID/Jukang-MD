@@ -2,10 +2,14 @@ package com.example.jukang.view.payment
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.jukang.data.RetrofitClient
@@ -17,6 +21,7 @@ import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
 import com.example.jukang.helper.struk.StrukActivity
+import com.example.jukang.view.maps.MapsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,10 +36,13 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var db : AlamatLengkapDatabase
     private lateinit var alamatdao : AlamatLengkapDao
 
+    private var currentImage: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
         binding.progressBar2.visibility = View.GONE
 
@@ -73,6 +81,10 @@ class PaymentActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
+        binding.btnUploadPhoto.setOnClickListener {
+            launchGallery()
+        }
+
         binding.btnPayment.setOnClickListener {
             binding.progressBar2.visibility = View.VISIBLE
             val deskripsi = binding.deskripsiPerbaikan.text.toString().trim()
@@ -85,14 +97,22 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val alamat = alamatdao.getAlamat(email)
+            val alamat = alamatdao.getAlamatLive(email)
             withContext(Dispatchers.Main){
-                if (alamat != null ) {
-                    binding.Alamat.setText("${alamat.kota}, ${alamat.alamat}")
-                }else{
-                    binding.Alamat.setText("")
+                alamat.observe(this@PaymentActivity){ alamat ->
+                    if(alamat != null){
+                        binding.Alamat.setText(alamat.alamat)
+                    }else{
+                        binding.Alamat.setText("")
+                    }
                 }
             }
+        }
+
+        binding.btnLocationMarked.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java)
+            startActivity(intent)
+
         }
 
 
@@ -195,6 +215,21 @@ class PaymentActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    fun launchGallery() {
+        launcherGallary.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val launcherGallary = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ){uri : Uri? ->
+        if(uri != null){
+            currentImage = uri
+            binding.imageViewSelectedPhoto.setImageURI(currentImage!!)
+        }else{
+            Toast.makeText(this, "Gagal memilih gambar", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun checkStatus (){

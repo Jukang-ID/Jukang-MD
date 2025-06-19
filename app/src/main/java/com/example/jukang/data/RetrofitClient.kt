@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private const val NEWS = "https://api-berita-indonesia.vercel.app/"
-    private const val JUKANG = "https://jukang-api-177471570498.asia-southeast2.run.app/"
+    private const val JUKANG = "https://api-jukang.vercel.app/"
     private const val MAPS = "https://api.openrouteservice.org/"
 
     val instance: Apiservice by lazy {

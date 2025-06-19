@@ -140,6 +140,8 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.searchView.setQuery("Cari layanan atau tukang...", false)
+
 
         Glide.with(this)
             .load(imageUrl)

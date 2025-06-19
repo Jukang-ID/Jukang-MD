@@ -22,8 +22,11 @@ import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
 import com.example.jukang.view.dashboard.MainActivity
 import com.example.jukang.view.profile.ProfileActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -58,6 +61,11 @@ class UserFragment : Fragment() {
 
         binding.progressBar2.visibility = View.GONE
 
+        val googleSigninOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
         binding.goprofile.setOnClickListener {
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
             startActivity(intent)
@@ -67,7 +75,6 @@ class UserFragment : Fragment() {
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
             startActivity(intent)
         }
-
 
 
         val namauser = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
@@ -86,7 +93,19 @@ class UserFragment : Fragment() {
             val dialogBuild = AlertDialog.Builder(requireActivity())
             dialogBuild.setTitle("Apakah Anda Yakin Ingin Keluar ?")
             dialogBuild.setPositiveButton("Iya Dong") { dialog, which ->
-                logout()
+
+                FirebaseAuth.getInstance().signOut()
+                val googlesignclient = GoogleSignIn.getClient(requireContext(), googleSigninOption)
+                googlesignclient.signOut().addOnCompleteListener {
+                    val sharedPreferences =
+                        requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.clear()
+                    editor.apply()
+                    val intent = Intent(requireActivity(), WelcomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
             }
             dialogBuild.setNegativeButton("Batal") { dialog, which ->
                 dialog.dismiss()
@@ -105,17 +124,17 @@ class UserFragment : Fragment() {
         return root
     }
 
-    fun checkStatusProfil(namauser: String){
+    fun checkStatusProfil(namauser: String) {
         binding.progressBar2.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 try {
                     binding.progressBar2.visibility = View.GONE
                     alamatdao.getAlamat(namauser).let {
-                        binding.alamatPengguna.text = "${it.kota}, ${it.alamat}"
+                        binding.alamatPengguna.text = it.alamat
                     }
 
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -144,7 +163,7 @@ class UserFragment : Fragment() {
                     Glide.with(requireContext())
                         .load(data.profilePhoto)
                         .into(binding.profilephoto)
-                }else{
+                } else {
                     binding.namaprofile.text = nama
                     binding.emailprofile.text = email
                     Glide.with(requireContext())
@@ -156,15 +175,8 @@ class UserFragment : Fragment() {
     }
 
 
-
     private fun logout() {
-        val sharedPreferences = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-        val intent = Intent(requireActivity(), WelcomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+
     }
 
     companion object {

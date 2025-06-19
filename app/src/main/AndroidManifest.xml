@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission
         android:name="android.permission.LOCATION_HARDWARE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"  />
 
     <application
+        android:name=".view.maps.MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,11 +23,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jukang"
         tools:targetApi="31">
-        <activity android:name=".view.dashboard.ui.search.SearchActivity" android:theme="@style/Theme.Main" android:exported="false" />
+
         <activity
-            android:name=".view.profile.ProfileActivity"
+            android:name=".view.maps.MapsActivity"
             android:theme="@style/Theme.Main"
             android:exported="false" />
+        <activity
+            android:name=".view.dashboard.ui.search.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Main" />
+        <activity
+            android:name=".view.profile.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Main" />
         <activity
             android:name=".view.history.detailhistory.DetailHistory"
             android:exported="false"
@@ -60,6 +69,7 @@
             android:exported="false"
             android:theme="@style/Theme.Main" />
         <activity
+            android:theme="@style/Theme.Main"
             android:name=".view.dashboard.MainActivity"
             android:exported="false" />
         <activity

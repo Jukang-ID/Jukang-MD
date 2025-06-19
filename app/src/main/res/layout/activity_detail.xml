@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tukangstruk"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".view.detailTukang.DetailActivity">
 
     <ImageView
         android:id="@+id/photodetial"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,12 +44,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
         app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnbookDet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spesialisDetail">
@@ -66,7 +63,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.181"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/start" />
 
             <TextView
@@ -75,10 +72,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/ppbold"
                 android:text="Rating"
                 android:textColor="@color/font_second"
                 android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView17"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,8 +103,8 @@
         android:id="@+id/btnBAckPay"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/backbtnbg"
         android:clipToOutline="true"
         android:padding="10dp"
@@ -168,7 +167,6 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/card"
         android:fontFamily="@font/ppbold"
@@ -177,21 +175,21 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/btnBAckPay" />
 
     <TextView
         android:id="@+id/PosisiDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+
+        android:layout_marginBottom="8dp"
         android:drawableStart="@drawable/baseline_location_on_24"
         android:fontFamily="@font/ppbold"
         android:text="Posisi"
-
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

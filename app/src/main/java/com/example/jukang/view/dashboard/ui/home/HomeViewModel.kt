@@ -35,7 +35,7 @@ class HomeViewModel : ViewModel() {
                     tukang?.booked == false // Filter tukang yang belum dibooking
                 }
 
-                Log.d("TAG", "fetchTukang: $dataTukang")
+                Log.d("Home", "fetchTukang: $dataTukang")
 
                 // Memastikan data tidak kosong
                 if (dataTukang.isNullOrEmpty()) {

@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:title="Home" />
+
+    <item
+        android:id="@+id/searchActivity"
+        android:icon="@drawable/ic_search"
+        android:title="Search" />
+
+    <!-- Placeholder item for the FAB. Important for the FAB to appear in the center. -->
+    <!-- This ID will be disabled in the Kotlin code. -->
+    <item
+        android:id="@+id/placeholder"
+        android:enabled="false"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_article_24"
-        android:title="@string/title_dashboard" />
+        android:icon="@drawable/ic_menu_mapmode"
+        android:title="Artikel" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_person_24"
-        android:title="@string/title_notifications" />
-
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Profile" />
 </menu>
+

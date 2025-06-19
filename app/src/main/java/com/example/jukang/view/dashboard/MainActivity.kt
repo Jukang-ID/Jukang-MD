@@ -5,10 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -20,6 +23,9 @@ import com.example.jukang.R
 import com.example.jukang.databinding.ActivityMainBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
+import com.example.jukang.view.dashboard.ui.artikel.DashboardFragment
+import com.example.jukang.view.dashboard.ui.home.HomeFragment
+import com.example.jukang.view.dashboard.ui.user.UserFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +33,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
-        checkStatusLogin()
         setContentView(binding.root)
+        checkStatusLogin()
+
+        binding.fab.setOnClickListener {
+            Toast.makeText(this, "Purple Plus Button Clicked!", Toast.LENGTH_SHORT).show()
+            // Here you can add logic for when the FAB is clicked,
+            // such as opening a dialog, starting a new activity, or displaying something.
+        }
 
 
         supportActionBar?.hide()
@@ -37,12 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
     }

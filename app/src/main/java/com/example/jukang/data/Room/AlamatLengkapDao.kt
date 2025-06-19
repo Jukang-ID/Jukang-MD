@@ -1,5 +1,6 @@
 package com.example.jukang.data.Room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -15,4 +16,10 @@ interface AlamatLengkapDao {
 
     @Update
     suspend fun update(data: AlamatLengkap)
+
+    @Query("SELECT * FROM alamatlengkap WHERE namaUser = :namaUser limit 1")
+    fun getAlamatLive(namaUser: String) : LiveData<AlamatLengkap>
+
+
+
 }

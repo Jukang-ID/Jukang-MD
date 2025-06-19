@@ -17,7 +17,7 @@ class AdapterTukang(private var listTukang: List<TukangListItem>) : RecyclerView
         fun bind(tukang: TukangListItem) {
             binding.NamaTukang.text = tukang.namatukang
             binding.Spesialis.text = tukang.spesialis
-            binding.price.text = tukang.priceRupiah
+            binding.price.text = "${tukang.priceRupiah} / Hari"
             binding.rating.text = tukang.review
             binding.lokasi.text = tukang.domisili
             Glide.with(itemView.context)
