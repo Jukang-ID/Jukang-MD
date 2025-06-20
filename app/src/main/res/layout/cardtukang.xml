@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="18dp"
+    android:layout_marginVertical="2dp"
+    app:cardCornerRadius="14dp"
     app:cardElevation="2dp"> <!-- Meningkatkan elevasi untuk bayangan yang lebih menonjol -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,20 +26,33 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <!-- Kategori Spesialis (di atas Nama Tukang) -->
+
+        <!-- Nama Tukang -->
+
+        <!-- Lokasi (dengan ikon jika memungkinkan, sekarang hanya teks) -->
+
+        <!-- Harga -->
+
         <TextView
             android:id="@+id/Spesialis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/category_corner"
             android:fontFamily="@font/ppmedium"
+            android:padding="8dp"
             android:text="KATEGORI"
-            android:textColor="#03A9F4"
+            android:textColor="@color/category_text"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/photourls"
-            app:layout_constraintTop_toTopOf="@+id/photourls" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBooking"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/rating"
+            app:layout_constraintTop_toBottomOf="@+id/photourls"
+            app:layout_constraintVertical_bias="1.0" />
 
-        <!-- Nama Tukang -->
         <TextView
             android:id="@+id/NamaTukang"
             android:layout_width="0dp"
@@ -51,28 +64,29 @@
             android:fontFamily="@font/ppbold"
             android:maxLines="1"
             android:text="Gilang Arya Libra"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/photourls"
-            app:layout_constraintTop_toBottomOf="@+id/Spesialis" />
-
-        <!-- Lokasi (dengan ikon jika memungkinkan, sekarang hanya teks) -->
-
-        <!-- Harga -->
+            app:layout_constraintTop_toTopOf="@+id/photourls" />
 
         <TextView
             android:id="@+id/lokasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ppmedium"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/location_badge"
+            android:fontFamily="@font/ppreguler"
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="8dp"
             android:text="Tangerang"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/Spesialis"
-            app:layout_constraintTop_toTopOf="@+id/Spesialis" />
+            android:textColor="@color/location_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/photourls"
+            app:layout_constraintEnd_toEndOf="@+id/price"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/price"
+            app:layout_constraintTop_toBottomOf="@+id/price" />
 
         <TextView
             android:id="@+id/price"
@@ -83,9 +97,9 @@
             android:fontFamily="@font/ppbold"
             android:maxLines="1"
             android:text="Rp. 1.250.000,00"
-            android:textColor="#f09f2f"
+            android:textColor="@color/price_text"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/NamaTukang"
             app:layout_constraintStart_toEndOf="@+id/photourls"
             app:layout_constraintTop_toBottomOf="@+id/NamaTukang" />
 
@@ -98,10 +112,9 @@
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/Spesialis"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnBooking"
+            app:layout_constraintTop_toTopOf="@+id/Spesialis"
             app:srcCompat="@drawable/start" />
 
         <TextView
@@ -123,7 +136,8 @@
             android:id="@+id/btnBooking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:backgroundTint="@color/primary_button"
             android:fontFamily="@font/ppmedium"
             android:minHeight="0dp"
@@ -131,13 +145,15 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
+            android:textAllCaps="false"
             android:text="Booking"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/price" />
+            app:layout_constraintTop_toBottomOf="@+id/lokasi"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

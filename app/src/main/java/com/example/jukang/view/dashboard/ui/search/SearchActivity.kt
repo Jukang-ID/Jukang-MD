@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangItem
+import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.data.response.requestTukang
 import com.example.jukang.databinding.ActivitySearchBinding
 import com.example.jukang.helper.adapter.AdapterTukang
@@ -81,7 +82,7 @@ class SearchActivity : AppCompatActivity() {
                         // Menampilkan RecyclerView jika ada data
                         binding.emptyPlaceholder.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
-                        adapterTukang = AdapterTukang(data)
+                        adapterTukang = AdapterTukang(data as MutableList<TukangListItem>)
                         binding.recyclerView.adapter = adapterTukang
                     } else {
                         // Menampilkan placeholder jika data kosong

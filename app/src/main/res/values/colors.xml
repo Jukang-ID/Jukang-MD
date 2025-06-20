@@ -7,9 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_button">#980000</color>
+    <color name="black_smoke">#1e293b</color>
+    <color name="textCOlorPrimary">#334155</color>
+    <color name="primary_button">#4f46e5</color>
     <color name="font_second">#3F3D56</color>
     <color name="font_des">#52525b</color>
+    <color name="badge_member">#40f1f5f9</color>
+    <color name="price_text">#059669</color>
+    <color name="category_text">#4f46e5</color>
+    <color name="category_background">#e0e7ff</color>
+    <color name="location_text">#64748b</color>
+    <color name="location_background">#f1f5f9</color>
     <color name="font_textDes">#5A5757</color>
     <color name="red">#F44336</color>
+    <color name="stat_label">#64748b</color>
+    <color name="stat_number">#4f46e5</color>
+    <color name="pengaturan_text">#1e293b</color>
+    <color name="pengaturan_subtitile">#64748b</color>
 </resources>

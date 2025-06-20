@@ -59,7 +59,7 @@ class UserFragment : Fragment() {
         dbProfile = profileDatabase.getDatabase(requireContext())
         profiledao = dbProfile.profiledao()
 
-        binding.progressBar2.visibility = View.GONE
+//        binding.progressBar2.visibility = View.GONE
 
         val googleSigninOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -89,7 +89,7 @@ class UserFragment : Fragment() {
         }
 
         getUserData()
-        binding.logout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             val dialogBuild = AlertDialog.Builder(requireActivity())
             dialogBuild.setTitle("Apakah Anda Yakin Ingin Keluar ?")
             dialogBuild.setPositiveButton("Iya Dong") { dialog, which ->
@@ -113,7 +113,7 @@ class UserFragment : Fragment() {
             dialogBuild.show()
         }
 
-        binding.alamat.setOnClickListener {
+        binding.AlamatCard.setOnClickListener {
             val bottomsheet = CustomButtom()
             bottomsheet.updatedListenerUser = {
                 checkStatusProfil(namauser.toString())
@@ -125,13 +125,13 @@ class UserFragment : Fragment() {
     }
 
     fun checkStatusProfil(namauser: String) {
-        binding.progressBar2.visibility = View.VISIBLE
+//        binding.progressBar2.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main) {
                 try {
-                    binding.progressBar2.visibility = View.GONE
+//                    binding.progressBar2.visibility = View.GONE
                     alamatdao.getAlamat(namauser).let {
-                        binding.alamatPengguna.text = it.alamat
+                        binding.alamatSett.text = it.alamat
                     }
 
                 } catch (e: Exception) {
@@ -162,13 +162,13 @@ class UserFragment : Fragment() {
                     binding.emailprofile.text = data.email
                     Glide.with(requireContext())
                         .load(data.profilePhoto)
-                        .into(binding.profilephoto)
+                        .into(binding.imgProfil)
                 } else {
                     binding.namaprofile.text = nama
                     binding.emailprofile.text = email
                     Glide.with(requireContext())
                         .load(photo)
-                        .into(binding.profilephoto)
+                        .into(binding.imgProfil)
                 }
             }
         }

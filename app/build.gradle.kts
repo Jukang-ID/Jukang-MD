@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.gridlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -97,6 +99,14 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    implementation("androidx.camera:camera-camera2:1.4.2")
+    implementation("androidx.camera:camera-lifecycle:1.4.2")
+    implementation("androidx.camera:camera-view:1.4.2")
+    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.camera:camera-extensions:1.4.2")
+    implementation("androidx.camera:camera-core:1.4.2")
+
 
 
 

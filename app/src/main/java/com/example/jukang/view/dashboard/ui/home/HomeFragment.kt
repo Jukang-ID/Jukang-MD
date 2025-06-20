@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
 
         homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
             if (list != null) {
-                adapterTukang = AdapterTukang(list)
+                adapterTukang = AdapterTukang(list as MutableList<TukangListItem>)
                 binding.listTukang.adapter = adapterTukang
             }
 
@@ -145,7 +145,6 @@ class HomeFragment : Fragment() {
 
         Glide.with(this)
             .load(imageUrl)
-            .circleCrop()
             .into(binding.photourl)
 
         db = profileDatabase.getDatabase(requireContext())
@@ -161,14 +160,12 @@ class HomeFragment : Fragment() {
                     binding.emailcard.text = data.email
                     Glide.with(this@HomeFragment)
                         .load(data.profilePhoto)
-                        .circleCrop()
                         .into(binding.photourl)
                 } else {
                     binding.greeting.text = name
                     binding.emailcard.text = email
                     Glide.with(this@HomeFragment)
                         .load(imageUrl)
-                        .circleCrop()
                         .into(binding.photourl)
                 }
             }
@@ -184,9 +181,6 @@ class HomeFragment : Fragment() {
             NumberFormat.getCurrencyInstance(Locale("id", "ID")) // Locale Indonesia
         binding.point.text = currencyFormat.format(number)
 
-        binding.profilecard.setOnClickListener {
-
-        }
 
         binding.pointcard.setOnClickListener {
             val dialogBuild = AlertDialog.Builder(requireActivity())

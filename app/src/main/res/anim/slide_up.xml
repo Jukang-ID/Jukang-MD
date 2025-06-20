@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 4. Slide Up: Membuat View muncul dari bawah ke posisi aslinya -->
+<!-- Simpan sebagai res/anim/slide_up.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Animasi translasi dari bawah (100% dari tingginya) ke posisi nol -->
+    <translate
+        android:fromYDelta="100%p"
+        android:toYDelta="0%p"
+        android:duration="500" />
+    <!-- Ditambah sedikit fade in agar lebih mulus -->
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="500" />
+</set>

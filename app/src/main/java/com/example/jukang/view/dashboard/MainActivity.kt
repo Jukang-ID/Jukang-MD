@@ -23,6 +23,7 @@ import com.example.jukang.R
 import com.example.jukang.databinding.ActivityMainBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
+import com.example.jukang.view.camerax.CameraActivity
 import com.example.jukang.view.dashboard.ui.artikel.DashboardFragment
 import com.example.jukang.view.dashboard.ui.home.HomeFragment
 import com.example.jukang.view.dashboard.ui.user.UserFragment
@@ -40,9 +41,10 @@ class MainActivity : AppCompatActivity() {
         checkStatusLogin()
 
         binding.fab.setOnClickListener {
-            Toast.makeText(this, "Purple Plus Button Clicked!", Toast.LENGTH_SHORT).show()
-            // Here you can add logic for when the FAB is clicked,
-            // such as opening a dialog, starting a new activity, or displaying something.
+            val intent = Intent(this,CameraActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_up, R.anim.fade_out)
+
         }
 
 
