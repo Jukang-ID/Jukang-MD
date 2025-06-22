@@ -43,6 +43,9 @@ class SearchActivity : AppCompatActivity() {
 
         binding.emptyPlaceholder.visibility = View.VISIBLE // Menampilkan placeholder "Mau cari tukang apa?"
 
+//        binding.searchView.setQuery("Test Query", false)
+
+
         // Search View listener
         binding.searchView.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {

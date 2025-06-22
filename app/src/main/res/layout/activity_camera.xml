@@ -8,7 +8,6 @@
     tools:context=".view.camerax.CameraActivity">
 
 
-
     <androidx.camera.view.PreviewView
         android:id="@+id/camera"
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.camera.view.PreviewView>
 
@@ -24,10 +23,44 @@
         android:id="@+id/imageButton2"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="30dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_picture"
+        app:tint="@color/white"
+        android:src="@drawable/scan_ic"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_kembali"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btnback_camera"
+        android:clickable="true"
+        android:clipToOutline="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrowleft" />
+
+    <ImageView
+        android:id="@+id/OpenGallery"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        app:layout_constraintVertical_bias="0.238"
+        app:srcCompat="@drawable/image_gallery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

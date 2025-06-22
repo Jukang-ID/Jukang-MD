@@ -1,6 +1,7 @@
 package com.example.jukang.view.camerax
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -22,6 +25,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.jukang.R
 import com.example.jukang.databinding.ActivityCameraBinding
+import com.example.jukang.view.result.ResultActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -44,7 +48,34 @@ class CameraActivity : AppCompatActivity() {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
+        }
+
+        binding.btnKembali.setOnClickListener {
+            finish()
+        }
+
+        binding.OpenGallery.setOnClickListener {
+            startGallery()
+        }
+
+        val cekrek = binding.imageButton2
+
+        cekrek.setOnClickListener {
+
+            cekrek.animate()
+                .scaleX(0.8f)
+                .scaleY(0.8f)
+                .setDuration(100)
+                .withEndAction {
+                    cekrek.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start()
+                }.start()
+            takePhoto()
         }
     }
 
@@ -70,7 +101,8 @@ class CameraActivity : AppCompatActivity() {
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture)
+                    this, cameraSelector, preview, imageCapture
+                )
             } catch (exc: Exception) {
                 Log.e("CameraX", "Use case binding failed", exc)
             }
@@ -78,8 +110,25 @@ class CameraActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ){ uri : Uri? ->
+        if(uri != null){
+            val intent = Intent(this, ResultActivity::class.java).apply {
+                putExtra(ResultActivity.UriImage, uri.toString())
+            }
+            startActivity(intent)
+        }else{
+            Toast.makeText(this,"Tidak ada yang dipilih",Toast.LENGTH_SHORT).show()
+        }
+    }
 
-    fun hideSystemUi(){
+    fun startGallery(){
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+
+    fun hideSystemUi() {
         window.setFlags(
             WindowManager.LayoutParams
                 .FLAG_FULLSCREEN,
@@ -91,7 +140,8 @@ class CameraActivity : AppCompatActivity() {
     private fun takePhoto() {
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg"
+        )
 
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
@@ -106,7 +156,12 @@ class CameraActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Foto disimpan: ${photoFile.absolutePath}"
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@CameraActivity, ResultActivity::class.java).apply {
+                        putExtra(ResultActivity.UriImage, savedUri.toString())
+                    }
+                    startActivity(intent)
+                    Log.d("CameraX", msg)
+//                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 }
             })
     }
@@ -114,7 +169,8 @@ class CameraActivity : AppCompatActivity() {
 
     private val outputDirectory: File by lazy {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
         if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
     }
 
