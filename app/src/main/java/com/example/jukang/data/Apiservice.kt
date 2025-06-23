@@ -91,7 +91,7 @@ interface ApiService2 {
 }
 
 interface ApiService3 {
-    @Headers("Authorization: 5b3ce3597851110001cf6248b9ad4c9761324324805eeef615700410")
+    @Headers("Authorization: ")
     @POST("v2/directions/driving-car")
     fun getRoute(@Body body: RouteRequest): Call<Orm>
 }

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.jukang"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,10 +37,22 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
     }
+
+
 }
 
 dependencies {
+    implementation(libs.tensorflow.lite.metadata)
+    // Ganti semua baris tensorflow-lite Anda dengan ini
+
+    val tflite_version = "2.16.1"
+
+    implementation ("org.tensorflow:tensorflow-lite:$tflite_version")
+    implementation ("org.tensorflow:tensorflow-lite-support:0.4.4") // Versi support library tetap berbeda
+//    implementation ("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:$tflite_version")
+    implementation ("org.tensorflow:tensorflow-lite-select-tf-ops:$tflite_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -107,8 +119,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.4.2")
     implementation("androidx.camera:camera-core:1.4.2")
 
-
-
+    implementation ("com.airbnb.android:lottie:6.6.7")
 
 
 }

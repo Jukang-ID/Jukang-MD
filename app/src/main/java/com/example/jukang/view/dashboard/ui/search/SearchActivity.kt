@@ -43,7 +43,11 @@ class SearchActivity : AppCompatActivity() {
 
         binding.emptyPlaceholder.visibility = View.VISIBLE // Menampilkan placeholder "Mau cari tukang apa?"
 
-//        binding.searchView.setQuery("Test Query", false)
+        val setQueries = intent.getStringExtra(query)
+        if (setQueries != null) {
+            binding.searchView.setQuery(setQueries, false)
+            search(setQueries)
+        }
 
 
         // Search View listener
@@ -60,6 +64,10 @@ class SearchActivity : AppCompatActivity() {
                 return false
             }
         })
+    }
+
+    companion object{
+        const val query = "query"
     }
 
     // Pada metode search()

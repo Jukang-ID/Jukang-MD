@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
@@ -25,9 +26,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import java.io.IOException
 import java.util.Locale
@@ -38,6 +41,8 @@ class MapsActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var db: AlamatLengkapDatabase
     private lateinit var dao : AlamatLengkapDao
+
+    private var userMarker: Marker? = null
 
     private val requestLaucnher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -115,14 +120,16 @@ class MapsActivity : AppCompatActivity() {
 
 
         mapView.setMultiTouchControls(true)
+        enableMapLongClick()
 
         binding.btnBack.setOnClickListener {
             finish()
         }
 
         binding.btnAmbilAlamat.setOnClickListener {
-            val alamat = binding.alamatMap.text.toString()
-            updateAlamat(alamat,"",emailUser.toString())
+            val alamat = binding.tvAddress.text.toString()
+            val kota = binding.domisili.text.toString()
+            updateAlamat(alamat,kota,emailUser.toString())
             finish()
         }
 
@@ -167,6 +174,41 @@ class MapsActivity : AppCompatActivity() {
         }
     }
 
+    private fun enableMapLongClick() {
+        val receiver = object : MapEventsReceiver {
+            override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+                return false // Kita tidak butuh tap biasa
+            }
+
+            override fun longPressHelper(p: GeoPoint?): Boolean {
+                if (p != null) {
+                    moveToLocation(p)
+                    return true
+                }
+                return false
+            }
+        }
+
+        val overlayEvents = MapEventsOverlay(receiver)
+        mapView.overlays.add(overlayEvents)
+    }
+
+    private fun moveToLocation(geoPoint: GeoPoint) {
+        // Update posisi marker
+        userMarker?.let {
+            mapView.overlays.remove(it)
+        }
+        userMarker = Marker(mapView).apply {
+            position = geoPoint
+            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            title = "Lokasi yang Anda pilih"
+        }
+        mapView.overlays.add(userMarker)
+        mapView.controller.animateTo(geoPoint)
+        getAddressFromLocation(geoPoint)
+        mapView.invalidate()
+    }
+
     fun startLocation(lat: Double, long: Double) {
         val mapController = mapView.controller
         mapController.setZoom(20.0)
@@ -191,14 +233,21 @@ class MapsActivity : AppCompatActivity() {
 
                     // Ekstrak informasi yang Anda butuhkan
                     val fullAddress = address.getAddressLine(0) ?: "Alamat tidak ditemukan"
-                    val city = address.locality ?: "Kota tidak ditemukan"
-                    val province = address.adminArea ?: "Provinsi tidak ditemukan"
+                    val kota = address.locality ?: "Kota tidak ditemukan"
+                    val provinsi = address.adminArea ?: "Provinsi tidak ditemukan"
+
+                    val lat = address.latitude
+                    val lon = address.longitude
+
 
                     // Kembali ke Main Thread untuk menampilkan hasil ke UI
                     withContext(Dispatchers.Main) {
                         val addressText = fullAddress
 //                        Toast.makeText(this@MapsActivity, addressText, Toast.LENGTH_LONG).show()
-                        binding.alamatMap.text = addressText
+                        binding.tvAddress.text = addressText
+                        binding.domisili.text = kota
+                        binding.tvCoordinates.text = "$lat,$lon"
+
                     }
                 }
             } catch (e: IOException) {

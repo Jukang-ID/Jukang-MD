@@ -140,7 +140,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.searchView.setQuery("Cari layanan atau tukang...", false)
 
 
         Glide.with(this)
@@ -179,18 +178,18 @@ class HomeFragment : Fragment() {
         val number = 0
         val currencyFormat =
             NumberFormat.getCurrencyInstance(Locale("id", "ID")) // Locale Indonesia
-        binding.point.text = currencyFormat.format(number)
+//        binding.point.text = currencyFormat.format(number)
 
 
-        binding.pointcard.setOnClickListener {
-            val dialogBuild = AlertDialog.Builder(requireActivity())
-            dialogBuild.setTitle("Pemberitahuan")
-            dialogBuild.setMessage("Fitur ini belum tersedia")
-            dialogBuild.setPositiveButton("OK") { dialog, which ->
-                dialog.dismiss()
-            }
-            dialogBuild.show()
-        }
+//        binding.pointcard.setOnClickListener {
+//            val dialogBuild = AlertDialog.Builder(requireActivity())
+//            dialogBuild.setTitle("Pemberitahuan")
+//            dialogBuild.setMessage("Fitur ini belum tersedia")
+//            dialogBuild.setPositiveButton("OK") { dialog, which ->
+//                dialog.dismiss()
+//            }
+//            dialogBuild.show()
+//        }
 
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
@@ -207,10 +206,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.searchView.setOnClickListener {
-            val intent = Intent(requireContext(), SearchActivity::class.java)
-            startActivity(intent)
-        }
 
 
 //        // Memanggil fungsi getCurrentLocation

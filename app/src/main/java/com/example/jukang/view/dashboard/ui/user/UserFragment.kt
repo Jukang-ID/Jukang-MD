@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.Room.AlamatDao
@@ -44,6 +45,8 @@ class UserFragment : Fragment() {
     private lateinit var dbProfile: profileDatabase
     private lateinit var profiledao: profileDAO
 
+    private lateinit var viewmodel : userViewmodel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,6 +61,17 @@ class UserFragment : Fragment() {
 
         dbProfile = profileDatabase.getDatabase(requireContext())
         profiledao = dbProfile.profiledao()
+
+        viewmodel = userViewmodel()
+
+        val pref = requireActivity().getSharedPreferences("AUTH",Context.MODE_PRIVATE)
+        val id = pref.getString("UID","")
+
+        viewmodel.fetchTukangTransaksi(id.toString())
+
+        viewmodel.dataTukang.observe(viewLifecycleOwner, Observer { size ->
+            binding.valueStat.text = size.toString()
+        })
 
 //        binding.progressBar2.visibility = View.GONE
 
@@ -139,6 +153,10 @@ class UserFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun fetchRiwayat (){
+
     }
 
     private fun getUserData() {

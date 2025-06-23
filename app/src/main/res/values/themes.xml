@@ -45,4 +45,11 @@
         <item name="android:fontFamily">@font/ppreguler</item>
     </style>
 
+    <style name="CostumTextBold">
+        <item name="android:fontFamily">@font/ppbold</item>
+        <item name="android:textColor">@color/black_smoke</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
 </resources>

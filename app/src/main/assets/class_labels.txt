@@ -1,0 +1,53 @@
+AC
+Bak Mandi
+CCTV
+Ember
+Gorden
+Kaca
+Kepala shower
+Kran Air
+Pagar Utuh
+Pengait
+Toilet
+Tong sampah
+USB stick
+WiFi
+air
+arus
+asbes
+baja ringan
+cat
+computer mouse
+dinding
+genset
+genteng
+jendela
+kabel
+keramik
+keran
+keyboard I
+keys objects
+kursi
+lampu
+lantai
+laptop
+listrik
+marmer
+meja
+pagar
+phone
+pintu
+pipa air
+plafon
+router
+saluran
+sambungan
+satellite dish device
+septic tank
+server rack
+toilet paper
+toothbrush holder
+wallpaper
+wastafel
+water
+water heater

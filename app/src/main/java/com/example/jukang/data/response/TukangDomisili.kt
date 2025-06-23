@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class TukangDomisili(
 
+	@field:SerializedName("count")
+	val count: Int? = null,
+
 	@field:SerializedName("tukangList")
 	val tukangList: List<TukangListItem?>? = null,
 

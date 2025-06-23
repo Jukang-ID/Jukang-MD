@@ -5,93 +5,153 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_welcome_parent"
     android:fitsSystemWindows="true"
     tools:context=".view.auth.welcome.WelcomeActivity">
 
-    <!-- Button for "Masuk" -->
-    <Button
-        android:id="@+id/button"
-        style="@style/CustomButton"
+
+    <LinearLayout
+        android:id="@+id/LOGO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:fontFamily="@font/ppbold"
+            android:text="JuKang"
+            android:textAlignment="textEnd"
+            android:textColor="#2d3748"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ppbold"
+            android:text="ID"
+            android:textColor="#667eea"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView29"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="92dp"
-        android:backgroundTint="@color/primary_button"
-        android:text="Masuk"
+        android:textAlignment="center"
+        android:fontFamily="@font/ppmedium"
+        android:text="Platform Tukang Profesional"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/text_welcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LOGO" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="welcome_animation.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:text="Selamat Datang!"
+        android:textAlignment="center"
+        android:textColor="#2d3748"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/ppmedium"
+        android:text="Masuk untuk mengakses layanan tukang profesional terbaik di Indonesia   "
+        android:textAlignment="center"
+        android:textColor="@color/text_welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/ppmedium"
+        android:text="Dengan masuk, Anda menyetujui Syarat dan Ketentuan dan Kebijakan Privasi kami"
+        android:textAlignment="center"
+        android:textColor="@color/text_welcome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ImageView -->
-    <ImageView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/welcome" />
-
-    <!-- Google login button -->
-    <Button
-        android:id="@+id/btnGoogleWelcome"
+    <LinearLayout
+        android:id="@+id/btnLoginGoogle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/cardgradient"
-        android:fontFamily="@font/ppreguler"
-        android:text="Login with Google"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:icon="@drawable/google"
-        app:iconSize="20dp"
-        app:iconTint="@null"
-        app:backgroundTint="@null"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/btn_google_welcome"
+        android:clickable="true"
+        android:clipToOutline="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView31"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- Container for "Belum punya akun?" and "daftar" -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoogleWelcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
 
-        <!-- TextView: "Belum punya akun?" -->
+        <ImageView
+            android:id="@+id/logo_google"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/google" />
+
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tulisan_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ppreguler"
-            android:text="Belum punya akun?"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textRegis"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <!-- TextView: "daftar" -->
-        <TextView
-            android:id="@+id/textRegis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/ppreguler"
-            android:text="daftar"
-            android:textColor="#2196F3"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/ppmedium"
+            android:text="Masuk dengan Google"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

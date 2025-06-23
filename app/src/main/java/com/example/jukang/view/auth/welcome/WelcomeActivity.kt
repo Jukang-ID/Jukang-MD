@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.response.Register
@@ -46,19 +47,10 @@ class WelcomeActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
-        binding.button.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.textRegis.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnGoogleWelcome.setOnClickListener {
+        binding.btnLoginGoogle.setOnClickListener {
             signInwithGoogle()
         }
+
 
     }
 

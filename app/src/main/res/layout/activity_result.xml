@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.result.ResultActivity">
@@ -10,33 +11,34 @@
     <ImageView
         android:id="@+id/preview"
         android:layout_width="0dp"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/cornergambar"
         android:clipToOutline="true"
         android:elevation="20dp"
-        android:scaleType="centerCrop"
         android:outlineSpotShadowColor="@color/black_smoke"
+        android:scaleType="centerCrop"
         android:src="@drawable/placeholder"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.038" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="129dp"
         app:columnCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview"
         app:rowCount="1">
 
         <com.google.android.material.button.MaterialButton
@@ -61,11 +63,11 @@
 
         <LinearLayout
             android:id="@+id/scanBTn"
-            android:clipToOutline="true"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:background="@drawable/btn_scan_gradient"
             android:clickable="true"
+            android:clipToOutline="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
@@ -93,5 +95,39 @@
 
         </LinearLayout>
     </androidx.gridlayout.widget.GridLayout>
+
+    <LinearLayout
+        android:id="@+id/LoadingScan"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corner_loading"
+        android:elevation="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="scanning.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/ppbold"
+            android:text="Memindai..."
+            android:textAlignment="center"
+            android:textColor="@color/black_smoke"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
