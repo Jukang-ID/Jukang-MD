@@ -66,5 +66,10 @@ data class paymentReq (
 	val tanggal: String,
 	val alamat: String,
 	val metodePembayaran: String,
-	val total: String
+	val total: String,
+	val lat : String? = null,
+	val long : String? = null,
+	val nomor_telpon: String? = null,
+	val photoprofile: String? = null,
+	val domisili: String? = null,
 )

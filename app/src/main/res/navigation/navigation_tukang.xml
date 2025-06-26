@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_tukang"
+    app:startDestination="@id/dashboard_tukang">
+
+    <fragment
+        android:id="@+id/dashboard_tukang"
+        android:name="com.example.jukang.view.tukang.ui.dashboard.dashboard_tukang"
+        android:label="fragment_dashboard_tukang"
+        tools:layout="@layout/fragment_dashboard_tukang" />
+    <fragment
+        android:id="@+id/pesanan_tukang"
+        android:name="com.example.jukang.view.tukang.ui.pesanan.Pesanan_tukang"
+        android:label="fragment_pesanan_tukang"
+        tools:layout="@layout/fragment_pesanan_tukang" />
+</navigation>

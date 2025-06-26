@@ -46,4 +46,18 @@
             app:tint="@android:color/white" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
+    <ImageButton
+        android:id="@+id/ChatAi"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_chat"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/support" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

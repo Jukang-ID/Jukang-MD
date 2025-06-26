@@ -2,19 +2,16 @@ package com.example.jukang.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Register(
+data class UserByEmail(
 
-	@field:SerializedName("data")
-	val data: Dataa? = null,
-
-	@field:SerializedName("message")
-	val message: String? = null,
+	@field:SerializedName("listUser")
+	val listUser: List<ListUserItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class User(
+data class ListUserItem(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
@@ -45,17 +42,5 @@ data class User(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
-)
 
-data class Dataa(
-	@field:SerializedName("user")
-	val user: User? = null
-)
-
-data class registerRequest(
-	val namalengkap: String,
-	val nomortelp: String,
-	val email: String,
-	val password: String,
-	val photoprofile: String
 )

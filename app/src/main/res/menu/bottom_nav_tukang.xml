@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboard_tukang"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Beranda" />
+
+<!--    <item-->
+<!--        android:id="@+id/searchActivity"-->
+<!--        android:icon="@drawable/ic_search"-->
+<!--        android:title="Search" />-->
+
+<!--    &lt;!&ndash; Placeholder item for the FAB. Important for the FAB to appear in the center. &ndash;&gt;-->
+<!--    &lt;!&ndash; This ID will be disabled in the Kotlin code. &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/placeholder"-->
+<!--        android:enabled="false"-->
+<!--        android:title="" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_dashboard"-->
+<!--        android:icon="@drawable/ic_menu_mapmode"-->
+<!--        android:title="Artikel" />-->
+
+    <item
+        android:id="@+id/pesanan_tukang"
+        android:icon="@drawable/img"
+        android:title="Pesanan" />
+</menu>

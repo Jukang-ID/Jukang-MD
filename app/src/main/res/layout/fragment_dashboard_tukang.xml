@@ -2,7 +2,7 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/refreshLayout"
+    android:id="@+id/refresh"
     android:background="@drawable/background_gradient_profil"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -110,11 +110,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/namaprofile" />
 
                     <ImageView
-                        android:id="@+id/goprofile"
+                        android:id="@+id/btnKeluar"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginEnd="8dp"
-                        android:src="@drawable/rounded_arrow_forward_ios_24"
+                        android:src="@drawable/logout_tukang"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -238,201 +238,6 @@
 
                 </androidx.gridlayout.widget.GridLayout>
 
-                <TextView
-                    android:id="@+id/textView22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/ppmedium"
-                    android:text="Pengaturan Tambahan"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
-
-                <LinearLayout
-                    android:id="@+id/CardTambahan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:backgroundTint="@color/white"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/cornergambar"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="vertical"
-                    android:clipToOutline="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView22">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/AlamatCard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:clipToOutline="true"
-                        android:foreground="?attr/selectableItemBackground">
-
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp"
-                            android:padding="2dp"
-                            android:src="@drawable/cogwheel"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.482" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/ppmedium"
-                            android:text="Tambahkan Alamat"
-                            android:textColor="@color/pengaturan_text"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.012"
-                            app:layout_constraintStart_toEndOf="@+id/imageView"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/alamatSett"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="24dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:text="alamat"
-                            android:textColor="@color/pengaturan_subtitile"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/textView4"
-                            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/Webview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:clipToOutline="true"
-                        android:foreground="?attr/selectableItemBackground">
-
-                        <ImageView
-                            android:id="@+id/Icon_web"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp"
-                            android:padding="2dp"
-                            android:src="@drawable/plumber"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.482" />
-
-                        <TextView
-                            android:id="@+id/title_web"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/ppmedium"
-                            android:text="Daftar Menjadi Tukang"
-                            android:textColor="@color/pengaturan_text"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.012"
-                            app:layout_constraintStart_toEndOf="@+id/Icon_web"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/caption_web"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="24dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:text="Jadila bagian dari kami sebagai Tukang"
-                            android:textColor="@color/pengaturan_subtitile"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/title_web"
-                            app:layout_constraintTop_toBottomOf="@+id/title_web" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btnLogout2"
-                    android:background="@drawable/cornergambar"
-                    android:backgroundTint="@color/primary_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:clickable="true"
-                    android:clipToOutline="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/CardTambahan">
-
-                    <ImageView
-                        android:id="@+id/icoN_log"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:padding="2dp"
-                        android:src="@drawable/logout1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.482" />
-
-                    <TextView
-                        android:id="@+id/text_keluar"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/ppmedium"
-                        android:gravity="center_vertical"
-                        android:text="Keluar Perangkat"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/icoN_log"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.371"
-                        app:layout_constraintStart_toEndOf="@+id/icoN_log"
-                        app:layout_constraintTop_toTopOf="@+id/icoN_log"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

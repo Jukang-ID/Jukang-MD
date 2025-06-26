@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerForm(name: String,notelp: String ,email: String, password: String) {
         binding.loading.visibility = View.VISIBLE
-        val request = registerRequest(name, notelp, email, password)
+        val request = registerRequest(name, notelp, email, password,"")
         val call = RetrofitClient.Jukang.register(request)
 
         call.enqueue(object : Callback<Register> {

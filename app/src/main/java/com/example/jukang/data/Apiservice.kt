@@ -10,10 +10,12 @@ import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.Payment
 import com.example.jukang.data.response.Register
 import com.example.jukang.data.response.Transaksi
+import com.example.jukang.data.response.TransaksiData
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.Uploadfoto
+import com.example.jukang.data.response.UserByEmail
 import com.example.jukang.data.response.loginRequest
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.data.response.registerRequest
@@ -46,6 +48,11 @@ interface ApiService2 {
     ): TukangDomisili
 
     @GET("register")
+    suspend fun getUserByEmail(
+        @Query("username") username: String
+    ): UserByEmail
+
+    @GET("register")
     fun getRegister(): Call<Register>
 
     @POST("users/login")
@@ -60,6 +67,11 @@ interface ApiService2 {
     suspend fun getDetailTukang(
         @Path("id") id:String
     ):DetailTukang
+
+    @GET("tukang/pesan/{id}")
+    suspend fun getPEsananTukang(
+        @Path("id") id:String
+    ) :TransaksiData
 
     @POST("addtransaksi")
      fun addtransaksi(

@@ -3,6 +3,7 @@ package com.example.jukang.view.auth.welcome
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,19 +58,100 @@ class WelcomeActivity : AppCompatActivity() {
 
     }
 
+    fun fetchUser(name: String, notelp: String, email: String, password: String, photo: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = RetrofitClient.Jukang.getUserByEmail(email)
+
+            if (response.listUser?.isEmpty() == true) {
+                registerForm(name, notelp, email, password, photo)
+            } else {
+
+                val role = response.listUser?.get(0)?.role
+                val user_id = response.listUser?.get(0)?.userId
+
+                val sharedPref = getSharedPreferences("AUTH", MODE_PRIVATE)
+                val edit = sharedPref.edit()
+                edit.putString("ROLE", role)
+                edit.putString("UID", user_id)
+                edit.apply()
+
+//                Toast.makeText(this@WelcomeActivity, role, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@WelcomeActivity, LoadingActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
+    }
+
     private fun checkStatusLogin() {
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token = pref.getString("TOKEN", null)
-        val id = pref.getString("UID",null)
-        if(token != null || id != null){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        val id = pref.getString("UID", null)
+        val role = pref.getString("ROLE", null)
+
+
+        when (role) {
+            "tukang" -> {
+                val intent =
+                    Intent(this, com.example.jukang.view.tukang.ui.MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+
+            "pengguna" -> {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+
+            }
+            else -> null
+
         }
     }
 
 
-    private fun signInwithGoogle(){
+    private fun registerForm(
+        name: String,
+        notelp: String,
+        email: String,
+        password: String,
+        photo: String
+    ) {
+        val request = registerRequest(name, notelp, email, password, photo)
+        val call = RetrofitClient.Jukang.register(request)
+
+        call.enqueue(object : Callback<Register> {
+            override fun onResponse(call: Call<Register>, response: Response<Register>) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    val role = res?.data?.user?.role
+                    val uid = res?.data?.user?.userId
+
+                    val sharedPref = getSharedPreferences("AUTH", MODE_PRIVATE)
+                    val edit = sharedPref.edit()
+                    edit.putString("ROLE", role)
+                    edit.putString("UID", uid)
+                    edit.apply()
+
+                    Toast.makeText(this@WelcomeActivity, "Registrasi Berhasil", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(this@WelcomeActivity, LoadingActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<Register>, t: Throwable) {
+                Toast.makeText(this@WelcomeActivity, t.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+
+    private fun signInwithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
 
@@ -100,12 +185,11 @@ class WelcomeActivity : AppCompatActivity() {
                     val photo = account?.photoUrl.toString()
                     val uid = account?.id.toString()
 
-                    saveData(token, email, name, photo, uid)
+                    fetchUser(name, "", email, uid, photo)
+                    saveData(token, email, name, photo)
 
                     Log.d(TAG, "signInWithCredential:success")
-                    val intent = Intent(this, LoadingActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
@@ -113,14 +197,13 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
 
-    private fun saveData(token: String, email: String, name: String, photo: String, uid: String){
+    private fun saveData(token: String, email: String, name: String, photo: String) {
         val sharedPref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val edit = sharedPref.edit()
         edit.putString("TOKEN", token)
         edit.putString("EMAIL", email)
         edit.putString("NAME", name)
         edit.putString("PHOTO", photo)
-        edit.putString("UID", uid)
 
         edit.apply()
 

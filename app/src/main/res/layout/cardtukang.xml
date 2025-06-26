@@ -37,8 +37,8 @@
             android:id="@+id/Spesialis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/category_corner"
             android:fontFamily="@font/ppmedium"
             android:padding="8dp"
@@ -46,12 +46,8 @@
             android:textColor="@color/category_text"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnBooking"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/rating"
-            app:layout_constraintTop_toBottomOf="@+id/photourls"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
 
         <TextView
             android:id="@+id/NamaTukang"
@@ -112,9 +108,10 @@
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="@+id/Spesialis"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBooking"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/Spesialis"
+            app:layout_constraintTop_toBottomOf="@+id/photourls"
             app:srcCompat="@drawable/start" />
 
         <TextView
@@ -136,7 +133,7 @@
             android:id="@+id/btnBooking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/primary_button"
             android:fontFamily="@font/ppmedium"
@@ -145,15 +142,13 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:textAllCaps="false"
             android:text="Booking"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:cornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lokasi"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/lokasi" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

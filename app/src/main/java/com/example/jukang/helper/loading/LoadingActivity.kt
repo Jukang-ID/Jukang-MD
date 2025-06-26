@@ -25,13 +25,13 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun checkStatusLogin() {
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val id = pref.getString("UID", "")
+        val id = pref.getString("ROLE", "")
 
-        if (id == "") {
-            startActivity(Intent(this, WelcomeActivity::class.java))
+        if (id == "pengguna") {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, com.example.jukang.view.tukang.ui.MainActivity::class.java))
             finish()
         }
     }

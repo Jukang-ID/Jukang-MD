@@ -29,12 +29,20 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/aplikasijago"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Jukang"
+        android:theme="@style/Theme.Main"
         tools:targetApi="31">
         <activity
-            android:name=".view.result.ResultActivity"
+            android:name=".view.tukang.ui.MainActivity"
             android:theme="@style/Theme.Main"
             android:exported="false" />
+        <activity
+            android:name=".view.chatbot.ChatActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Main" />
+        <activity
+            android:name=".view.result.ResultActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Main" />
         <activity
             android:name=".view.camerax.CameraActivity"
             android:exported="false"

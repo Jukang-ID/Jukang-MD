@@ -22,11 +22,8 @@ class SplashScreen : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        Glide.with(this)
-//            .load(R.drawable.splash)
-//            .override(Target.SIZE_ORIGINAL)
-//            .into(binding.splash)
-
+        val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val role = pref.getString("ROLE", null)
 
         Handler().postDelayed({
             val intent = Intent(this, WelcomeActivity::class.java)

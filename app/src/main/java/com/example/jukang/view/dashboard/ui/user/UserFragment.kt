@@ -2,35 +2,28 @@ package com.example.jukang.view.dashboard.ui.user
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jukang.R
-import com.example.jukang.data.Room.AlamatDao
-import com.example.jukang.data.Room.AlamatDatabase
 import com.example.jukang.data.Room.AlamatLengkapDao
 import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.data.Room.profileDAO
 import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.databinding.FragmentUserBinding
-import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
-import com.example.jukang.view.dashboard.MainActivity
 import com.example.jukang.view.profile.ProfileActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -103,7 +96,7 @@ class UserFragment : Fragment() {
         }
 
         getUserData()
-        binding.btnLogout.setOnClickListener {
+        binding.btnLogout2.setOnClickListener {
             val dialogBuild = AlertDialog.Builder(requireActivity())
             dialogBuild.setTitle("Apakah Anda Yakin Ingin Keluar ?")
             dialogBuild.setPositiveButton("Iya Dong") { dialog, which ->
@@ -125,6 +118,12 @@ class UserFragment : Fragment() {
                 dialog.dismiss()
             }
             dialogBuild.show()
+        }
+
+        binding.Webview.setOnClickListener{
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://jukang-website.vercel.app/")
+            startActivity(intent)
         }
 
         binding.AlamatCard.setOnClickListener {
@@ -155,9 +154,6 @@ class UserFragment : Fragment() {
         }
     }
 
-    fun fetchRiwayat (){
-
-    }
 
     private fun getUserData() {
         val pref = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
@@ -193,9 +189,6 @@ class UserFragment : Fragment() {
     }
 
 
-    private fun logout() {
-
-    }
 
     companion object {
         const val TAG = "UserFragment"

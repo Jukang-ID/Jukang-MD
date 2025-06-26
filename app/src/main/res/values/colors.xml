@@ -25,4 +25,7 @@
     <color name="pengaturan_text">#1e293b</color>
     <color name="pengaturan_subtitile">#64748b</color>
     <color name="text_welcome">#718096</color>
+    <color name="background_input">#F8FAFC</color>
+    <color name="background_card">#f8f9fa</color>
+    <color name="stroke_card">#ecf0f1</color>
 </resources>

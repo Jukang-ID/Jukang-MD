@@ -13,22 +13,15 @@
         android:layout_height="match_parent"
         tools:context=".view.dashboard.ui.home.HomeFragment">
 
-        <!-- Toolbar with SearchView -->
-
-
-
-
-        <!-- Profile Card -->
         <androidx.constraintlayout.widget.ConstraintLayout
-
             android:id="@id/cardprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
             android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <ImageView
                 android:id="@+id/photourl"
@@ -66,10 +59,10 @@
                 android:id="@+id/emailcard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="email"
                 android:fontFamily="@font/ppreguler"
-                android:textSize="13sp"
+                android:text="email"
                 android:textColor="#64748b"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/photourl"
                 app:layout_constraintEnd_toEndOf="@+id/greeting"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -80,14 +73,14 @@
             <ImageButton
                 android:id="@+id/btnRiwayat"
                 android:layout_width="30dp"
-                android:padding="4dp"
-                android:scaleType="centerCrop"
-                android:clickable="true"
-                android:clipToOutline="true"
-                android:foreground="?attr/selectableItemBackground"
                 android:layout_height="30dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/border_icon_home"
+                android:clickable="true"
+                android:clipToOutline="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/document"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -95,8 +88,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <!-- Recomendation Section -->
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -164,9 +155,18 @@
             app:layout_constraintEnd_toEndOf="@+id/listTukang"
             app:layout_constraintHorizontal_bias="0.936"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/pointcard"
             app:layout_constraintVertical_bias="0.0" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

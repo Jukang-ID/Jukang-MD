@@ -29,6 +29,7 @@ import com.example.jukang.databinding.ActivityMainBinding
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.welcome.WelcomeActivity
 import com.example.jukang.view.camerax.CameraActivity
+import com.example.jukang.view.chatbot.ChatActivity
 import com.example.jukang.view.dashboard.ui.artikel.DashboardFragment
 import com.example.jukang.view.dashboard.ui.home.HomeFragment
 import com.example.jukang.view.dashboard.ui.user.UserFragment
@@ -97,8 +98,16 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val role = sharedPreferences.getString("ROLE", null)
 
-        supportActionBar?.hide()
+//        Toast.makeText(this, role, Toast.LENGTH_SHORT).show()
+
+        binding.ChatAi.setOnClickListener{
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

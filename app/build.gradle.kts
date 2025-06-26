@@ -1,3 +1,7 @@
+// Di bagian atas file, setelah plugins
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +21,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProperties = Properties()
+        val localProperyiesFiles = rootProject.file("local.properties")
+
+        if(localProperyiesFiles.exists()){
+            localProperties.load(FileInputStream(localProperyiesFiles))
+        }
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"${localProperties.getProperty("GEMINI_API_KEY")}\"")
+
     }
 
     buildTypes {
@@ -38,6 +52,7 @@ android {
     buildFeatures {
         viewBinding = true
         mlModelBinding = true
+        buildConfig = true
     }
 
 
@@ -84,6 +99,8 @@ dependencies {
 
 //    GIF
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.29")
+    implementation("com.google.ai.client.generativeai:generativeai:0.5.0") // Gemini API
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0") // Untuk viewModelScope
 
 // retrofit
     implementation(libs.retrofit)
