@@ -3,6 +3,7 @@ package com.example.jukang.view.tukang.data
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ import com.example.jukang.data.response.TransaksiItem
 import com.example.jukang.data.response.UpdateStatusReq
 import com.example.jukang.data.response.UpdateStatusTransaksiResponse
 import com.example.jukang.databinding.CardPesananBinding
+import com.example.jukang.helper.struk.StrukActivity
+import com.example.jukang.view.history.detailhistory.DetailHistory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,11 +31,19 @@ class AdapterPesanan(private val listPesanan: MutableList<TransaksiItem>) :
 
         fun bind(pesanan: TransaksiItem) {
             binding.NamaTukang.text = pesanan.namatukang
-            binding.lokasi.text = pesanan.domisili
+            binding.lokasi.text = if(pesanan.domisili == "") "Tidak Ada" else pesanan.domisili
             binding.price.text = pesanan.total
             binding.tag.text = pesanan.spesialis
             binding.deskripsiPerbaikkan.text = "Deskripsi : ${pesanan.deskripsi}"
             binding.status.text = pesanan.statusCode
+
+            binding.BtnTestAccpet.text = when(pesanan.statusCode){
+                "pending" -> "Konfirmasi"
+                "diterima" -> "Lihat Detail"
+                "ditolak" -> "ditolak"
+                "Selesai" -> "selesai"
+                else -> "pending"
+            }
 
             binding.Alamat.text = "Alamat : ${pesanan.alamat}"
 
@@ -47,13 +58,48 @@ class AdapterPesanan(private val listPesanan: MutableList<TransaksiItem>) :
                 binding.root.context.startActivity(intent)
             }
 
+            binding.btnaccept.setOnClickListener{
+//                Toast.makeText(itemView.context, pesanan.idTransaksi, Toast.LENGTH_SHORT).show()
+
+                when(pesanan.statusCode){
+                    "pending" -> {
+                        updateConfirmation(pesanan.idTransaksi.toString(), "diterima")
+                        binding.gridLayout3.visibility = View.VISIBLE
+                        binding.linearLayout3.visibility = View.VISIBLE
+                    }
+                    "diterima" -> {
+                        binding.gridLayout3.visibility = View.VISIBLE
+                        binding.linearLayout3.visibility = View.VISIBLE
+                    }
+                    "ditolak" -> updateConfirmation(pesanan.idTransaksi.toString(), "ditolak")
+                    "Selesai" -> {
+                        val intent = Intent(itemView.context, DetailHistory::class.java)
+                        intent.putExtra(DetailHistory.idtukangdetail, pesanan.tukangId)
+                        intent.putExtra(DetailHistory.namatukangdetail, pesanan.namatukang)
+                        intent.putExtra(DetailHistory.tanggaldetail, pesanan.createdAt)
+                        intent.putExtra(DetailHistory.metode, pesanan.metodePembayaran)
+                        intent.putExtra(DetailHistory.total, pesanan.total)
+                        intent.putExtra(DetailHistory.spesialis, pesanan.spesialis)
+                        intent.putExtra(DetailHistory.tanggalDibuat, pesanan.createdAt)
+                        intent.putExtra(DetailHistory.idTRansaksksi, pesanan.idTransaksi)
+                        itemView.context.startActivity(intent)
+                    }
+                }
+            }
+
+            binding.btnLokasi.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("https://www.google.com/maps/search/?api=1&query=${pesanan.alamat}")
+                binding.root.context.startActivity(intent)
+            }
+
             binding.jadwalValue.text = checkAndFormatDate(pesanan.tanggal.toString())
         }
 
         fun updateConfirmation(id_transaksi: String, status: String) {
             val req = UpdateStatusReq(
                 id_transaksi = id_transaksi,
-                Status_code = status
+                status_code = status
             )
 
             val call = RetrofitClient.Jukang.updateTransaksiStatus(req)

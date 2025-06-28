@@ -49,6 +49,14 @@ class Pesanan_tukang : Fragment() {
 
         })
 
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer { empty ->
+            if(empty){
+                binding.kosong.visibility = View.VISIBLE
+            }else{
+                binding.kosong.visibility = View.GONE
+            }
+        })
+
 
         return root
     }

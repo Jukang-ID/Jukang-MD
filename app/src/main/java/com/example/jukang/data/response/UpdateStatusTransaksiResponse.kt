@@ -16,5 +16,5 @@ data class UpdateStatusTransaksiResponse(
 
 data class UpdateStatusReq (
 	val id_transaksi: String? = null,
-	val Status_code: String? = null
+	val status_code: String? = null
 )

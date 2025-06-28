@@ -29,4 +29,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageButton
+        android:id="@+id/ChatAi"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/background_chat"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavTukang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/support" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

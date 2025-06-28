@@ -28,4 +28,9 @@
     <color name="background_input">#F8FAFC</color>
     <color name="background_card">#f8f9fa</color>
     <color name="stroke_card">#ecf0f1</color>
+    <color name="btn_trek">#feca57</color>
+    <color name="btn_trek1">#ff6b6b</color>
+    <color name="menu_complete">#e0f7fa</color>
+    <color name="menu_rating">#fbf6e0</color>
+    <color name="menu_wallet">#f7e0fa</color>
 </resources>

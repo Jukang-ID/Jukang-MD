@@ -26,6 +26,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/primary_button</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <item name="android:fontFamily">@font/ppreguler</item>
 
         <!-- Customize your theme here. -->

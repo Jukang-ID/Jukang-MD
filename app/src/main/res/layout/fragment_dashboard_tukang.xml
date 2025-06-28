@@ -89,7 +89,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/profilephoto"
-                        app:layout_constraintEnd_toStartOf="@+id/goprofile"
+                        app:layout_constraintEnd_toStartOf="@+id/btnKeluar"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/profilephoto"
                         app:layout_constraintTop_toTopOf="@+id/profilephoto"
@@ -145,6 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/corneratas"
+                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,11 +169,11 @@
                     <LinearLayout
                         android:id="@+id/card1"
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/card_profil"
-                        android:backgroundTint="@color/white"
-                        android:elevation="10dp"
+                        android:backgroundTint="@color/menu_complete"
+                        android:elevation="20dp"
                         android:gravity="center"
                         android:orientation="vertical"
                         app:layout_column="0"
@@ -180,13 +181,20 @@
                         app:layout_gravity="fill_horizontal"
                         app:layout_row="0">
 
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/completed"
+                            />
+
                         <TextView
                             android:id="@+id/value_stat"
                             android:layout_width="wrap_content"
+                            android:layout_marginTop="6dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/ppbold"
                             android:text="0"
-                            android:textColor="@color/stat_number"
+                            android:textColor="@color/black_smoke"
                             android:textSize="24sp" />
 
                         <TextView
@@ -204,11 +212,11 @@
                     <LinearLayout
                         android:id="@+id/card2"
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/card_profil"
-                        android:backgroundTint="@color/white"
-                        android:elevation="10dp"
+                        android:backgroundTint="@color/menu_rating"
+                        android:elevation="20dp"
                         android:gravity="center"
                         android:orientation="vertical"
                         app:layout_column="1"
@@ -216,13 +224,112 @@
                         app:layout_gravity="fill_horizontal"
                         app:layout_row="0">
 
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/star"
+                            />
+
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/rating_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/ppbold"
+                            android:layout_marginTop="6dp"
                             android:text="4.9"
-                            android:textColor="@color/stat_number"
+                            android:textColor="@color/black_smoke"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/textView51"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/ppmedium"
+                            android:text="Rating"
+                            android:textColor="@color/stat_label" />
+
+                    </LinearLayout>
+
+                </androidx.gridlayout.widget.GridLayout>
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:columnCount="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gridLayout"
+                    app:rowCount="1">
+
+                    <!-- Card 1: Pesanan Selesai -->
+                    <!-- Menggunakan LinearLayout di dalam lebih sederhana untuk kasus ini -->
+                    <LinearLayout
+                        android:id="@+id/card3"
+                        android:layout_width="0dp"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clipToOutline="true"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/card_profil"
+                        android:backgroundTint="#e0fae7"
+                        android:elevation="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_column="0"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="fill_horizontal"
+                        app:layout_row="0">
+
+                        <ImageView
+                            android:id="@+id/Menu_Pengetauran"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:tint="#27ae60"
+                            android:src="@drawable/clock"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/ppmedium"
+                            android:text="Riwayat"
+                            android:textColor="@color/stat_label" />
+
+                    </LinearLayout>
+
+                    <!-- Card 2: Rating Rata-Rata -->
+                    <LinearLayout
+                        android:id="@+id/card4"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clipToOutline="true"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/card_profil"
+                        android:backgroundTint="@color/menu_wallet"
+                        android:elevation="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_column="1"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="fill_horizontal"
+                        app:layout_row="0">
+
+                        <ImageView
+                            android:id="@+id/textView6"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:fontFamily="@font/ppbold"
+                            android:src="@drawable/wallet"
                             android:textSize="24sp" />
 
                         <TextView
@@ -231,12 +338,99 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/ppmedium"
-                            android:text="Rating Rata-Rata"
+                            android:text="Dompet"
                             android:textColor="@color/stat_label" />
 
                     </LinearLayout>
 
                 </androidx.gridlayout.widget.GridLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/corneratas"
+                    android:backgroundTint="#eef2f6"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+                    app:layout_constraintVertical_bias="0.309">
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/ppmedium"
+                        android:text="Inovasi Tambahan"
+                        android:textColor="@color/black_smoke"
+                        android:textSize="18sp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cardInovasi1"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clipToOutline="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_card_pesan"
+                        android:backgroundTint="@color/white">
+
+                        <ImageView
+                            android:id="@+id/ic_anlit"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/ppbold"
+                            android:padding="4dp"
+                            android:src="@drawable/analytics"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.09"
+                            app:tint="#7c91a8" />
+
+                        <TextView
+                            android:id="@+id/textView38"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/ppmedium"
+                            android:gravity="center_vertical"
+                            android:text="Analisa Pengguna"
+                            android:textColor="@color/stat_label"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ic_anlit"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.068"
+                            app:layout_constraintStart_toEndOf="@+id/ic_anlit"
+                            app:layout_constraintTop_toTopOf="@+id/ic_anlit"
+                            app:layout_constraintVertical_bias="0.328" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/stat_label"
+                            android:text="Melihat statistik mendalam tentang aktivitas Anda."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/textView38"
+                            app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

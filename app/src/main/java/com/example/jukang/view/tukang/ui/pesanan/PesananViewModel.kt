@@ -27,17 +27,20 @@ class PesananViewModel: ViewModel() {
             _isLoading.value = true
             try {
                 val response = RetrofitClient.Jukang.getPEsananTukang(id_tukang)
+                val filteredList = response.data?.filter { it?.statusCode == "pending" || it?.statusCode == "diterima" }
                 _isLoading.value = false
-                if(response.status == "success"){
-                    _data.value = response.data as List<TransaksiItem>?
-                    _isEmpty.value = false
-                }else{
+                if(response.data?.isEmpty() == true){
                     _isEmpty.value = true
+                }else{
+                    _data.value = filteredList as List<TransaksiItem>?
+                    _isEmpty.value = false
                 }
 
             }catch (e:Exception){
                 e.printStackTrace()
                 _errorMessage.value = "Failed to fetch data. reason :${e.message}"
+                _isLoading.value = false
+                _isEmpty.value = true
             }
         }
     }

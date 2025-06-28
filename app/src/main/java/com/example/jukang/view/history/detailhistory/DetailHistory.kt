@@ -12,6 +12,8 @@ import com.example.jukang.data.Room.historyRiwayat
 import com.example.jukang.data.Room.historycheckDAO
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
+import com.example.jukang.data.response.UpdateStatusReq
+import com.example.jukang.data.response.UpdateStatusTransaksiResponse
 import com.example.jukang.databinding.ActivityDetailHistoryBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +44,7 @@ class DetailHistory : AppCompatActivity() {
         val total = intent.getStringExtra(total)
         val spesialis = intent.getStringExtra(spesialis)
         val tanggalDibuat = intent.getStringExtra(tanggalDibuat)
+        val idTRansaksksis = intent.getStringExtra(idTRansaksksi)
 
         val preferences = getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val namauser = preferences.getString("NAME", "")
@@ -91,6 +94,7 @@ class DetailHistory : AppCompatActivity() {
                     false,
                     idtukang.toString()
                 )
+                updateConfirmation(idTRansaksksis.toString(), "Selesai")
                 saveStatus(tanggalDibuat.toString(), namauser.toString())
             }
         }
@@ -143,6 +147,32 @@ class DetailHistory : AppCompatActivity() {
 
     }
 
+    fun updateConfirmation(id_transaksi: String, status: String) {
+        val req = UpdateStatusReq(
+            id_transaksi = id_transaksi,
+            status_code = status
+        )
+
+        val call = RetrofitClient.Jukang.updateTransaksiStatus(req)
+        call.enqueue(object : Callback<UpdateStatusTransaksiResponse> {
+            override fun onResponse(
+                call: Call<UpdateStatusTransaksiResponse>,
+                response: Response<UpdateStatusTransaksiResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+//                    binding.status.text = status
+//                    Toast.makeText(itemView.context, data?.message.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateStatusTransaksiResponse>, t: Throwable) {
+                Toast.makeText(this@DetailHistory, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
     companion object {
         const val idtukangdetail = "idtukang"
         const val namatukangdetail = "nama"
@@ -151,5 +181,6 @@ class DetailHistory : AppCompatActivity() {
         const val total = "total"
         const val spesialis = "rating"
         const val tanggalDibuat = "tanggal dibuat"
+        const val idTRansaksksi = "id transaksi"
     }
 }

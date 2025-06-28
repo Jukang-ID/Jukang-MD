@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.databinding.FragmentDashboardTukangBinding
 import com.example.jukang.view.auth.welcome.WelcomeActivity
+import com.example.jukang.view.tukang.ui.riwayat.HistoryTukangActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +23,7 @@ class dashboard_tukang : Fragment() {
 
     private var _binding: FragmentDashboardTukangBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: DashboardViewmodel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +45,11 @@ class dashboard_tukang : Fragment() {
         val role = pref.getString("ROLE", null)
         val uid = pref.getString("UID", null)
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.fetch(uid.toString())
+            binding.refresh.isRefreshing = false
+        }
+
         binding.namaprofile.text = name
         binding.emailprofile.text = email
 
@@ -49,9 +57,26 @@ class dashboard_tukang : Fragment() {
             .load(photo)
             .into(binding.imgProfil)
 
+        viewModel = DashboardViewmodel()
+        viewModel.fetch(uid.toString())
+
+        viewModel.detailTukang.observe(viewLifecycleOwner, Observer {
+            binding.ratingValue.text = it ?: "0"
+        })
+
+        viewModel.transaksi.observe(viewLifecycleOwner, Observer {
+            binding.valueStat.text = it.toString()
+        })
+
+
         binding.badge.text = role
 
-        Toast.makeText(requireContext(), uid, Toast.LENGTH_SHORT).show()
+        binding.card3.setOnClickListener {
+            val intent = Intent(requireContext(), HistoryTukangActivity::class.java)
+            startActivity(intent)
+        }
+
+//        Toast.makeText(requireContext(), uid, Toast.LENGTH_SHORT).show()
 
         binding.btnKeluar.setOnClickListener{
             FirebaseAuth.getInstance().signOut()

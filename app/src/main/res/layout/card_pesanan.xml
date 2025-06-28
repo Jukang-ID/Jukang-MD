@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="2dp"
     android:layout_marginHorizontal="6dp"
+    android:layout_marginVertical="2dp"
     app:cardCornerRadius="14dp"
     app:cardElevation="2dp"> <!-- Meningkatkan elevasi untuk bayangan yang lebih menonjol -->
 
@@ -20,7 +19,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/cornergambar"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
@@ -45,22 +43,22 @@
             app:layout_constraintStart_toEndOf="@+id/photourls"
             app:layout_constraintTop_toTopOf="@+id/photourls" />
 
-    <TextView
-        android:id="@+id/lokasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/location_badge"
-        android:fontFamily="@font/ppreguler"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
-        android:text="Tangerang"
-        android:textColor="@color/location_text"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/price"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/price"
-        app:layout_constraintTop_toBottomOf="@+id/price" />
+        <TextView
+            android:id="@+id/lokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/location_badge"
+            android:fontFamily="@font/ppreguler"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="Tangerang"
+            android:textColor="@color/location_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/price"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/price"
+            app:layout_constraintTop_toBottomOf="@+id/price" />
 
         <TextView
             android:id="@+id/price"
@@ -77,6 +75,31 @@
             app:layout_constraintStart_toEndOf="@+id/photourls"
             app:layout_constraintTop_toBottomOf="@+id/NamaTukang" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photourls">
+
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/badge_tukang"
+                android:fontFamily="@font/ppmedium"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="6dp"
+                android:text="Resparasi atap"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayout3"
             android:layout_width="match_parent"
@@ -84,6 +107,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
+            android:visibility="gone"
             app:columnCount="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ppbold"
-                    android:text="3-2 Jam"
+                    android:text="2-3 Jam"
                     android:textColor="@color/stat_number"
                     android:textSize="16sp" />
 
@@ -163,35 +187,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
-            android:elevation="10dp"
             android:background="@drawable/background_card_pesan"
+            android:elevation="10dp"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photourls">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="6dp">
-
-                <TextView
-                    android:id="@+id/tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/badge_tukang"
-                    android:fontFamily="@font/ppmedium"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="6dp"
-                    android:text="Resparasi atap"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -230,43 +234,94 @@
         </LinearLayout>
 
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:columnCount="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/gridLayout3"
-        app:layout_constraintStart_toStartOf="@+id/gridLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout3"
-        app:rowCount="1">
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            app:columnCount="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout3"
+            app:rowCount="1">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ulang"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ulang"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_preview_ulang"
+                android:elevation="0dp"
+                android:fontFamily="@font/ppbold"
+                android:text="Kontak"
+                android:textAllCaps="false"
+                android:textColor="#666"
+                app:backgroundTint="@null"
+                app:elevation="0dp"
+                app:icon="@drawable/phone"
+                app:iconGravity="textStart"
+                app:iconSize="20dp"
+                app:iconTint="#666"
+                app:layout_column="0" />
+
+            <LinearLayout
+                android:id="@+id/btnaccept"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_pesanan_tukang"
+                android:clickable="true"
+                android:clipToOutline="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="0">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_acc" />
+
+                <TextView
+                    android:id="@+id/BtnTestAccpet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/ppbold"
+                    android:text="Konfirmasi"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <TextView
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/btn_preview_ulang"
-            android:elevation="0dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/badge_provinsi"
             android:fontFamily="@font/ppmedium"
-            android:text="Kontak"
-            android:textAllCaps="false"
-            android:textColor="#666"
-            app:backgroundTint="@null"
-            app:elevation="0dp"
-            app:icon="@drawable/histroy"
-            app:iconGravity="textStart"
-            app:iconSize="20dp"
-            app:iconTint="#666"
-            app:layout_column="0" />
+            android:padding="8dp"
+            android:text="Pending"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/btnaccept"
-            android:layout_width="100dp"
+            android:id="@+id/btnLokasi"
+            android:layout_width="0dp"
             android:layout_height="50dp"
-            android:background="@drawable/btn_pesanan_tukang"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_trek_lokasi"
             android:clickable="true"
             android:clipToOutline="true"
             android:focusable="true"
@@ -277,39 +332,29 @@
             android:paddingEnd="12dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
+            app:layout_constraintEnd_toEndOf="@+id/gridLayout2"
+            app:layout_constraintStart_toStartOf="@+id/gridLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
             app:layout_row="0">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_acc" />
+                android:src="@drawable/map" />
 
             <TextView
+                android:id="@+id/BtnTestsAccpet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/ppbold"
-                android:text="Konfirmasi"
+                android:text="Lacak Pesanan"
                 android:textColor="@color/white" />
 
         </LinearLayout>
 
-    </androidx.gridlayout.widget.GridLayout>
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/badge_provinsi"
-            android:textColor="@color/white"
-            android:fontFamily="@font/ppmedium"
-            android:padding="8dp"
-            android:text="Pending"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Pembatas (lebih halus) -->
 
@@ -318,5 +363,6 @@
         <!-- Tombol Booking -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.cardview.widget.CardView>

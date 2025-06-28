@@ -4,6 +4,7 @@ import ORSResponse
 import RouteRequest
 import com.example.jukang.data.response.BeritaResponse
 import com.example.jukang.data.response.DetailTukang
+import com.example.jukang.data.response.DetailTukangResponse
 import com.example.jukang.data.response.History
 import com.example.jukang.data.response.Login
 import com.example.jukang.data.response.Orm
@@ -44,7 +45,7 @@ interface Apiservice {
 interface ApiService2 {
     @POST("register")
     fun register(
-        @Body registerReq : registerRequest
+        @Body registerReq: registerRequest
     ): Call<Register>
 
     @GET("tukangbylokasi")
@@ -62,7 +63,7 @@ interface ApiService2 {
 
     @POST("users/login")
     fun login(
-        @Body loginReq : loginRequest
+        @Body loginReq: loginRequest
     ): Call<Login>
 
     @GET("tukang")
@@ -70,39 +71,39 @@ interface ApiService2 {
 
     @GET("detailtukang/{id}")
     suspend fun getDetailTukang(
-        @Path("id") id:String
-    ):DetailTukang
+        @Path("id") id: String
+    ): DetailTukangResponse
 
     @GET("tukang/pesan/{id}")
     suspend fun getPEsananTukang(
-        @Path("id") id:String
-    ) :TransaksiData
+        @Path("id") id: String
+    ): TransaksiData
 
     @POST("addtransaksi")
-     fun addtransaksi(
+    fun addtransaksi(
         @Body transaksi: paymentReq
     ): Call<Payment>
 
-     @POST("tukang/{id}")
-     fun updateTukang(
-         @Body tukang: TukangReq,
-         @Path("id") idTukang:String
-     ): Call<Tukang>
+    @POST("tukang/{id}")
+    fun updateTukang(
+        @Body tukang: TukangReq,
+        @Path("id") idTukang: String
+    ): Call<Tukang>
 
-     @POST("/search")
-     fun search(
-         @Body search:requestTukang
-     ):Call<TukangDomisili>
+    @POST("/search")
+    fun search(
+        @Body search: requestTukang
+    ): Call<TukangDomisili>
 
-     @POST("/pendaftaran")
-     fun addPEndaftaran(
-         @Body pendaftaran:PendaftaranReq
-     ):Call<PendaftaranResponse>
+    @POST("/pendaftaran")
+    fun addPEndaftaran(
+        @Body pendaftaran: PendaftaranReq
+    ): Call<PendaftaranResponse>
 
-     @GET("riwayat/{id}")
-        suspend fun getTransaksi(
-            @Path("id") idUser:String
-        ): History
+    @GET("riwayat/{id}")
+    suspend fun getTransaksi(
+        @Path("id") idUser: String
+    ): History
 
     @Multipart
     @POST("upload")

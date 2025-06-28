@@ -44,6 +44,7 @@ class AdapterHistory(private val listHistory: List<DataItem>) :RecyclerView.Adap
             intent.putExtra(DetailHistory.total, listHistory[position].total)
             intent.putExtra(DetailHistory.spesialis, listHistory[position].spesialis)
             intent.putExtra(DetailHistory.tanggalDibuat, listHistory[position].createdAt)
+            intent.putExtra(DetailHistory.idTRansaksksi, listHistory[position].idTransaksi)
             holder.itemView.context.startActivity(intent)
         }
     }

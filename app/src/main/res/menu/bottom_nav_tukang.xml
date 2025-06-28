@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/dashboard_tukang"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/activity"
         android:title="Beranda" />
 
 <!--    <item-->
