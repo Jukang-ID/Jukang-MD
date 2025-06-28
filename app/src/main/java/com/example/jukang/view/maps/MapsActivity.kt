@@ -129,7 +129,12 @@ class MapsActivity : AppCompatActivity() {
         binding.btnAmbilAlamat.setOnClickListener {
             val alamat = binding.tvAddress.text.toString()
             val kota = binding.domisili.text.toString()
-            updateAlamat(alamat,kota,emailUser.toString())
+
+            val lat = binding.tvCoordinates.text.toString().split(",")[0]
+            val lon = binding.tvCoordinates.text.toString().split(",")[1]
+
+
+            updateAlamat(alamat,kota,emailUser.toString(),lat,lon)
             finish()
         }
 
@@ -152,14 +157,16 @@ class MapsActivity : AppCompatActivity() {
         hideSystemUI()
     }
 
-    fun updateAlamat(alamat: String, kota: String,email:String) {
+    fun updateAlamat(alamat: String, kota: String,email:String,lat:String,lon:String) {
         CoroutineScope(Dispatchers.IO).launch {
             val data = dao.getAlamat(email)
             if (data != null) {
                 dao.update(
                     data.copy(
                         alamat = alamat,
-                        kota = kota
+                        kota = kota,
+                        lat = lat,
+                        lon = lon
                     )
                 )
             }else{
@@ -167,7 +174,9 @@ class MapsActivity : AppCompatActivity() {
                     AlamatLengkap(
                         alamat = alamat,
                         kota = kota,
-                        namaUser = email
+                        namaUser = email,
+                        lat = lat,
+                        lon = lon
                     )
                 )
             }

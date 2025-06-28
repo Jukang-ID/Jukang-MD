@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_marginVertical="2dp"
+    android:layout_marginHorizontal="6dp"
     app:cardCornerRadius="14dp"
     app:cardElevation="2dp"> <!-- Meningkatkan elevasi untuk bayangan yang lebih menonjol -->
 
@@ -14,25 +15,26 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/photourls"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/cornergambar"
-        android:clipToOutline="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/photourls"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/cornergambar"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
+        <TextView
             android:id="@+id/NamaTukang"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:ellipsize="end"
             android:fontFamily="@font/ppbold"
             android:maxLines="1"
@@ -75,139 +77,157 @@
             app:layout_constraintStart_toEndOf="@+id/photourls"
             app:layout_constraintTop_toBottomOf="@+id/NamaTukang" />
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:columnCount="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:rowCount="1">
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            app:columnCount="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            app:rowCount="1">
+
+            <LinearLayout
+                android:id="@+id/card21"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:background="@drawable/background_card_pesan"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill_horizontal"
+                app:layout_row="0">
+
+                <TextView
+                    android:id="@+id/jadwal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ppbold"
+                    android:text="3-2 Jam"
+                    android:textColor="@color/stat_number"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/ppmedium"
+                    android:text="Waktu Kerja"
+                    android:textColor="@color/stat_label" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card2"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/background_card_pesan"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill_horizontal"
+                app:layout_row="0">
+
+                <TextView
+                    android:id="@+id/jadwal_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ppbold"
+                    android:text="Hari Ini"
+                    android:textColor="@color/stat_number"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/ppmedium"
+                    android:text="Jadwal"
+                    android:textColor="@color/stat_label" />
+
+            </LinearLayout>
+
+        </androidx.gridlayout.widget.GridLayout>
 
         <LinearLayout
-            android:id="@+id/card21"
+            android:id="@+id/linearLayout3"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:background="@drawable/background_card_pesan"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_column="0"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            app:layout_row="0">
-
-            <TextView
-                android:id="@+id/jadwal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ppbold"
-                android:text="3-2 Jam"
-                android:textColor="@color/stat_number"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/ppmedium"
-                android:text="Waktu Kerja"
-                android:textColor="@color/stat_label" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/card2"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/background_card_pesan"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
             android:elevation="10dp"
-            android:gravity="center"
+            android:background="@drawable/background_card_pesan"
             android:orientation="vertical"
-            app:layout_column="1"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            app:layout_row="0">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photourls">
 
-            <TextView
-                android:id="@+id/jadwal_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ppbold"
-                android:text="Hari Ini"
-                android:textColor="@color/stat_number"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/ppmedium"
-                android:text="Jadwal"
-                android:textColor="@color/stat_label" />
-
-        </LinearLayout>
-
-    </androidx.gridlayout.widget.GridLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_card_pesan"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photourls">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="6dp">
-
-            <TextView
-                android:id="@+id/tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:layout_marginTop="4dp"
-                android:layout_weight="0"
-                android:background="@drawable/badge_tukang"
-                android:fontFamily="@font/ppmedium"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="6dp"
-                android:text="Resparasi atap"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="6dp">
-
-            <TextView
-                android:id="@+id/deskripsiPerbaikkan"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:ellipsize="end"
-                android:layout_marginHorizontal="4dp"
-                android:layout_marginVertical="4dp"
-                android:text="deskripsi" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="6dp">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/badge_tukang"
+                    android:fontFamily="@font/ppmedium"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="6dp"
+                    android:text="Resparasi atap"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:padding="6dp">
+
+                <TextView
+                    android:id="@+id/Alamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginVertical="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="Alamat" />
+
+                <TextView
+                    android:id="@+id/deskripsiPerbaikkan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginVertical="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="deskripsi" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     <androidx.gridlayout.widget.GridLayout
@@ -277,7 +297,21 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
-    <!-- Pembatas (lebih halus) -->
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/badge_provinsi"
+            android:textColor="@color/white"
+            android:fontFamily="@font/ppmedium"
+            android:padding="8dp"
+            android:text="Pending"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Pembatas (lebih halus) -->
 
         <!-- Bagian Rating (dikelompokkan) -->
 

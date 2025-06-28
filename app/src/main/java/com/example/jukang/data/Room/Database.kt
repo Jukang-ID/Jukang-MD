@@ -3,6 +3,8 @@ package com.example.jukang.data.Room
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @androidx.room.Database(entities = [historyRiwayat::class], version = 1, exportSchema = false)
 abstract class Database:RoomDatabase() {
@@ -50,7 +52,7 @@ abstract class AlamatDatabase:RoomDatabase(){
 }
 
 
-@androidx.room.Database(entities = [AlamatLengkap::class], version = 1, exportSchema = false)
+@androidx.room.Database(entities = [AlamatLengkap::class], version = 2, exportSchema = false)
 abstract class AlamatLengkapDatabase:RoomDatabase(){
 
     abstract fun alamatLengkapDao():AlamatLengkapDao
@@ -65,9 +67,18 @@ abstract class AlamatLengkapDatabase:RoomDatabase(){
                     context.applicationContext,
                     AlamatLengkapDatabase::class.java,
                     "alamatLengkap_database"
-                ).build()
+                )
+                    .addMigrations(MIGRATION_1_2) // ← Tambahkan migrasi
+                    .build()
                 INSTANCE = instance
                 instance
+            }
+        }
+
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE alamatlengkap ADD COLUMN lat TEXT")
+                database.execSQL("ALTER TABLE alamatlengkap ADD COLUMN lon TEXT")
             }
         }
     }

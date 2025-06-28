@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class BeritaResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val data: DataBErita? = null,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,
@@ -32,7 +32,7 @@ data class PostsItem(
     val pubDate: String? = null
 )
 
-data class Data(
+data class DataBErita(
 
 	@field:SerializedName("image")
 	val image: String? = null,

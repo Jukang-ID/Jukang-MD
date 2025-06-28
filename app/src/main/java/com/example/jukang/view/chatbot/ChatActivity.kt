@@ -31,7 +31,6 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -22,6 +22,7 @@ import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
 import com.example.jukang.helper.struk.StrukActivity
 import com.example.jukang.view.maps.MapsActivity
+import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,8 +34,13 @@ import java.util.Calendar
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var db : AlamatLengkapDatabase
-    private lateinit var alamatdao : AlamatLengkapDao
+    private lateinit var db: AlamatLengkapDatabase
+    private lateinit var alamatdao: AlamatLengkapDao
+
+    var lat :String? = null
+    var lon :String? = null
+    var DomisiliPengguna :String? = null
+
 
     private var currentImage: Uri? = null
 
@@ -49,6 +55,7 @@ class PaymentActivity : AppCompatActivity() {
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val id = pref.getString("UID", "").toString()
         val nama = pref.getString("NAME", "").toString()
+        val photo = pref.getString("PHOTO", "").toString()
         val namatukang = intent.getStringExtra(namaTukang).toString()
         val harga = intent.getStringExtra(harga).toString()
         val spesialis = intent.getStringExtra(spesialis).toString()
@@ -59,6 +66,7 @@ class PaymentActivity : AppCompatActivity() {
         val idTukang = intent.getStringExtra(idTukang).toString()
         val email = pref.getString("EMAIL", "").toString()
         val domisili = intent.getStringExtra(domisili).toString()
+
 
         db = AlamatLengkapDatabase.getDatabase(this)
         alamatdao = db.alamatLengkapDao()
@@ -77,7 +85,7 @@ class PaymentActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.tanggal.setOnClickListener{
+        binding.tanggal.setOnClickListener {
             showDatePickerDialog()
         }
 
@@ -90,27 +98,51 @@ class PaymentActivity : AppCompatActivity() {
             val deskripsi = binding.deskripsiPerbaikan.text.toString().trim()
             val tanggal = binding.tanggal.text.toString().trim()
             val alamat = binding.Alamat.text.toString().trim()
+            val nomorTelepon = binding.nomorTelpon.text.toString().trim()
 
             Log.d(Tag, "onCreate: $status")
 
-            paymentMethod(id, nama, namatukang,idTukang ,spesialis, deskripsi, tanggal, alamat, tunai, harga,status)
+            paymentMethod(
+                id,
+                nama,
+                namatukang,
+                idTukang,
+                spesialis,
+                deskripsi,
+                tanggal,
+                alamat,
+                tunai,
+                harga,
+                status,
+                DomisiliPengguna.toString(),
+                lat.toString(),
+                lon.toString(),
+                nomorTelepon,
+                photo
+            )
         }
 
         CoroutineScope(Dispatchers.IO).launch {
             val alamat = alamatdao.getAlamatLive(email)
-            withContext(Dispatchers.Main){
-                alamat.observe(this@PaymentActivity){ alamat ->
-                    if(alamat != null){
+            withContext(Dispatchers.Main) {
+                alamat.observe(this@PaymentActivity) { alamat ->
+                    if (alamat != null) {
                         binding.Alamat.setText(alamat.alamat)
-                    }else{
+                        lat = alamat.lat
+                        lon = alamat.lon
+                        DomisiliPengguna = alamat.kota
+                    } else {
                         binding.Alamat.setText("")
+                        lat = ""
+                        lon = ""
+                        DomisiliPengguna = ""
                     }
                 }
             }
         }
 
         binding.btnLocationMarked.setOnClickListener {
-            val intent = Intent(this,MapsActivity::class.java)
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
 
         }
@@ -148,7 +180,12 @@ class PaymentActivity : AppCompatActivity() {
         alamat: String,
         metodePembayaran: String,
         total: String,
-        status: Boolean
+        status: Boolean,
+        domisili: String,
+        lat: String,
+        lon: String,
+        nomorTelepon: String,
+        photo: String
     ) {
         val request = paymentReq(
             user_id,
@@ -160,16 +197,21 @@ class PaymentActivity : AppCompatActivity() {
             tanggal,
             alamat,
             metodePembayaran,
-            total
+            total,
+            domisili = domisili,
+            lat = lat,
+            long = lon,
+            nomor_telpon = nomorTelepon,
+            photoprofile = photo
         )
 
         val call = RetrofitClient.Jukang.addtransaksi(request)
 
         call.enqueue(object : Callback<Payment> {
             override fun onResponse(call: Call<Payment>, response: Response<Payment>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     binding.progressBar2.visibility = View.GONE
-                    update(namatukang, spesialis, rating, status,idTukang)
+                    update(namatukang, spesialis, rating, status, idTukang)
                     Toast.makeText(this@PaymentActivity, "Berhasil", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PaymentActivity, StrukActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -181,19 +223,33 @@ class PaymentActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this@PaymentActivity, "Gagal : ${response.message()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PaymentActivity,
+                        "Gagal : ${response.message()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     binding.progressBar2.visibility = View.GONE
                 }
             }
 
             override fun onFailure(call: Call<Payment>, t: Throwable) {
-                Toast.makeText(this@PaymentActivity, "Barang sudah di booking orang", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@PaymentActivity,
+                    "Barang sudah di booking orang",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.e("TAG", "onFailure: ${t.localizedMessage}")
             }
         })
     }
 
-    private fun update(namatukang: String,spesialis: String,review: String,booked: Boolean,id: String){
+    private fun update(
+        namatukang: String,
+        spesialis: String,
+        review: String,
+        booked: Boolean,
+        id: String
+    ) {
         val requestUpdate = TukangReq(
             namatukang,
             spesialis,
@@ -203,7 +259,7 @@ class PaymentActivity : AppCompatActivity() {
         val call = RetrofitClient.Jukang.updateTukang(requestUpdate, id)
         call.enqueue(object : Callback<Tukang> {
             override fun onResponse(call: Call<Tukang>, response: Response<Tukang>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     Log.d(Tag, "onResponse: ${response.body()}")
                 } else {
                     Log.d(Tag, "onResponse: ${response.message()}")
@@ -223,17 +279,17 @@ class PaymentActivity : AppCompatActivity() {
 
     private val launcherGallary = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ){uri : Uri? ->
-        if(uri != null){
+    ) { uri: Uri? ->
+        if (uri != null) {
             currentImage = uri
             binding.imageViewSelectedPhoto.setImageURI(currentImage!!)
-        }else{
+        } else {
             Toast.makeText(this, "Gagal memilih gambar", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun checkStatus (){
-        if (binding.tukangNm.text.toString().isEmpty()){
+    fun checkStatus() {
+        if (binding.tukangNm.text.toString().isEmpty()) {
             binding.tukangNm.error = "Nama Tukang tidak boleh kosong"
             finish()
         }

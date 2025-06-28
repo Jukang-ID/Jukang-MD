@@ -13,6 +13,24 @@ data class History(
 
 data class DataItem(
 
+	@field:SerializedName("tukang_id")
+	val tukangId: String? = null,
+
+	@field:SerializedName("status_code")
+	val statusCode: String? = null,
+
+	@field:SerializedName("namalengkap")
+	val namalengkap: String? = null,
+
+	@field:SerializedName("id_transaksi")
+	val idTransaksi: String? = null,
+
+	@field:SerializedName("long")
+	val jsonMemberLong: String? = null,
+
+	@field:SerializedName("alamat")
+	val alamat: String? = null,
+
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
 
@@ -22,14 +40,8 @@ data class DataItem(
 	@field:SerializedName("user_id")
 	val userId: String? = null,
 
-	@field:SerializedName("namalengkap")
-	val namalengkap: String? = null,
-
 	@field:SerializedName("namatukang")
 	val namatukang: String? = null,
-
-	@field:SerializedName("tukang_id")
-	val idTukang: String? = null,
 
 	@field:SerializedName("metodePembayaran")
 	val metodePembayaran: String? = null,
@@ -37,15 +49,21 @@ data class DataItem(
 	@field:SerializedName("spesialis")
 	val spesialis: String? = null,
 
-	@field:SerializedName("id_transaksi")
-	val idTransaksi: String? = null,
-
 	@field:SerializedName("deskripsi")
 	val deskripsi: String? = null,
 
 	@field:SerializedName("tanggal")
 	val tanggal: String? = null,
 
-	@field:SerializedName("alamat")
-	val alamat: String? = null
+	@field:SerializedName("photoprofile")
+	val photoprofile: String? = null,
+
+	@field:SerializedName("domisili")
+	val domisili: String? = null,
+
+	@field:SerializedName("lat")
+	val lat: String? = null,
+
+	@field:SerializedName("nomor_telpon")
+	val nomorTelpon: String? = null
 )

@@ -8,12 +8,17 @@ import com.example.jukang.data.response.History
 import com.example.jukang.data.response.Login
 import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.Payment
+import com.example.jukang.data.response.PendaftaranReq
+import com.example.jukang.data.response.PendaftaranResponse
 import com.example.jukang.data.response.Register
 import com.example.jukang.data.response.Transaksi
 import com.example.jukang.data.response.TransaksiData
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
+import com.example.jukang.data.response.UpdateStatusReq
+import com.example.jukang.data.response.UpdateStatusTransaksiResponse
+import com.example.jukang.data.response.UploadResponse
 import com.example.jukang.data.response.Uploadfoto
 import com.example.jukang.data.response.UserByEmail
 import com.example.jukang.data.response.loginRequest
@@ -89,6 +94,11 @@ interface ApiService2 {
          @Body search:requestTukang
      ):Call<TukangDomisili>
 
+     @POST("/pendaftaran")
+     fun addPEndaftaran(
+         @Body pendaftaran:PendaftaranReq
+     ):Call<PendaftaranResponse>
+
      @GET("riwayat/{id}")
         suspend fun getTransaksi(
             @Path("id") idUser:String
@@ -98,8 +108,12 @@ interface ApiService2 {
     @POST("upload")
     fun uploadPhoto(
         @Part photo: MultipartBody.Part
-    ): Call<Uploadfoto> // Ganti sesuai response-mu
+    ): Call<UploadResponse> // Ganti sesuai response-mu
 
+    @POST("transaksi/update")
+    fun updateTransaksiStatus(
+        @Body transaksi: UpdateStatusReq
+    ): Call<UpdateStatusTransaksiResponse>
 }
 
 interface ApiService3 {

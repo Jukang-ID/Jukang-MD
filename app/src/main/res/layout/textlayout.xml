@@ -7,7 +7,7 @@
     android:padding="4dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         app:cardBackgroundColor="@color/category_text"
@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/messageTextView"
+            android:maxWidth="250dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ini adalah contoh pesan dari pengguna."

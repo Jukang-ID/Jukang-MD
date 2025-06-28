@@ -18,6 +18,7 @@ import com.example.jukang.data.Room.profileDAO
 import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.databinding.FragmentUserBinding
 import com.example.jukang.view.auth.welcome.WelcomeActivity
+import com.example.jukang.view.form.FormActivity
 import com.example.jukang.view.profile.ProfileActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -121,9 +122,9 @@ class UserFragment : Fragment() {
         }
 
         binding.Webview.setOnClickListener{
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://jukang-website.vercel.app/")
+            val intent = Intent(requireActivity(),FormActivity::class.java)
             startActivity(intent)
+
         }
 
         binding.AlamatCard.setOnClickListener {

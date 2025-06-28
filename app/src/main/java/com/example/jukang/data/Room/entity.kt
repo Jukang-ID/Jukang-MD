@@ -23,6 +23,8 @@ data class AlamatLengkap(
     val namaUser : String,
     val alamat : String,
     val kota : String,
+    val lat: String? = null, // ← sekarang nullable
+    val lon: String? = null  // ← sekarang nullable
 )
 
 @Entity(tableName = "profile")
