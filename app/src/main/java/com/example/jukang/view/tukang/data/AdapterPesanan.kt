@@ -30,10 +30,10 @@ class AdapterPesanan(private val listPesanan: MutableList<TransaksiItem>) :
 
 
         fun bind(pesanan: TransaksiItem) {
-            binding.NamaTukang.text = pesanan.namatukang
+            binding.NamaTukang.text = pesanan.dataUser?.namalengkap
             binding.lokasi.text = if(pesanan.domisili == "") "Tidak Ada" else pesanan.domisili
-            binding.price.text = pesanan.total
-            binding.tag.text = pesanan.spesialis
+            binding.price.text = pesanan.dataTukang?.priceRupiah
+            binding.tag.text = pesanan.dataTukang?.spesialis
             binding.deskripsiPerbaikkan.text = "Deskripsi : ${pesanan.deskripsi}"
             binding.status.text = pesanan.statusCode
 
@@ -64,6 +64,7 @@ class AdapterPesanan(private val listPesanan: MutableList<TransaksiItem>) :
                 when(pesanan.statusCode){
                     "pending" -> {
                         updateConfirmation(pesanan.idTransaksi.toString(), "diterima")
+                        binding.BtnTestAccpet.text = "Lihat Detail"
                         binding.gridLayout3.visibility = View.VISIBLE
                         binding.linearLayout3.visibility = View.VISIBLE
                     }

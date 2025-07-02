@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jukang.data.RetrofitClient
-import com.example.jukang.data.response.DetailTukang
-import com.example.jukang.data.response.TransaksiItem
 import kotlinx.coroutines.launch
 
 class DashboardViewmodel:ViewModel() {
@@ -19,11 +17,16 @@ class DashboardViewmodel:ViewModel() {
 
     fun fetch (id:String){
         viewModelScope.launch {
-            val responseTransaksi = RetrofitClient.Jukang.getPEsananTukang(id)
-            val responseDetailTukang = RetrofitClient.Jukang.getDetailTukang(id)
-            _transaksi.value = responseTransaksi.data?.size
-            _detailTukang.value = responseDetailTukang.detailTukang?.review
-            Log.d("Dashboard", "fetch: ${responseDetailTukang}")
+            try {
+                val responseTransaksi = RetrofitClient.Jukang.getPEsananTukang(id)
+                val responseDetailTukang = RetrofitClient.Jukang.getDetailTukang(id)
+                _transaksi.value = responseTransaksi.data?.size ?: 0
+                _detailTukang.value = responseDetailTukang.detailTukang?.review.toString() ?: "0"
+                Log.d("Dashboard", "fetch: ${responseDetailTukang}")
+            }catch (e:Exception){
+                Log.d("Dashboard", "fetch: ${e.message}")
+
+            }
         }
     }
 

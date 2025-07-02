@@ -1,6 +1,7 @@
 package com.example.jukang.view.dashboard.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -8,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.response.TukangDomisili
-import com.example.jukang.data.response.TukangItem
 import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.data.response.requestTukang
 import com.example.jukang.databinding.ActivitySearchBinding
@@ -21,7 +21,6 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var adapterTukang: AdapterTukang
-    private val tukangList: MutableList<TukangItem?> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +75,7 @@ class SearchActivity : AppCompatActivity() {
         // Menampilkan LoadingBiggy
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
+        binding.emptyPlaceholder.visibility = View.GONE
 
         val request = requestTukang(keyword)
         val call = RetrofitClient.Jukang.search(request)
@@ -88,6 +88,8 @@ class SearchActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val tukang = response.body()
                     val data = tukang?.tukangList?.filterNotNull()
+
+                    Log.d("Search", "onResponse: ${tukang}")
 
                     if (!data.isNullOrEmpty()) {
                         // Menampilkan RecyclerView jika ada data
@@ -107,10 +109,11 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<TukangDomisili>, t: Throwable) {
                 // Menyembunyikan LoadingBiggy
+                Log.d("Search", "onFailure: ${t.message}")
                 binding.progressBar.visibility = View.GONE
                 binding.recyclerView.visibility = View.GONE
                 binding.emptyPlaceholder.visibility = View.VISIBLE // Menampilkan placeholder jika gagal
-                Toast.makeText(this@SearchActivity, "Gagal mengambil data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SearchActivity, t.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

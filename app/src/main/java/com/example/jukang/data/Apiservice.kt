@@ -7,13 +7,16 @@ import com.example.jukang.data.response.DetailTukang
 import com.example.jukang.data.response.DetailTukangResponse
 import com.example.jukang.data.response.History
 import com.example.jukang.data.response.Login
+import com.example.jukang.data.response.OrderMidtransResponse
 import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.Payment
+import com.example.jukang.data.response.PaymentOrderRequest
 import com.example.jukang.data.response.PendaftaranReq
 import com.example.jukang.data.response.PendaftaranResponse
 import com.example.jukang.data.response.Register
 import com.example.jukang.data.response.Transaksi
 import com.example.jukang.data.response.TransaksiData
+import com.example.jukang.data.response.TransaksiItem
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
@@ -67,7 +70,10 @@ interface ApiService2 {
     ): Call<Login>
 
     @GET("tukang")
-    suspend fun getTukang(): Tukang
+    suspend fun getTukang(
+        @Query("domisili") domisili: String?=null,
+        @Query("booked") booked: Boolean? = null
+    ): Tukang
 
     @GET("detailtukang/{id}")
     suspend fun getDetailTukang(
@@ -78,6 +84,12 @@ interface ApiService2 {
     suspend fun getPEsananTukang(
         @Path("id") id: String
     ): TransaksiData
+
+
+    @POST("transaksi/buat")
+    fun getTokenMidtrans(
+        @Body transaksi: PaymentOrderRequest
+    ):Call<OrderMidtransResponse>
 
     @POST("addtransaksi")
     fun addtransaksi(
@@ -90,10 +102,15 @@ interface ApiService2 {
         @Path("id") idTukang: String
     ): Call<Tukang>
 
-    @POST("/search")
+    @POST("search")
     fun search(
         @Body search: requestTukang
     ): Call<TukangDomisili>
+
+    @GET("transaksi/{id}")
+    suspend fun getTransaksibyId(
+        @Path("id") id: String
+    ): TransaksiItem
 
     @POST("/pendaftaran")
     fun addPEndaftaran(

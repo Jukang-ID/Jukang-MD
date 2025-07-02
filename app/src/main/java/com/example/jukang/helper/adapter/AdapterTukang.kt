@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.jukang.data.response.TukangItem
 import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.databinding.CardtukangBinding
 import com.example.jukang.view.detailTukang.DetailActivity
@@ -18,8 +17,8 @@ class AdapterTukang(private var listTukang: MutableList<TukangListItem>) : Recyc
         fun bind(tukang: TukangListItem) {
             binding.NamaTukang.text = tukang.namatukang
             binding.Spesialis.text = tukang.spesialis
-            binding.price.text = "${tukang.priceRupiah} / Hari"
-            binding.rating.text = tukang.review
+            binding.price.text = "${tukang.priceRupiah} / ${tukang.harga?.satuan}"
+            binding.rating.text = tukang.review.toString()
             binding.lokasi.text = tukang.domisili
             Glide.with(itemView.context)
                 .load(tukang.photoUrl)
@@ -59,15 +58,17 @@ class AdapterTukang(private var listTukang: MutableList<TukangListItem>) : Recyc
 
         holder.binding.btnBooking.setOnClickListener {
             val tukangItem = listTukang[position]
+            val nominal = tukangItem.harga?.nominal ?: 0
             val intent = Intent(holder.itemView.context, PaymentActivity::class.java).apply {
                 putExtra(PaymentActivity.idTukang, tukangItem.tukangId)
                 putExtra(PaymentActivity.namaTukang, tukangItem.namatukang)
                 putExtra(PaymentActivity.spesialis, tukangItem.spesialis)
                 putExtra(PaymentActivity.gambarTukang, tukangItem.photoUrl)
                 putExtra(PaymentActivity.harga, tukangItem.priceRupiah)
-                putExtra(PaymentActivity.rating, tukangItem.review)
+                putExtra(PaymentActivity.rating, tukangItem.review.toString())
                 putExtra(PaymentActivity.booked, tukangItem.booked)
                 putExtra(PaymentActivity.domisili, tukangItem.domisili)
+                putExtra(PaymentActivity.amount, nominal)
             }
             holder.itemView.context.startActivity(intent)
         }

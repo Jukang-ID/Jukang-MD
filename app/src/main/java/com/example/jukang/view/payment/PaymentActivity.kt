@@ -1,8 +1,13 @@
 package com.example.jukang.view.payment
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,18 +16,30 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.bumptech.glide.Glide
+import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.Room.AlamatLengkapDao
 import com.example.jukang.data.Room.AlamatLengkapDatabase
+import com.example.jukang.data.response.OrderMidtransResponse
 import com.example.jukang.data.response.Payment
+import com.example.jukang.data.response.PaymentOrderRequest
 import com.example.jukang.data.response.Tukang
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.paymentReq
 import com.example.jukang.databinding.ActivityPaymentBinding
 import com.example.jukang.helper.struk.StrukActivity
+import com.example.jukang.service.createNotificationChannel
+import com.example.jukang.service.showNotification
+import com.example.jukang.view.dashboard.MainActivity
+import com.example.jukang.view.maps.MainApplication
 import com.example.jukang.view.maps.MapsActivity
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.midtrans.sdk.uikit.api.model.TransactionResult
+import com.midtrans.sdk.uikit.external.UiKitApi
+import com.midtrans.sdk.uikit.internal.util.UiKitConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,12 +54,61 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var db: AlamatLengkapDatabase
     private lateinit var alamatdao: AlamatLengkapDao
 
-    var lat :String? = null
-    var lon :String? = null
-    var DomisiliPengguna :String? = null
+
+    private val CHANNEL_ID = "Pembayaran"
+    private val NOTIFICATION_ID = 101
+
+    var lat: String? = null
+    var lon: String? = null
+    var DomisiliPengguna: String? = null
+
+    var deskripsi: String? = null
+    var tanggal: String? = null
+    var alamat: String? = null
+    var nomorTelepon: String? = null
+
+    var idTukangs: String? = null
+    var id_user: String? = null
+    var photoProfile: String? = null
+
+    var statusBooked: Boolean? = null
+    var ratingTukang: String? = null
+
+
 
 
     private var currentImage: Uri? = null
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.let {
+                    val transactionResult =
+                        it.getParcelableExtra<TransactionResult>(UiKitConstants.KEY_TRANSACTION_RESULT)
+                    if(transactionResult?.status == UiKitConstants.STATUS_SUCCESS){
+                        val request = paymentReq(
+                            user_id = id_user.toString(),
+                            tukang_id = idTukangs.toString(),
+                            deskripsi = deskripsi.toString(),
+                            tanggal = tanggal.toString(),
+                            alamat = alamat.toString(),
+                            metodePembayaran = transactionResult.paymentType,
+                            domisili = DomisiliPengguna.toString(),
+                            lat = lat.toString(),
+                            long = lon.toString(),
+                            nomor_telpon = nomorTelepon,
+                            photoprofile = photoProfile
+                        )
+                        statusBooked?.let { status ->
+                            paymentMethod(request,
+                                status,ratingTukang.toString())
+                        }
+                    }else{
+                        handleTransactionResult(transactionResult)
+                    }
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -52,75 +118,29 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.progressBar2.visibility = View.GONE
 
+        createNotificationChannel(
+            CHANNEL_ID, this
+        )
+
         val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
         val id = pref.getString("UID", "").toString()
         val nama = pref.getString("NAME", "").toString()
         val photo = pref.getString("PHOTO", "").toString()
+
         val namatukang = intent.getStringExtra(namaTukang).toString()
         val harga = intent.getStringExtra(harga).toString()
         val spesialis = intent.getStringExtra(spesialis).toString()
         val gambar = intent.getStringExtra(gambarTukang).toString()
-        val tunai = binding.tunai.text.toString()
         val status = intent.getBooleanExtra(booked, false)
         val rating = intent.getStringExtra(rating).toString()
         val idTukang = intent.getStringExtra(idTukang).toString()
         val email = pref.getString("EMAIL", "").toString()
         val domisili = intent.getStringExtra(domisili).toString()
+        val amount = intent.getIntExtra(PaymentActivity.amount, 0)
 
 
         db = AlamatLengkapDatabase.getDatabase(this)
         alamatdao = db.alamatLengkapDao()
-
-
-        Glide.with(this@PaymentActivity)
-            .load(gambar)
-            .into(binding.pototukang)
-
-        binding.tukangNm.text = namatukang
-        binding.harga.text = harga
-        binding.spesialisTk.text = spesialis
-        binding.posisi.text = domisili
-
-        binding.btnBAckPay.setOnClickListener {
-            finish()
-        }
-
-        binding.tanggal.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        binding.btnUploadPhoto.setOnClickListener {
-            launchGallery()
-        }
-
-        binding.btnPayment.setOnClickListener {
-            binding.progressBar2.visibility = View.VISIBLE
-            val deskripsi = binding.deskripsiPerbaikan.text.toString().trim()
-            val tanggal = binding.tanggal.text.toString().trim()
-            val alamat = binding.Alamat.text.toString().trim()
-            val nomorTelepon = binding.nomorTelpon.text.toString().trim()
-
-            Log.d(Tag, "onCreate: $status")
-
-            paymentMethod(
-                id,
-                nama,
-                namatukang,
-                idTukang,
-                spesialis,
-                deskripsi,
-                tanggal,
-                alamat,
-                tunai,
-                harga,
-                status,
-                DomisiliPengguna.toString(),
-                lat.toString(),
-                lon.toString(),
-                nomorTelepon,
-                photo
-            )
-        }
 
         CoroutineScope(Dispatchers.IO).launch {
             val alamat = alamatdao.getAlamatLive(email)
@@ -141,13 +161,118 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
+
+
+        Glide.with(this@PaymentActivity)
+            .load(gambar)
+            .into(binding.pototukang)
+
+        binding.tukangNm.text = namatukang
+        binding.harga.text = harga
+        binding.totalHarga.text = harga
+
+        binding.btnBAckPay.setOnClickListener {
+            finish()
+        }
+
+        binding.tanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        binding.btnUploadPhoto.setOnClickListener {
+            launchGallery()
+        }
+
+//        Toast.makeText(this, "$amount", Toast.LENGTH_SHORT).show()
+
+        binding.btnPayment.setOnClickListener {
+            binding.progressBar2.visibility = View.VISIBLE
+            deskripsi = binding.deskripsiPerbaikan.text.toString().trim()
+            tanggal = binding.tanggal.text.toString().trim()
+            alamat = binding.Alamat.text.toString().trim()
+            nomorTelepon = binding.nomorTelpon.text.toString().trim()
+            idTukangs = idTukang
+            id_user = id
+            photoProfile = photo
+            ratingTukang = rating
+            statusBooked = status
+
+//            Toast.makeText(this, "$idTukang $id_user", Toast.LENGTH_SHORT).show()
+
+
+//            val intent = Intent(this@PaymentActivity, StrukActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+////            intent.putExtra(StrukActivity.id_transaksi,data?.idTransaksi)
+//            startActivity(intent)
+
+            val requestToken = PaymentOrderRequest(
+                total = amount,
+                user_id = id
+                )
+            fetchTransactionToken(requestToken)
+        }
+
+
+
         binding.btnLocationMarked.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
 
         }
+    }
 
+    private fun fetchTransactionToken(request : PaymentOrderRequest) {
+        val call = RetrofitClient.Jukang.getTokenMidtrans(request)
 
+        call.enqueue(object : Callback<OrderMidtransResponse>{
+            override fun onResponse(
+                call: Call<OrderMidtransResponse>,
+                response: Response<OrderMidtransResponse>
+            ) {
+                if(response.isSuccessful){
+                    val data = response.body()
+                    val snaptoken = data?.token
+
+                    startMidtransPayment(snaptoken.toString())
+
+                }
+            }
+
+            override fun onFailure(p0: Call<OrderMidtransResponse>, p1: Throwable) {
+                Toast.makeText(this@PaymentActivity, "Failed : ${p1.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+    private fun startMidtransPayment(token: String) {
+        Log.d("PaymentFlowDebug", "3. Calling startMidtransPayment() with token: $token")
+
+        MainApplication.uiKitApi?.startPaymentUiFlow(
+            this,
+            launcher,
+            token
+        )
+    }
+
+    private fun handleTransactionResult(result: TransactionResult?) {
+        when (result?.status) {
+            UiKitConstants.STATUS_SUCCESS -> {
+                Toast.makeText(this, "Transaction Success", Toast.LENGTH_LONG).show()
+            }
+
+            UiKitConstants.STATUS_PENDING -> {
+                Toast.makeText(this, "Transaction Pending", Toast.LENGTH_LONG).show()
+            }
+
+            UiKitConstants.STATUS_FAILED -> {
+                Toast.makeText(this, "Transaction Failed", Toast.LENGTH_LONG).show()
+            }
+
+            else -> {
+                Toast.makeText(this, "Transaction Error", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -170,56 +295,29 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun paymentMethod(
-        user_id: String,
-        namalengkap: String,
-        namatukang: String,
-        id_tukang: String,
-        spesialis: String,
-        deskripsi: String,
-        tanggal: String,
-        alamat: String,
-        metodePembayaran: String,
-        total: String,
+        payment: paymentReq,
         status: Boolean,
-        domisili: String,
-        lat: String,
-        lon: String,
-        nomorTelepon: String,
-        photo: String
+        rating: String
     ) {
-        val request = paymentReq(
-            user_id,
-            namalengkap,
-            namatukang,
-            id_tukang,
-            spesialis,
-            deskripsi,
-            tanggal,
-            alamat,
-            metodePembayaran,
-            total,
-            domisili = domisili,
-            lat = lat,
-            long = lon,
-            nomor_telpon = nomorTelepon,
-            photoprofile = photo
-        )
-
-        val call = RetrofitClient.Jukang.addtransaksi(request)
+        val call = RetrofitClient.Jukang.addtransaksi(payment)
 
         call.enqueue(object : Callback<Payment> {
             override fun onResponse(call: Call<Payment>, response: Response<Payment>) {
                 if (response.isSuccessful) {
                     binding.progressBar2.visibility = View.GONE
-                    update(namatukang, spesialis, rating, status, idTukang)
+                    val data = response.body()?.data?.transaksi
+                    update(data?.dataTukang?.namatukang.toString(), data?.dataTukang?.spesialis.toString(), rating, status, payment.tukang_id)
+                    showNotification(
+                        this@PaymentActivity,
+                        CHANNEL_ID,
+                        NOTIFICATION_ID,
+                        "Pembayaran Dilakukan",
+                        "saat ini pembayaran sedang dilakukan"
+                    )
                     Toast.makeText(this@PaymentActivity, "Berhasil", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PaymentActivity, StrukActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.putExtra(StrukActivity.namatukangs, namatukang)
-                    intent.putExtra(StrukActivity.method, metodePembayaran)
-                    intent.putExtra(StrukActivity.total, total)
-                    intent.putExtra(StrukActivity.tanggal, tanggal)
-                    intent.putExtra(StrukActivity.id, id_tukang)
+                    intent.putExtra(StrukActivity.id_transaksi,data?.idTransaksi)
                     startActivity(intent)
                     finish()
                 } else {
@@ -306,5 +404,6 @@ class PaymentActivity : AppCompatActivity() {
         const val booked = "status"
         const val idTukang = "id"
         const val domisili = "domisili"
+        const val amount = ""
     }
 }

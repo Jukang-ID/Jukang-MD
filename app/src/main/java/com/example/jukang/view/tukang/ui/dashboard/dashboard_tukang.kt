@@ -65,7 +65,7 @@ class dashboard_tukang : Fragment() {
         })
 
         viewModel.transaksi.observe(viewLifecycleOwner, Observer {
-            binding.valueStat.text = it.toString()
+            binding.valueStat.text = it.toString() ?: "0"
         })
 
 

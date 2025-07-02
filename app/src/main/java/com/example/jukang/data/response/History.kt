@@ -22,6 +22,12 @@ data class DataItem(
 	@field:SerializedName("namalengkap")
 	val namalengkap: String? = null,
 
+	@field:SerializedName("dataUser")
+	val dataUser: ListUserItem? = null,
+
+	@field:SerializedName("dataTukang")
+	val dataTukang: DetailTukangs? = null,
+
 	@field:SerializedName("id_transaksi")
 	val idTransaksi: String? = null,
 

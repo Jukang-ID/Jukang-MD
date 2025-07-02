@@ -40,32 +40,50 @@ class MainActivity : AppCompatActivity() {
 
 
     private val requestPermissionLauncher = registerForActivityResult(
-       ActivityResultContracts.RequestPermission()
-    ){ isGranted ->
-        if(isGranted){
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
             Log.d("Home", "onCreate: permission granted")
-        }else{
+        } else {
             Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     fun PermissionLocation() {
-        when{
+        when {
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ) == PackageManager.PERMISSION_GRANTED
+                -> {
 //                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "PermissionLocation: IsGranted")
+
             }
+
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
     }
 
-    fun PermissionCamera(){
+    fun permissionNotification() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.d(TAG, "permissionNotification: Permission granted")
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    fun PermissionCamera() {
         when {
             ContextCompat.checkSelfPermission(
                 this,
@@ -73,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.d(TAG, "PermissionCamera: IsGranted")
             }
+
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
@@ -87,12 +106,14 @@ class MainActivity : AppCompatActivity() {
 
         PermissionLocation()
 
+        permissionNotification()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         checkStatusLogin()
 
         binding.fab.setOnClickListener {
-            val intent = Intent(this,CameraActivity::class.java)
+            val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_up, R.anim.fade_out)
 
@@ -103,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
 //        Toast.makeText(this, role, Toast.LENGTH_SHORT).show()
 
-        binding.ChatAi.setOnClickListener{
+        binding.ChatAi.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
         }
@@ -115,11 +136,12 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
     }
-    private fun checkStatusLogin(){
+
+    private fun checkStatusLogin() {
         val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token = sharedPreferences.getString("TOKEN", null)
-        val id = sharedPreferences.getString("UID",null)
-        if (id == null){
+        val id = sharedPreferences.getString("UID", null)
+        if (id == null) {
             val intent = Intent(this, WelcomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

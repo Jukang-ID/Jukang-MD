@@ -19,6 +19,12 @@ data class TransaksiItem(
 	@field:SerializedName("status_code")
 	val statusCode: String? = null,
 
+	@field:SerializedName("dataUser")
+	val dataUser: ListUserItem? = null,
+
+	@field:SerializedName("dataTukang")
+	val dataTukang: DetailTukangs? = null,
+
 	@field:SerializedName("namalengkap")
 	val namalengkap: String? = null,
 

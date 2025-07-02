@@ -30,18 +30,35 @@ class FormActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFormBinding
     private var currentImage: String? = null
-    private var currentImage2: Uri? = null
+    private var currentImage2: String? = null
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
             binding.imageViewPhotoKtp.setImageURI(uri)
+            binding.kirimBtn.isEnabled = false
             uploadGambarKTP(uri)
         } else {
             currentImage = null
             Toast.makeText(this, "Gagal memilih gambar", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private val launcherGallery1 = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            binding.imageViewPhotoProfile.setImageURI(uri)
+            binding.kirimBtn.isEnabled = false
+            uploadGambarProfile(uri)
+        } else {
+            Toast.makeText(this, "Gagal memilih gambar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun startGallery() {
+        launcherGallery1.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     fun startGallery1() {
@@ -97,6 +114,10 @@ class FormActivity : AppCompatActivity() {
             "Kecamatan Pontianak Tenggara"
         )
 
+        binding.buttonSelectPhotoProfile.setOnClickListener {
+            startGallery()
+        }
+
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, cities)
         binding.autoCompleteTextViewDomisili.setAdapter(adapter)
 
@@ -108,20 +129,33 @@ class FormActivity : AppCompatActivity() {
             "Reparasi aksesoris"
         )
 
-        val adapterSpesialis = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, spesialis)
+        val adapterSpesialis =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, spesialis)
         binding.autoCompleteTextViewSpesialis.setAdapter(adapterSpesialis)
 
         binding.buttonSelectPhotoKtp.setOnClickListener {
             startGallery1()
         }
 
+        val photoProfile = if (currentImage2 != null) {
+            currentImage2.toString()
+        } else {
+            photo.toString()
+        }
+
         binding.kirimBtn.setOnClickListener {
+
+            if(currentImage2 == null || currentImage == null){
+                Toast.makeText(this, "Gambar tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val request = PendaftaranReq(
                 user_id = id.toString(),
-                namalengkap = name.toString(),
+                namalengkap = binding.editTextNamaLengkap.text.toString(),
                 email = email.toString(),
                 domisili = binding.autoCompleteTextViewDomisili.text.toString(),
-                photoprofile = photo.toString(),
+                photoprofile = currentImage2.toString(),
                 photoktp = currentImage.toString(),
                 nomortelp = binding.editTextNomorTelp.text.toString(),
                 spesialis = binding.autoCompleteTextViewSpesialis.text.toString(),
@@ -132,8 +166,8 @@ class FormActivity : AppCompatActivity() {
         }
     }
 
-    fun uploadGambarKTP(uri:Uri){
-        val file = uriToFile(this,uri)
+    fun uploadGambarKTP(uri: Uri) {
+        val file = uriToFile(this, uri)
         val body = createMultipartFromFile(file)
 
         val call = RetrofitClient.Jukang.uploadPhoto(body)
@@ -143,9 +177,46 @@ class FormActivity : AppCompatActivity() {
                 call: Call<UploadResponse>,
                 response: Response<UploadResponse>
             ) {
-                if(response.isSuccessful){
-                    currentImage =response.body()?.data?.filePath
-                    Toast.makeText(this@FormActivity, "Berhasil Menggungah Gambar", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    currentImage = response.body()?.data?.filePath
+                    Toast.makeText(
+                        this@FormActivity,
+                        "Berhasil Menggungah Gambar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.kirimBtn.isEnabled = true
+
+                }
+            }
+
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                Toast.makeText(this@FormActivity, "Gagal : ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun uploadGambarProfile(uri: Uri) {
+        val file = uriToFile(this, uri)
+        val body = createMultipartFromFile(file)
+
+        val call = RetrofitClient.Jukang.uploadPhoto(body)
+
+        call.enqueue(object : Callback<UploadResponse> {
+            override fun onResponse(
+                call: Call<UploadResponse>,
+                response: Response<UploadResponse>
+            ) {
+                if (response.isSuccessful) {
+                    currentImage2 = response.body()?.data?.filePath
+
+                    Toast.makeText(
+                        this@FormActivity,
+                        "Berhasil Menggungah Gambar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.kirimBtn.isEnabled = true
+
                 }
             }
 

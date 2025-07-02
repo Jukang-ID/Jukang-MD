@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jukang.data.RetrofitClient
-import com.example.jukang.data.response.TukangItem
 import com.example.jukang.data.response.TukangListItem
 import kotlinx.coroutines.launch
 
@@ -23,6 +22,9 @@ class HomeViewModel : ViewModel() {
     private val _notifikasi = MutableLiveData<Boolean>()
     val notifikasi: LiveData<Boolean> get() = _notifikasi
 
+    private val _isEmpety = MutableLiveData<Boolean>()
+    val isEmpety: LiveData<Boolean> get() = _isEmpety
+
 
     // Fungsi untuk mengambil data tukang
     fun fetchTukang(domisli: String) {
@@ -30,20 +32,15 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 // Memanggil API untuk mendapatkan data tukang
-                val response = RetrofitClient.Jukang.getTukangByLokasi(domisli)
-                val dataTukang = response.tukangList?.filter { tukang ->
-                    tukang?.booked == false // Filter tukang yang belum dibooking
-                }
+                val response = RetrofitClient.Jukang.getTukang(domisli,false)
+                val dataTukang = response.tukang
 
-                Log.d("Home", "fetchTukang: $dataTukang")
-
-                // Memastikan data tidak kosong
-                if (dataTukang.isNullOrEmpty()) {
+                if(dataTukang?.isEmpty() == true){
+                    _isEmpety.value = true
                     _loadingHome.value = false
-                    _error.value = "Tidak ada tukang tersedia"
-                } else {
-                    _loadingHome.value = false
+                }else{
                     _dataTukang.value = dataTukang as List<TukangListItem>?
+                    _loadingHome.value = false
                 }
 
             } catch (e: Exception) {

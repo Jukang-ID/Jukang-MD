@@ -30,6 +30,8 @@ android {
         }
 
         buildConfigField("String", "GEMINI_API_KEY", "\"${localProperties.getProperty("GEMINI_API_KEY")}\"")
+        buildConfigField("String", "CLIENT_KEY_MT", "\"${localProperties.getProperty("CLIENT_KEY_MT")}\"")
+        buildConfigField("String", "SERVER_KEY_MT", "\"${localProperties.getProperty("SERVER_KEY_MT")}\"")
 
     }
 
@@ -137,6 +139,8 @@ dependencies {
     implementation("androidx.camera:camera-core:1.4.2")
 
     implementation ("com.airbnb.android:lottie:6.6.7")
+
+    implementation("com.midtrans:uikit:2.3.0-SANDBOX")
 
 
 }

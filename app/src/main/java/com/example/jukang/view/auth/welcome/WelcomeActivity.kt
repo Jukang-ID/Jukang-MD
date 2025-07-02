@@ -1,12 +1,17 @@
 package com.example.jukang.view.auth.welcome
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
@@ -17,6 +22,7 @@ import com.example.jukang.helper.loading.LoadingActivity
 import com.example.jukang.view.auth.login.LoginActivity
 import com.example.jukang.view.auth.regis.RegisterActivity
 import com.example.jukang.view.dashboard.MainActivity
+import com.example.jukang.view.dashboard.MainActivity.Companion
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -39,6 +45,7 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         checkStatusLogin()
+        permissionNotification()
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,6 +63,33 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.d("Home", "onCreate: permission granted")
+        } else {
+            Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    @SuppressLint("InlinedApi")
+    fun permissionNotification() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.d("Welcome", "permissionNotification: Permission granted")
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     fun fetchUser(name: String, notelp: String, email: String, password: String, photo: String) {
