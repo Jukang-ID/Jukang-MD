@@ -1,5 +1,6 @@
 package com.example.jukang.view.result
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jukang.databinding.ActivityResultBinding
+import com.example.jukang.helper.utils.ClassificationResult
 import com.example.jukang.helper.utils.ImageClassifier
 import com.example.jukang.view.dashboard.ui.search.SearchActivity
 
@@ -64,22 +66,25 @@ class ResultActivity : AppCompatActivity() {
             try {
                 // Konversi URI ke Bitmap
                 val bitmap = uriToBitmap(imageUri).copy(Bitmap.Config.ARGB_8888, true)
-                // Gunakan instance classifier yang sudah ada untuk klasifikasi
                 val result = classifier.classify(bitmap)
+                val topResultString = classifier.classifyAndGetAllResults(bitmap)
+                Log.d("MyApp", "Hasil simpel: $topResultString")
 
-                // Tampilkan hasil di TextView atau Toast
                 Handler().postDelayed({
-                    binding.LoadingScan.visibility = android.view.View.GONE
-                    val intent = Intent(this@ResultActivity,SearchActivity::class.java).apply {
-                        putExtra(SearchActivity.query, result)
+                    if(result == "Tidak diketahui"){
+                        Toast.makeText(this, "Objek tidak diketahui", Toast.LENGTH_SHORT).show()
+                    }else{
+                        binding.LoadingScan.visibility = android.view.View.GONE
+                        val intent = Intent(this@ResultActivity,SearchActivity::class.java).apply {
+                            putExtra(SearchActivity.query, result)
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
                 },2000)
 
 
             } catch (e: Exception) {
 
-                // Tangani error jika klasifikasi gagal
                 Log.d("Result", "setUpListener: ${e.message}", )
                 Toast.makeText(this, "Error saat klasifikasi: ${e.message}", Toast.LENGTH_SHORT).show()
                 e.printStackTrace()

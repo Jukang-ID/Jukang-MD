@@ -22,6 +22,7 @@ import com.example.jukang.data.response.TukangDomisili
 import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.UpdateStatusReq
 import com.example.jukang.data.response.UpdateStatusTransaksiResponse
+import com.example.jukang.data.response.UpdateTokenFcm
 import com.example.jukang.data.response.UploadResponse
 import com.example.jukang.data.response.Uploadfoto
 import com.example.jukang.data.response.UserByEmail
@@ -72,7 +73,8 @@ interface ApiService2 {
     @GET("tukang")
     suspend fun getTukang(
         @Query("domisili") domisili: String?=null,
-        @Query("booked") booked: Boolean? = null
+        @Query("booked") booked: Boolean? = null,
+        @Query("id") id: String?=null
     ): Tukang
 
     @GET("detailtukang/{id}")
@@ -90,6 +92,17 @@ interface ApiService2 {
     fun getTokenMidtrans(
         @Body transaksi: PaymentOrderRequest
     ):Call<OrderMidtransResponse>
+    
+    @POST("tukang/fcm/{id}")
+    fun updateFCM(
+        @Path("id") id: String,
+        @Body token: String
+    ): Call<UpdateTokenFcm>
+
+    @GET("transaksi/semua")
+    suspend fun getTransaksiUser(
+        @Query("user_id") id: String?=null
+    ):TransaksiData
 
     @POST("addtransaksi")
     fun addtransaksi(

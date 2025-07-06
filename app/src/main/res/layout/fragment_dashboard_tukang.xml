@@ -15,6 +15,8 @@
         android:fillViewport="true">
 
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:background="@drawable/background_gradient_profil"
@@ -22,8 +24,8 @@
 
             <TextView
                 android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="4dp"
+                android:layout_height="2dp"
                 android:fitsSystemWindows="true"
                 android:fontFamily="@font/ppbold"
                 android:text="Profile"
@@ -31,7 +33,6 @@
                 android:textSize="18sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
@@ -49,6 +50,16 @@
                     android:fitsSystemWindows="true"
                     android:layout_height="match_parent"
                     android:background="@drawable/background_gradient_profil">
+
+                    <ImageView
+                        android:id="@+id/role"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/badge"
+                        app:layout_constraintStart_toEndOf="@+id/badge"
+                        app:layout_constraintTop_toTopOf="@+id/badge"
+                        app:srcCompat="@drawable/img_2" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/profilephoto"

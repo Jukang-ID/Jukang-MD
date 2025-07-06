@@ -1,0 +1,67 @@
+package com.example.jukang.Firebase
+
+import android.util.Log
+import com.example.jukang.data.RetrofitClient
+import com.example.jukang.data.response.UpdateTokenFcm
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class MyFirebaseMessagingService :FirebaseMessagingService() {
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+
+        message.notification?.let {
+
+        }
+
+        message.data.isNotEmpty().let {
+            Log.d(TAG, "Message data payload: " + message.data)
+            // Kamu bisa ambil data custom di sini, misal:
+            // val transaksiId = remoteMessage.data["transaksi_id"]
+        }
+    }
+
+    private fun sendRegistrationToServer(token: String) {
+        Log.d(TAG, "Sending token to server (IMPLEMENT THIS!): $token")
+
+        val pref = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val idpengguna = pref.getString("UID", "")
+        val role = pref.getString("ROLE", "")
+
+        if(role == "tukang"){
+            val call = RetrofitClient.Jukang.updateFCM(idpengguna.toString(), token)
+            call.enqueue(object : Callback<UpdateTokenFcm> {
+                override fun onResponse(p0: Call<UpdateTokenFcm>, response: Response<UpdateTokenFcm>) {
+                    if(response.isSuccessful){
+                        Log.d("TAG", "onResponse: ${response.body()}")
+                    }
+                }
+
+                override fun onFailure(p0: Call<UpdateTokenFcm>, p1: Throwable) {
+
+                }
+
+            })
+        }
+
+    }
+
+
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+
+        sendRegistrationToServer(token)
+    }
+
+    companion object {
+        private const val TAG = "MyFirebaseMsgService"
+    }
+
+}

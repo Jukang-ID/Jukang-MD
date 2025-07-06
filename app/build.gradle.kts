@@ -117,6 +117,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.firebase:firebase-storage:21.0.1")
 
+    // Firebase Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
 
     implementation("com.github.razaghimahdi:Android-Loading-Dots:1.3.2")
 

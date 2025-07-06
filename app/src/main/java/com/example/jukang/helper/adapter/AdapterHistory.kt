@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jukang.data.response.DataItem
+import com.example.jukang.data.response.TransaksiItem
 import com.example.jukang.databinding.CardhistoryBinding
 import com.example.jukang.view.history.detailhistory.DetailHistory
 
-class AdapterHistory(private val listHistory: List<DataItem>) :RecyclerView.Adapter<AdapterHistory.ViewHolder>() {
+class AdapterHistory(private val listHistory: List<TransaksiItem>) :RecyclerView.Adapter<AdapterHistory.ViewHolder>() {
     class ViewHolder(val binding: CardhistoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(history:DataItem){
+        fun bind(history:TransaksiItem){
             binding.NamaTukangHistory.text = history.dataTukang?.namatukang
             binding.tanggalhist.text = history.tanggal
             binding.totalHistr.text = history.dataTukang?.priceRupiah

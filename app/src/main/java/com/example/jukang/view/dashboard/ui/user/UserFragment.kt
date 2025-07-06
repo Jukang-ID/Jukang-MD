@@ -7,16 +7,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jukang.R
+import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.Room.AlamatLengkapDao
 import com.example.jukang.data.Room.AlamatLengkapDatabase
 import com.example.jukang.data.Room.profileDAO
 import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.databinding.FragmentUserBinding
+import com.example.jukang.helper.bottomSheet.ChangeRole
 import com.example.jukang.view.auth.welcome.WelcomeActivity
 import com.example.jukang.view.form.FormActivity
 import com.example.jukang.view.profile.ProfileActivity
@@ -49,6 +52,10 @@ class UserFragment : Fragment() {
 
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        requireActivity().window.statusBarColor = resources.getColor(R.color.primary_button)
+
+        checkRoleAccept()
+
 
         db = AlamatLengkapDatabase.getDatabase(requireContext())
         alamatdao = db.alamatLengkapDao()
@@ -87,6 +94,8 @@ class UserFragment : Fragment() {
 
         val namauser = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
             .getString("EMAIL", "")
+
+
 
         checkStatusProfil(namauser.toString())
 
@@ -136,6 +145,36 @@ class UserFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+        binding.role.setOnClickListener {
+            val bottomsheet = ChangeRole.newInstance()
+            bottomsheet.show(requireActivity().supportFragmentManager, ChangeRole.TAG)
+        }
+    }
+
+    fun checkRoleAccept() {
+        val EMAIL = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
+            .getString("EMAIL", "")
+//        Toast.makeText(requireContext(), uid, Toast.LENGTH_SHORT).show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = RetrofitClient.Jukang.getUserByEmail(EMAIL.toString())
+//            Toast.makeText(requireContext(), response.tukang.toString(), Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                val role = response.listUser?.get(0)?.role
+                if (role == "tukang") {
+                    binding.role.visibility = View.VISIBLE
+                }else{
+                    binding.role.visibility = View.GONE
+                }
+            }
+        }
     }
 
     fun checkStatusProfil(namauser: String) {

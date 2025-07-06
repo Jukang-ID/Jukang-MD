@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.databinding.FragmentDashboardTukangBinding
+import com.example.jukang.helper.bottomSheet.ChangeRole
 import com.example.jukang.view.auth.welcome.WelcomeActivity
 import com.example.jukang.view.tukang.ui.riwayat.HistoryTukangActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -94,6 +95,15 @@ class dashboard_tukang : Fragment() {
         }
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.role.setOnClickListener {
+            val bottomsheet = ChangeRole.newInstance()
+            bottomsheet.show(requireActivity().supportFragmentManager, ChangeRole.TAG)
+        }
     }
 
 

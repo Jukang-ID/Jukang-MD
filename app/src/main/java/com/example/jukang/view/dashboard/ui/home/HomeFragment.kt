@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.Room.AlamatLengkapDao
 import com.example.jukang.data.Room.AlamatLengkapDatabase
@@ -62,6 +63,8 @@ class HomeFragment : Fragment() {
         // Inisialisasi binding
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 

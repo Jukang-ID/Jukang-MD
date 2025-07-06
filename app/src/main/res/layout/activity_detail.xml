@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="100dp"
@@ -28,7 +29,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -451,7 +451,6 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:elevation="30dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -462,11 +461,10 @@
             android:layout_width="150dp"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/btn_pesanan_tukang"
-            android:clickable="true"
             android:backgroundTint="@color/background_slate_800"
+            android:clickable="true"
             android:clipToOutline="true"
             android:fontFamily="@font/interbold"
             android:foreground="?attr/selectableItemBackground"
@@ -475,7 +473,10 @@
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.938"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView47"
@@ -487,7 +488,8 @@
             android:textColor="@color/text_slate_500"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/harga"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/harga"
@@ -495,6 +497,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Rp 100000000"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnBooking"

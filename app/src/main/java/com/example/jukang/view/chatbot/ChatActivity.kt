@@ -1,5 +1,6 @@
 package com.example.jukang.view.chatbot
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -7,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.example.jukang.R
 import com.example.jukang.databinding.ActivityChatBinding
 import com.example.jukang.helper.Message
 import com.example.jukang.helper.adapter.AdapterChat
+import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
@@ -25,6 +28,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var generativeModel: GenerativeModel
     private val messageList = mutableListOf<com.example.jukang.helper.Message>()
     private lateinit var messageAdapter: AdapterChat
+    private lateinit var chat: Chat
     private lateinit var chatRecyclerView: RecyclerView
     private lateinit var messageEditText: EditText
     private lateinit var sendButton: ImageButton
@@ -33,6 +37,15 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = resources.getColor(R.color.primary_button)
+        window.navigationBarColor = Color.WHITE
+
+        // 3. Ubah ikon di status bar & navigation bar menjadi gelap.
+        // Ini penting! Karena background-nya sekarang terang (putih), ikonnya harus gelap biar kelihatan.
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars = true
+            controller.isAppearanceLightNavigationBars = true
+        }
 
         // Inisialisasi UI
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
@@ -44,11 +57,19 @@ class ChatActivity : AppCompatActivity() {
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
+        val systemInstruction =
+            "Kamu adalah Jukang, asisten AI yang ramah, gaul, dan ahli dalam bidang pertukangan. Selalu gunakan bahasa yang santai dan mudah dimengerti seperti anak Gen Z. Berikan jawaban yang detail namun tetap asik dibaca."
+
         // Inisialisasi Model Gemini
         generativeModel = GenerativeModel(
             modelName = "gemini-1.5-flash-latest",
-            apiKey =  BuildConfig.GEMINI_API_KEY // Gunakan API Key dari BuildConfig
+            apiKey = BuildConfig.GEMINI_API_KEY, // Gunakan API Key dari BuildConfig,
+            systemInstruction = content {
+                text(systemInstruction)
+            }
         )
+
+        chat = generativeModel.startChat()
 
         // Setup tombol kirim
         sendButton.setOnClickListener {
@@ -69,7 +90,7 @@ class ChatActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 // Tampilkan indikator loading (opsional)
-                addMessage("Mengetik...", false)
+                addMessage("Lagi ngetik...", false)
 
                 // Kirim pesan ke Gemini API
                 val response = generativeModel.generateContent(
@@ -91,7 +112,11 @@ class ChatActivity : AppCompatActivity() {
                 removeLastMessage()
                 // Tampilkan pesan error
                 addMessage("Gagal mendapatkan respon: ${e.message}", false)
-                Toast.makeText(this@ChatActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ChatActivity,
+                    "Error: ${e.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
