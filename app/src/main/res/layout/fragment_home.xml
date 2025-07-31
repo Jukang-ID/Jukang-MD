@@ -13,15 +13,34 @@
         android:layout_height="match_parent"
         tools:context=".view.dashboard.ui.home.HomeFragment">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:id="@+id/appbar"
+                android:layout_height="wrap_content"
+                app:titleTextAppearance="@style/Toolbar.Title.Bold"
+                app:titleTextColor="@color/jukangTheme"
+                android:minHeight="?attr/actionBarSize"
+                app:navigationIcon="@drawable/aplikasijukangsvg"
+                app:menu="@menu/appbar_home"
+                app:title="@string/app_name"
+                app:subtitle="Hello, username"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@id/cardprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            tools:layout_editor_absoluteY="127dp">
 
             <ImageView
                 android:id="@+id/photourl"
@@ -112,20 +131,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/progressBar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:lottie_fileName="loading.json"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/listTukang"
             app:layout_constraintEnd_toEndOf="@+id/listTukang"
             app:layout_constraintStart_toStartOf="@+id/listTukang"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.478" />
+            app:layout_constraintVertical_bias="0.478"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/erromes"
@@ -143,6 +163,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/erromes"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/placeholder_home" />
 

@@ -25,17 +25,18 @@ class HomeViewModel : ViewModel() {
     private val _isEmpety = MutableLiveData<Boolean>()
     val isEmpety: LiveData<Boolean> get() = _isEmpety
 
+    var repository = HomeRepository(RetrofitClient)
+
 
     // Fungsi untuk mengambil data tukang
     fun fetchTukang(domisli: String) {
         _loadingHome.value = true
         viewModelScope.launch {
             try {
-                // Memanggil API untuk mendapatkan data tukang
-                val response = RetrofitClient.Jukang.getTukang(domisli,false)
-                val dataTukang = response.tukang
+                val response = repository.getMainData(domisli)
+                val dataTukang = response
 
-                if(dataTukang?.isEmpty() == true){
+                if(dataTukang.isEmpty()){
                     _isEmpety.value = true
                     _loadingHome.value = false
                 }else{

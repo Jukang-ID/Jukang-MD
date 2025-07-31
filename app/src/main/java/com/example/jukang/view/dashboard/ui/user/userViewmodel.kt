@@ -14,6 +14,10 @@ class userViewmodel : ViewModel() {
     private val _dataTukang = MutableLiveData<Int?>()
     val dataTukang: LiveData<Int?> get() = _dataTukang
 
+    private val _checkRole = MutableLiveData<Boolean>()
+    val checkRole: LiveData<Boolean> get() = _checkRole
+
+
 
 
     fun fetchTukangTransaksi (user_id:String){
@@ -28,6 +32,22 @@ class userViewmodel : ViewModel() {
             }catch (e:Exception){
                 e.printStackTrace()
                 Log.d("transaksi user", "${e.message}")
+            }
+        }
+    }
+
+    fun fetchRoleSwittch(Email:String){
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.Jukang.getUserByEmail(Email)
+                val role = response.listUser?.get(0)?.role
+                if(role == "tukang"){
+                    _checkRole.value = true
+                }else{
+                    _checkRole.value = false
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
             }
         }
     }

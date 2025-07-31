@@ -57,11 +57,16 @@ android {
         buildConfig = true
     }
 
+    testOptions{
+        unitTests.isReturnDefaultValues = true
+    }
+
 
 }
 
 dependencies {
     implementation(libs.tensorflow.lite.metadata)
+    testImplementation(libs.junit.jupiter)
     // Ganti semua baris tensorflow-lite Anda dengan ini
 
     val tflite_version = "2.16.1"
@@ -144,6 +149,11 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.6.7")
 
     implementation("com.midtrans:uikit:2.3.0-SANDBOX")
+
+    implementation("org.mockito:mockito-core:5.18.0")
+    testImplementation( "org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation( "androidx.arch.core:core-testing:2.2.0")
+    testImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
 
 
 }

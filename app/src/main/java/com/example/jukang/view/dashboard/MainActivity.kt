@@ -108,11 +108,11 @@ class MainActivity : AppCompatActivity() {
         window.navigationBarColor = Color.WHITE // Sesuai permintaan, bagian bawah jadi putih.
 
         // 3. Ubah ikon di status bar & navigation bar menjadi gelap.
-        // Ini penting! Karena background-nya sekarang terang (putih), ikonnya harus gelap biar kelihatan.
-        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars = true
-            controller.isAppearanceLightNavigationBars = true
-        }
+//        // Ini penting! Karena background-nya sekarang terang (putih), ikonnya harus gelap biar kelihatan.
+//        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+//            controller.isAppearanceLightStatusBars = true
+//            controller.isAppearanceLightNavigationBars = true
+//        }
         PermissionCamera()
         PermissionLocation()
 

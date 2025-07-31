@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -34,7 +35,13 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
         setContentView(binding.root)
-        window.navigationBarColor = resources.getColor(R.color.black_smoke)
+        window.navigationBarColor = resources.getColor(R.color.white)
+
+        //        // Ini penting! Karena background-nya sekarang terang (putih), ikonnya harus gelap biar kelihatan.
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars = true
+            controller.isAppearanceLightNavigationBars = true
+        }
 
         binding.btnBAckPay.setOnClickListener {
             finish()

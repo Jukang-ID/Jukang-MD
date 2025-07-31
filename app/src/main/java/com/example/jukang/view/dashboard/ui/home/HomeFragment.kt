@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.jukang.R
@@ -69,14 +70,12 @@ class HomeFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         // Inisialisasi ViewModel
-        homeView = HomeViewModel()
+        homeView = ViewModelProvider(this)[HomeViewModel::class]
 
         homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
-            if (list != null) {
+
                 adapterTukang = AdapterTukang(list as MutableList<TukangListItem>)
                 binding.listTukang.adapter = adapterTukang
-            }
-
         })
 
         homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
@@ -156,13 +155,13 @@ class HomeFragment : Fragment() {
             val data = profiledao.checkProfile(id.toString())
             withContext(Dispatchers.Main) {
                 if (data != null) {
-                    binding.greeting.text = data.namaUser
+                    binding.appbar.subtitle = "Hello, ${data.namaUser}"
                     binding.emailcard.text = data.email
                     Glide.with(this@HomeFragment)
                         .load(data.profilePhoto)
                         .into(binding.photourl)
                 } else {
-                    binding.greeting.text = name
+                    binding.appbar.subtitle = "Hello, ${name}"
                     binding.emailcard.text = email
                     Glide.with(this@HomeFragment)
                         .load(imageUrl)
@@ -171,9 +170,15 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.btnRiwayat.setOnClickListener {
-            val intent = Intent(requireContext(), HistoryActivity::class.java)
-            startActivity(intent)
+        binding.appbar.setOnMenuItemClickListener {  menuitem ->
+            when (menuitem.itemId){
+                R.id.riwayat -> {
+                    val intent = Intent(requireContext(), HistoryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
 
         binding.swipeContainer.setOnRefreshListener {

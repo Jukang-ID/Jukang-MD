@@ -46,4 +46,6 @@
     <color name="border_slate_300">#cbd5e1</color>
     <color name="border_slate_50">#f8fafc</color>
     <color name="text_blue_600">#2563eb</color>
+    <color name="backgroundUtama">#e2e8f0</color>
+    <color name="jukangTheme">#F50057</color>
 </resources>

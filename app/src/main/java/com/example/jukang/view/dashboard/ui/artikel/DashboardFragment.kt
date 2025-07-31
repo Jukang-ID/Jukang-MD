@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jukang.R
 import com.example.jukang.databinding.FragmentArtikelBinding
 import com.example.jukang.helper.adapter.AdapterNews
 
@@ -28,6 +29,9 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         binding.listNew.layoutManager = LinearLayoutManager(requireContext())
+
+        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
+
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             if (loading){

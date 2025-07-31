@@ -22,7 +22,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavTukang"
         app:menu="@menu/bottom_nav_tukang"
-        android:background="@color/white"
+        android:background="@drawable/corner_navbottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

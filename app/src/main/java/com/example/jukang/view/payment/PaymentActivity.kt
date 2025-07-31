@@ -18,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
@@ -115,6 +117,12 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
         setContentView(binding.root)
         binding.progressBar2.visibility = View.GONE
 
@@ -166,6 +174,10 @@ class PaymentActivity : AppCompatActivity() {
         Glide.with(this@PaymentActivity)
             .load(gambar)
             .into(binding.pototukang)
+
+        binding.appbar.setNavigationOnClickListener {
+            finish()
+        }
 
         binding.tukangNm.text = namatukang
         binding.harga.text = harga

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.jukang.R
 import com.example.jukang.data.RetrofitClient
@@ -54,16 +55,17 @@ class UserFragment : Fragment() {
         val root: View = binding.root
         requireActivity().window.statusBarColor = resources.getColor(R.color.primary_button)
 
+        viewmodel = ViewModelProvider(this).get(userViewmodel::class)
+        initDb()
+
+
+        val Email = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
+            .getString("EMAIL", "")
+
+        viewmodel.fetchRoleSwittch(Email.toString())
+
         checkRoleAccept()
 
-
-        db = AlamatLengkapDatabase.getDatabase(requireContext())
-        alamatdao = db.alamatLengkapDao()
-
-        dbProfile = profileDatabase.getDatabase(requireContext())
-        profiledao = dbProfile.profiledao()
-
-        viewmodel = userViewmodel()
 
         val pref = requireActivity().getSharedPreferences("AUTH",Context.MODE_PRIVATE)
         val id = pref.getString("UID","")
@@ -74,7 +76,6 @@ class UserFragment : Fragment() {
             binding.valueStat.text = size.toString()
         })
 
-//        binding.progressBar2.visibility = View.GONE
 
         val googleSigninOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -91,17 +92,11 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
-
-        val namauser = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
-            .getString("EMAIL", "")
-
-
-
-        checkStatusProfil(namauser.toString())
+        checkStatusProfil(Email.toString())
 
         binding.refreshLayout.setOnRefreshListener {
             getUserData()
-            checkStatusProfil(namauser.toString())
+            checkStatusProfil(Email.toString())
             binding.refreshLayout.isRefreshing = false
         }
 
@@ -139,7 +134,7 @@ class UserFragment : Fragment() {
         binding.AlamatCard.setOnClickListener {
             val bottomsheet = CustomButtom()
             bottomsheet.updatedListenerUser = {
-                checkStatusProfil(namauser.toString())
+                checkStatusProfil(Email.toString())
             }
             bottomsheet.show(requireActivity().supportFragmentManager, "BottomSheet")
         }
@@ -159,22 +154,13 @@ class UserFragment : Fragment() {
     }
 
     fun checkRoleAccept() {
-        val EMAIL = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
-            .getString("EMAIL", "")
-//        Toast.makeText(requireContext(), uid, Toast.LENGTH_SHORT).show()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitClient.Jukang.getUserByEmail(EMAIL.toString())
-//            Toast.makeText(requireContext(), response.tukang.toString(), Toast.LENGTH_SHORT).show()
-            withContext(Dispatchers.Main) {
-                val role = response.listUser?.get(0)?.role
-                if (role == "tukang") {
-                    binding.role.visibility = View.VISIBLE
-                }else{
-                    binding.role.visibility = View.GONE
-                }
+        viewmodel.checkRole.observe(viewLifecycleOwner,{isTukang ->
+            if (isTukang){
+                binding.role.visibility = View.VISIBLE
+            }else{
+                binding.role.visibility = View.GONE
             }
-        }
+        })
     }
 
     fun checkStatusProfil(namauser: String) {
@@ -226,6 +212,14 @@ class UserFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun initDb() {
+        db = AlamatLengkapDatabase.getDatabase(requireContext())
+        alamatdao = db.alamatLengkapDao()
+
+        dbProfile = profileDatabase.getDatabase(requireContext())
+        profiledao = dbProfile.profiledao()
     }
 
 
