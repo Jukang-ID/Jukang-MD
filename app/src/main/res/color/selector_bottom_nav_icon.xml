@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Icon color when item is selected (purple) -->
-    <item android:color="@color/primary_button" android:state_checked="true"/>
+    <item android:color="@color/white" android:state_checked="true"/>
     <!-- Icon color when item is not selected (grey) -->
     <item android:color="#AAAAAA" android:state_checked="false"/>
 </selector>

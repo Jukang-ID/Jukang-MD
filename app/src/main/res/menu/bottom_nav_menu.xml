@@ -3,13 +3,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home_ic_rounded"
-        android:title="Home" />
+        android:icon="@drawable/home_6_fill"
+        android:title="Beranda" />
 
     <item
-        android:id="@+id/searchActivity"
-        android:icon="@drawable/ic_search"
-        android:title="Search" />
+        android:id="@+id/navigation_receipt"
+        android:icon="@drawable/receipt_fill"
+        android:title="Pesanan" />
 
     <!-- Placeholder item for the FAB. Important for the FAB to appear in the center. -->
     <!-- This ID will be disabled in the Kotlin code. -->
@@ -20,12 +20,12 @@
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/newspaper"
+        android:icon="@drawable/article_fill"
         android:title="Artikel" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/contact"
-        android:title="Profile" />
+        android:icon="@drawable/profile_fill"
+        android:title="Profil" />
 </menu>
 

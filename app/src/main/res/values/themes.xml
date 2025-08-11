@@ -6,9 +6,16 @@
         <item name="colorSurface">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/primary_button</item>
-        <item name="android:fontFamily">@font/ppreguler</item>
+        <item name="android:fontFamily">@font/intermedium</item>
 
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="text_title">
+        <item name="android:fontFamily">@font/interbold</item>
+        <item name="android:textColor">@color/text_slate_700</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme"
@@ -63,6 +70,20 @@
         <item name="android:textColor">@color/black_smoke</item>
         <item name="android:textSize">16sp</item>
 
+    </style>
+
+    <style name="CustomIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_button</item>
+
+        <item name="shapeAppearance">@style/CustomShape</item>
+
+<!--        <item name="android:height">40dp</item>-->
+<!--        <item name="android:width">64dp</item>-->
+    </style>
+
+
+    <style name="CustomShape" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">20dp</item>
     </style>
 
 </resources>

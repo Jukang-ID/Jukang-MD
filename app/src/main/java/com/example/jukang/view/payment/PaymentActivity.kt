@@ -323,7 +323,7 @@ class PaymentActivity : AppCompatActivity() {
                         this@PaymentActivity,
                         CHANNEL_ID,
                         NOTIFICATION_ID,
-                        "Pembayaran Dilakukan",
+                        "Pembayaran Berhasil",
                         "saat ini pembayaran sedang dilakukan"
                     )
                     Toast.makeText(this@PaymentActivity, "Berhasil", Toast.LENGTH_SHORT).show()

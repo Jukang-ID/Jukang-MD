@@ -53,7 +53,7 @@ class UserFragment : Fragment() {
 
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        requireActivity().window.statusBarColor = resources.getColor(R.color.primary_button)
+//        requireActivity().window.statusBarColor = resources.getColor(R.color.primary_button)
 
         viewmodel = ViewModelProvider(this).get(userViewmodel::class)
         initDb()

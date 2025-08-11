@@ -101,7 +101,8 @@ interface ApiService2 {
 
     @GET("transaksi/semua")
     suspend fun getTransaksiUser(
-        @Query("user_id") id: String?=null
+        @Query("user_id") id: String?=null,
+        @Query("status_code") status: String?=null
     ):TransaksiData
 
     @POST("addtransaksi")

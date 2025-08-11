@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.jukang.R
@@ -27,7 +28,11 @@ import com.example.jukang.data.Room.profileDatabase
 import com.example.jukang.data.response.Orm
 import com.example.jukang.data.response.TukangListItem
 import com.example.jukang.databinding.FragmentHomeBinding
+import com.example.jukang.helper.AlertError
+import com.example.jukang.helper.adapter.AdapterMenu
 import com.example.jukang.helper.adapter.AdapterTukang
+import com.example.jukang.helper.model.menu_layanan
+import com.example.jukang.view.dashboard.ui.search.SearchActivity
 import com.example.jukang.view.history.HistoryActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,6 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.NumberFormat
 import java.util.Locale
+import kotlin.toString
 
 class HomeFragment : Fragment() {
 
@@ -65,59 +71,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
+//        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        init()
         // Inisialisasi ViewModel
-        homeView = ViewModelProvider(this)[HomeViewModel::class]
-
-        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
-
-                adapterTukang = AdapterTukang(list as MutableList<TukangListItem>)
-                binding.listTukang.adapter = adapterTukang
-        })
-
-        homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
-            if (loading) {
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.progressBar.visibility = View.GONE
-            }
-        })
-
-        homeView.error.observe(viewLifecycleOwner, Observer { error ->
-            if (error != null) {
-                binding.erromes.text = error
-            }
-        })
-
-        homeView.isEmpety.observe(viewLifecycleOwner, Observer { empty->
-            if (empty){
-                binding.caterror.visibility = View.VISIBLE
-            }else {
-                binding.caterror.visibility = View.GONE
-            }
-
-        })
-
-        homeView.notifikasi.observe(viewLifecycleOwner, Observer { notif ->
-            if (notif) {
-                Toast.makeText(requireContext(), "Tidak ada Koneksi Internet", Toast.LENGTH_SHORT).show()
-                binding.caterror.visibility = View.VISIBLE
-                binding.erromes.visibility = View.VISIBLE
-            }
-        })
-
-        // Setup LayoutManager dan Adapter
-        binding.listTukang.layoutManager = LinearLayoutManager(requireContext())
-
-        // Menyembunyikan error UI
-        binding.erromes.visibility = View.GONE
-        binding.caterror.visibility = View.GONE
-
-        dbalamat = AlamatLengkapDatabase.getDatabase(requireContext())
-        alamatdao = dbalamat.alamatLengkapDao()
 
         val sharedPreferences = requireActivity().getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val imageUrl = sharedPreferences.getString(
@@ -129,57 +87,66 @@ class HomeFragment : Fragment() {
 
         val (name, _) = getUserData()
 
-        CoroutineScope(Dispatchers.IO).launch{
-            val dataalamat = alamatdao.getAlamat(email.toString())
-            withContext(Dispatchers.Main){
-                if (dataalamat != null){
-                    homeView.fetchTukang(dataalamat.kota)
-                }else{
-                    homeView.fetchTukang("")
-                }
-            }
-        }
-
-
-
-        Glide.with(this)
-            .load(imageUrl)
-            .into(binding.photourl)
-
-        db = profileDatabase.getDatabase(requireContext())
-        profiledao = db.profiledao()
-
-        binding.progressBar.visibility = View.VISIBLE
-
         CoroutineScope(Dispatchers.IO).launch {
-            val data = profiledao.checkProfile(id.toString())
-            withContext(Dispatchers.Main) {
-                if (data != null) {
-                    binding.appbar.subtitle = "Hello, ${data.namaUser}"
-                    binding.emailcard.text = data.email
-                    Glide.with(this@HomeFragment)
-                        .load(data.profilePhoto)
-                        .into(binding.photourl)
-                } else {
-                    binding.appbar.subtitle = "Hello, ${name}"
-                    binding.emailcard.text = email
-                    Glide.with(this@HomeFragment)
-                        .load(imageUrl)
-                        .into(binding.photourl)
-                }
-            }
+            getUserDataq(
+                name = name.toString(),
+                email = email.toString(),
+                id = id.toString(),
+                imageUrl = imageUrl.toString()
+            )
+            getAlamatData(email.toString())
         }
 
-        binding.appbar.setOnMenuItemClickListener {  menuitem ->
-            when (menuitem.itemId){
-                R.id.riwayat -> {
-                    val intent = Intent(requireContext(), HistoryActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
+        val menu = dataMenu()
+
+        binding.listMenu.adapter = AdapterMenu(menu)
+
+        homeView.dataTukang.observe(viewLifecycleOwner, Observer { list ->
+                adapterTukang = AdapterTukang(list as MutableList<TukangListItem>)
+                binding.listItem.adapter = adapterTukang
+        })
+
+        homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
+//            if (loading) {
+//                binding.progressBar.visibility = View.VISIBLE
+//            } else {
+//                binding.progressBar.visibility = View.GONE
+//            }
+        })
+
+        homeView.error.observe(viewLifecycleOwner, Observer { error ->
+            if (error != null) {
+                AlertError(
+                    requireContext(),
+                    "Error",
+                    error
+                ).show()
             }
+        })
+
+        homeView.isEmpety.observe(viewLifecycleOwner, Observer { empty->
+//            if (empty){
+//                binding.caterror.visibility = View.VISIBLE
+//            }else {
+//                binding.caterror.visibility = View.GONE
+//            }
+
+        })
+
+        homeView.notifikasi.observe(viewLifecycleOwner, Observer { notif ->
+//            if (notif) {
+//                Toast.makeText(requireContext(), "Tidak ada Koneksi Internet", Toast.LENGTH_SHORT).show()
+//                binding.caterror.visibility = View.VISIBLE
+//                binding.erromes.visibility = View.VISIBLE
+//            }
+        })
+
+        binding.buttonCari.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
         }
+
+        // Setup LayoutManager dan Adapter
 
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
@@ -197,6 +164,46 @@ class HomeFragment : Fragment() {
         }
 
         return root
+    }
+
+    suspend fun getAlamatData(email: String?){
+            val dataalamat = alamatdao.getAlamat(email.toString())
+            withContext(Dispatchers.Main){
+                if (dataalamat != null){
+                    binding.locationMarked.text = dataalamat.kota
+                    homeView.fetchTukang(dataalamat.kota)
+                }else{
+                    homeView.fetchTukang("")
+                }
+            }
+
+    }
+
+    suspend fun getUserDataq(name: String, email: String, imageUrl: String, id: String) {
+            val data = profiledao.checkProfile(id.toString())
+            withContext(Dispatchers.Main) {
+                if (data != null) {
+                    Glide.with(this@HomeFragment)
+                        .load(data.profilePhoto)
+                        .circleCrop()
+                        .into(binding.photoProfile)
+                } else {
+                    Glide.with(this@HomeFragment)
+                        .load(imageUrl)
+                        .circleCrop()
+                        .into(binding.photoProfile)
+                }
+            }
+    }
+
+    fun dataMenu(): List<menu_layanan>{
+        return listOf(
+            menu_layanan("Lantai",R.drawable.img_3,R.color.menu_wallet),
+            menu_layanan("listrik",R.drawable.img_9,R.color.btn_trek1),
+            menu_layanan("AC",R.drawable.img_4,R.color.btn_trek),
+            menu_layanan("Meja",R.drawable.img_8,R.color.price_text),
+            menu_layanan("Lainnya",R.drawable.img_6,R.color.gray_400),
+        )
     }
 
 
@@ -243,16 +250,16 @@ class HomeFragment : Fragment() {
 
                     val inKm = distance as Double / 1000
                     val address = getCityname(originLat, originLon)
-                    binding.jarak.text = address
-                    binding.jarak.setOnClickListener {
-                        val dialogBuild = AlertDialog.Builder(requireActivity())
-                        dialogBuild.setTitle("Pemberitahuan")
-                        dialogBuild.setMessage("Berada ${distance} meter dari tujuan dan membutuhkan waktu ${duration} detik")
-                        dialogBuild.setPositiveButton("OK") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        dialogBuild.show()
-                    }
+//                    binding.jarak.text = address
+//                    binding.jarak.setOnClickListener {
+//                        val dialogBuild = AlertDialog.Builder(requireActivity())
+//                        dialogBuild.setTitle("Pemberitahuan")
+//                        dialogBuild.setMessage("Berada ${distance} meter dari tujuan dan membutuhkan waktu ${duration} detik")
+//                        dialogBuild.setPositiveButton("OK") { dialog, which ->
+//                            dialog.dismiss()
+//                        }
+//                        dialogBuild.show()
+//                    }
                 }
             }
 
@@ -276,6 +283,18 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun init (){
+        homeView = ViewModelProvider(this)[HomeViewModel::class]
+        dbalamat = AlamatLengkapDatabase.getDatabase(requireContext())
+        alamatdao = dbalamat.alamatLengkapDao()
+
+        db = profileDatabase.getDatabase(requireContext())
+        profiledao = db.profiledao()
+
+        binding.listItem.layoutManager = LinearLayoutManager(requireContext())
+        binding.listMenu.layoutManager = GridLayoutManager(requireContext(),5)
     }
 
     private fun getUserData(): Pair<String?, String?> {

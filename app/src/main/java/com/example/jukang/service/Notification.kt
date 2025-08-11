@@ -16,7 +16,7 @@ fun createNotificationChannel(CHANNEL_ID: String, context: Context) {
         val name = "Saluran Notifikasi Umum"
         val descriptionText =
             "Saluran ini digunakan untuk notifikasi umum aplikasi." // Deskripsi saluran
-        val importance = NotificationManager.IMPORTANCE_DEFAULT // Tingkat kepentingan notifikasi
+        val importance = NotificationManager.IMPORTANCE_HIGH // Tingkat kepentingan notifikasi
 
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText

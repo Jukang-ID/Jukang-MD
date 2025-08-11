@@ -28,122 +28,133 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardsprofile"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout3"
                 android:layout_width="match_parent"
+                android:backgroundTint="@color/primary_button"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:cardBackgroundColor="@color/primary_button"
+                android:fitsSystemWindows="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView24">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardsprofile"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_gradient_profil">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:cardBackgroundColor="@color/primary_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profilephoto"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/cornergambar"
-                        android:clipChildren="true"
-                        android:padding="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background_gradient_profil">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profilephoto"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/cornergambar"
+                            android:clipChildren="true"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/img_profil"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/cornergambar"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/profilpic" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/namaprofile"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/ppbold"
+                            android:maxLines="1"
+                            android:text="Nama Profile"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/profilephoto"
+                            app:layout_constraintEnd_toStartOf="@+id/goprofile"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/profilephoto"
+                            app:layout_constraintTop_toTopOf="@+id/profilephoto"
+                            app:layout_constraintVertical_bias="0.049" />
+
+                        <TextView
+                            android:id="@+id/emailprofile"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/ppmedium"
+                            android:maxLines="1"
+                            android:text="+62 1231 133"
+                            android:textColor="#E6FFFFFF"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="@+id/namaprofile"
+                            app:layout_constraintStart_toStartOf="@+id/namaprofile"
+                            app:layout_constraintTop_toBottomOf="@+id/namaprofile" />
 
                         <ImageView
-                            android:id="@+id/img_profil"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cornergambar"
-                            android:clipToOutline="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/profilpic" />
+                            android:id="@+id/goprofile"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/rounded_arrow_forward_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/badge_member"
+                            android:fontFamily="@font/ppmedium"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:text="Pengguna"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/emailprofile"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/emailprofile"
+                            app:layout_constraintTop_toBottomOf="@+id/emailprofile"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <ImageView
+                            android:id="@+id/role"
+                            android:layout_width="30dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="16dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/badge"
+                            app:layout_constraintStart_toEndOf="@+id/badge"
+                            app:layout_constraintTop_toTopOf="@+id/badge"
+                            app:srcCompat="@drawable/img_2" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/namaprofile"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/ppbold"
-                        android:maxLines="1"
-                        android:text="Nama Profile"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/profilephoto"
-                        app:layout_constraintEnd_toStartOf="@+id/goprofile"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toEndOf="@+id/profilephoto"
-                        app:layout_constraintTop_toTopOf="@+id/profilephoto"
-                        app:layout_constraintVertical_bias="0.049" />
-
-                    <TextView
-                        android:id="@+id/emailprofile"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/ppmedium"
-                        android:maxLines="1"
-                        android:text="+62 1231 133"
-                        android:textColor="#E6FFFFFF"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="@+id/namaprofile"
-                        app:layout_constraintStart_toStartOf="@+id/namaprofile"
-                        app:layout_constraintTop_toBottomOf="@+id/namaprofile" />
-
-                    <ImageView
-                        android:id="@+id/goprofile"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/rounded_arrow_forward_ios_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/badge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/badge_member"
-                        android:fontFamily="@font/ppmedium"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:text="Pengguna"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/emailprofile"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/emailprofile"
-                        app:layout_constraintTop_toBottomOf="@+id/emailprofile"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                    <ImageView
-                        android:id="@+id/role"
-                        android:layout_width="30dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@+id/badge"
-                        app:layout_constraintStart_toEndOf="@+id/badge"
-                        app:layout_constraintTop_toTopOf="@+id/badge"
-                        app:srcCompat="@drawable/img_2" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+            </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -152,8 +163,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardsprofile"
-                app:layout_constraintVertical_bias="1.0">
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout3">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

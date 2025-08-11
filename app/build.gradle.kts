@@ -66,6 +66,10 @@ android {
 
 dependencies {
     implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.viewpager2)
     testImplementation(libs.junit.jupiter)
     // Ganti semua baris tensorflow-lite Anda dengan ini
 

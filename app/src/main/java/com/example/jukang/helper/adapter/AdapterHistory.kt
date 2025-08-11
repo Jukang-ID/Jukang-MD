@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.jukang.data.response.DataItem
 import com.example.jukang.data.response.TransaksiItem
 import com.example.jukang.databinding.CardhistoryBinding
@@ -12,14 +13,18 @@ import com.example.jukang.view.history.detailhistory.DetailHistory
 class AdapterHistory(private val listHistory: List<TransaksiItem>) :RecyclerView.Adapter<AdapterHistory.ViewHolder>() {
     class ViewHolder(val binding: CardhistoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(history:TransaksiItem){
-            binding.NamaTukangHistory.text = history.dataTukang?.namatukang
-            binding.tanggalhist.text = history.tanggal
-            binding.totalHistr.text = history.dataTukang?.priceRupiah
-            binding.Method.text = history.metodePembayaran
-            binding.idTukangHis.text = history.tukangId
-            binding.spesialisHis.text = history.dataTukang?.spesialis
-            binding.tanggalCreate.text = "tanggal dibuat : "+history.createdAt
-            binding.statusCode.text = history.statusCode
+            binding.namaTukang.text = history.dataTukang?.namatukang
+            binding.totalBiaya.text = history.dataTukang?.priceRupiah
+//            binding.Method.text = history.metodePembayaran
+            binding.idTransaksi.text = "ID : ${history.idTransaksi}"
+            binding.Spesialis.text = history.dataTukang?.spesialis
+            binding.status.text = history.statusCode
+
+            Glide.with(binding.root)
+                .load(history.dataTukang?.photoUrl)
+                .into(binding.imageView2)
+
+
         }
 
     }

@@ -1,142 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="5dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:clipToOutline="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:backgroundTint="@color/white"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="6dp"
+    android:background="@drawable/card_tukang_corner"
+    android:padding="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/Spesialis"
+        android:fontFamily="@font/intermedium"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Spesialis"
+        android:textColor="@color/sky_600"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/NamaTukangHistory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/ppbold"
-            android:text="Nama Tukang"
-            android:textColor="@color/font_second"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/spesialis_his"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_tukang_his" />
+    <TextView
+        android:id="@+id/id_transaksi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="ID: JKG-230825-001"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Spesialis"
+        app:layout_constraintTop_toBottomOf="@+id/Spesialis" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Total"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tanggal_create" />
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/id_transaksi"
+        app:layout_constraintStart_toStartOf="@+id/id_transaksi"
+        app:layout_constraintTop_toBottomOf="@+id/id_transaksi" />
 
-        <TextView
-            android:id="@+id/totalHistr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:textColor="#F44336"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/ppbold"
-            android:textSize="16sp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView14"
-            app:layout_constraintVertical_bias="0.0" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cornergambar"
+        android:clipToOutline="true"
+        app:layout_constraintStart_toStartOf="@+id/divider6"
+        app:layout_constraintTop_toBottomOf="@+id/divider6"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tanggalhist"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/namaTukang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:text="Dragon of the Sea"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-            android:text="Tanggal"
-            android:textColor="@color/font_des"
-            app:layout_constraintEnd_toEndOf="@+id/NamaTukangHistory"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/NamaTukangHistory"
-            app:layout_constraintTop_toBottomOf="@+id/NamaTukangHistory" />
+    <TextView
+        android:id="@+id/tanggal"
+        android:layout_width="wrap_content"
 
-        <TextView
-            android:id="@+id/Method"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/ppbold"
-            android:text="Metode"
-            android:textColor="#3F51B5"
-            app:layout_constraintEnd_toEndOf="@+id/tanggalhist"
-            app:layout_constraintStart_toStartOf="@+id/tanggalhist"
-            app:layout_constraintTop_toBottomOf="@+id/tanggalhist" />
+        android:layout_height="wrap_content"
+        android:text="20 Desember 2022"
+        app:layout_constraintStart_toStartOf="@+id/namaTukang"
+        app:layout_constraintTop_toBottomOf="@+id/namaTukang" />
 
-        <TextView
-            android:id="@+id/id_tukang_his"
-            android:fontFamily="@font/ppmedium"
-            android:textColor="@color/font_des"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/divider6"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-        <TextView
-            android:fontFamily="@font/ppbold"
-            android:textSize="14sp"
-            android:textColor="#3F51B5"
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Id Tukang :"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Total Biaya"
+        app:layout_constraintTop_toBottomOf="@+id/divider7"
+        tools:layout_editor_absoluteX="10dp" />
 
-        <TextView
-            android:fontFamily="@font/ppbold"
-            android:textSize="14sp"
-            android:textColor="#00BCD4"
-            android:id="@+id/spesialis_his"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/tanggalhist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/NamaTukangHistory" />
+    <TextView
+        android:id="@+id/totalBiaya"
+        android:layout_width="wrap_content"
+        style="@style/CostumTextIntertitle"
+        android:textColor="@color/black_smoke"
+        android:layout_height="wrap_content"
+        android:text="Rp. -"
 
-        <TextView
-            android:id="@+id/tanggal_create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Method" />
+        app:layout_constraintStart_toStartOf="@+id/textView53"
+        app:layout_constraintTop_toBottomOf="@+id/textView53" />
 
-        <TextView
-            android:id="@+id/statusCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_pesanan_tukang"
-            android:fontFamily="@font/ppmedium"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="6dp"
-            android:text="Pending"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.048"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14"
-            app:layout_constraintVertical_bias="0.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/text_slate_800"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Lihat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView53" />
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Pending"
+        android:textColor="@color/stat_number"
+        app:layout_constraintBottom_toTopOf="@+id/id_transaksi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

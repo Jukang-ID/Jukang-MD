@@ -18,11 +18,13 @@ class AdapterTukang(private var listTukang: MutableList<TukangListItem>) : Recyc
             binding.NamaTukang.text = tukang.namatukang
             binding.Spesialis.text = tukang.spesialis
             binding.price.text = "${tukang.priceRupiah} / ${tukang.harga?.satuan}"
-            binding.rating.text = tukang.review.toString()
+//            binding.rating.text = tukang.review.toString()
             binding.lokasi.text = tukang.domisili
             Glide.with(itemView.context)
                 .load(tukang.photoUrl)
                 .into(binding.photourls)
+
+            binding.rating.text = "⭐ ${tukang.review.toString()}"
         }
     }
 

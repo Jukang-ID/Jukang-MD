@@ -30,7 +30,7 @@ class DashboardFragment : Fragment() {
 
         binding.listNew.layoutManager = LinearLayoutManager(requireContext())
 
-        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
+//        requireActivity().window.statusBarColor = resources.getColor(R.color.white)
 
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
