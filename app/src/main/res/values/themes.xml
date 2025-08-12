@@ -66,7 +66,7 @@
     </style>
 
     <style name="CostumTextBold">
-        <item name="android:fontFamily">@font/ppbold</item>
+        <item name="android:fontFamily">@font/interbold</item>
         <item name="android:textColor">@color/black_smoke</item>
         <item name="android:textSize">16sp</item>
 

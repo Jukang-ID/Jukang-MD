@@ -104,8 +104,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.WHITE // Sesuai permintaan, bagian bawah jadi putih.
+//        window.statusBarColor = Color.TRANSPARENT
+//        window.navigationBarColor = Color.WHITE // Sesuai permintaan, bagian bawah jadi putih.
 
         // 3. Ubah ikon di status bar & navigation bar menjadi gelap.
 //        // Ini penting! Karena background-nya sekarang terang (putih), ikonnya harus gelap biar kelihatan.

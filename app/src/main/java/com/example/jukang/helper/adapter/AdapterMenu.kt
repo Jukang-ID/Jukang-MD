@@ -1,5 +1,6 @@
 package com.example.jukang.helper.adapter
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jukang.databinding.CardMenuBinding
 import com.example.jukang.helper.model.menu_layanan
+import com.example.jukang.view.dashboard.ui.search.SearchActivity
 
 class AdapterMenu(private val listMenu : List<menu_layanan>): RecyclerView.Adapter<AdapterMenu.MenuViewHolder>() {
     override fun onCreateViewHolder(
@@ -39,6 +41,17 @@ class AdapterMenu(private val listMenu : List<menu_layanan>): RecyclerView.Adapt
                 )
                 binding.floatingActionButton.backgroundTintList = colorStateList
 
+            }
+
+            binding.floatingActionButton.setOnClickListener {
+                if(menu.name != "Lainnya"){
+                    val intent = Intent(binding.root.context, SearchActivity::class.java)
+                    intent.putExtra(SearchActivity.query, menu.name)
+                    binding.root.context.startActivity(intent)
+                }else {
+                    val intent = Intent(binding.root.context, SearchActivity::class.java)
+                    binding.root.context.startActivity(intent)
+                }
             }
         }
     }

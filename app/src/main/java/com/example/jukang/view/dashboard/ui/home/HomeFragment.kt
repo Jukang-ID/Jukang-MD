@@ -107,11 +107,9 @@ class HomeFragment : Fragment() {
         })
 
         homeView.loadingHome.observe(viewLifecycleOwner, Observer { loading ->
-//            if (loading) {
-//                binding.progressBar.visibility = View.VISIBLE
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//            }
+            if (!loading) {
+                binding.loading.visibility = View.GONE
+            }
         })
 
         homeView.error.observe(viewLifecycleOwner, Observer { error ->

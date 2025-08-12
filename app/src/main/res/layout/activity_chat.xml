@@ -11,6 +11,7 @@
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:layout_above="@id/inputLayout"
         android:layout_below="@+id/textView33"
         android:layout_alignParentEnd="true"

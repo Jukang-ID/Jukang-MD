@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.jukang.data.response.DataItem
 import com.example.jukang.data.response.TransaksiItem
 import com.example.jukang.databinding.CardhistoryBinding
+import com.example.jukang.helper.utils.parseFormatWaltu
 import com.example.jukang.view.history.detailhistory.DetailHistory
 
 class AdapterHistory(private val listHistory: List<TransaksiItem>) :RecyclerView.Adapter<AdapterHistory.ViewHolder>() {
@@ -19,12 +20,24 @@ class AdapterHistory(private val listHistory: List<TransaksiItem>) :RecyclerView
             binding.idTransaksi.text = "ID : ${history.idTransaksi}"
             binding.Spesialis.text = history.dataTukang?.spesialis
             binding.status.text = history.statusCode
+            binding.tanggal.text = parseFormatWaltu(history.createdAt.toString())
 
             Glide.with(binding.root)
                 .load(history.dataTukang?.photoUrl)
                 .into(binding.imageView2)
 
-
+            binding.button.setOnClickListener {
+                val intent = Intent(binding.root.context, DetailHistory::class.java)
+                intent.putExtra(DetailHistory.idtukangdetail, history.tukangId)
+                intent.putExtra(DetailHistory.namatukangdetail, history.dataTukang?.namatukang)
+                intent.putExtra(DetailHistory.tanggaldetail, history.createdAt)
+                intent.putExtra(DetailHistory.metode, history.metodePembayaran)
+                intent.putExtra(DetailHistory.total, history.dataTukang?.priceRupiah)
+                intent.putExtra(DetailHistory.spesialis, history.dataTukang?.spesialis)
+                intent.putExtra(DetailHistory.tanggalDibuat, history.createdAt)
+                intent.putExtra(DetailHistory.idTRansaksksi, history.idTransaksi)
+                binding.root.context.startActivity(intent)
+            }
         }
 
     }

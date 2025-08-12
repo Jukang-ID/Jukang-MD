@@ -77,6 +77,11 @@ class OrderListFragment : Fragment() {
                 binding.placeHolder.visibility = View.VISIBLE
             }
         }
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.fetchData(id.toString(), status.toString())
+            binding.refresh.isRefreshing = false
+        }
     }
 
 

@@ -3,9 +3,15 @@ package com.example.jukang.view.history.detailhistory
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.jukang.data.RetrofitClient
 import com.example.jukang.data.Room.Database
 import com.example.jukang.data.Room.historyRiwayat
@@ -15,6 +21,7 @@ import com.example.jukang.data.response.TukangReq
 import com.example.jukang.data.response.UpdateStatusReq
 import com.example.jukang.data.response.UpdateStatusTransaksiResponse
 import com.example.jukang.databinding.ActivityDetailHistoryBinding
+import com.example.jukang.helper.utils.parseFormatWaltu
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +30,7 @@ import pl.droidsonroids.gif.GifImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.toString
 
 
 class DetailHistory : AppCompatActivity() {
@@ -30,12 +38,23 @@ class DetailHistory : AppCompatActivity() {
     private lateinit var binding: ActivityDetailHistoryBinding
     private lateinit var db: Database
     private lateinit var history: historycheckDAO
+    private lateinit var viewmodel: DetailHistoryViewmodel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityDetailHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, 0)
+            insets
+        }
+        viewmodel = ViewModelProvider(this).get(DetailHistoryViewmodel::class)
+
+        db = Database.getDatabase(this)
+        history = db.historyDao()
 
         val idtukang = intent.getStringExtra(idtukangdetail)
         val namatukang = intent.getStringExtra(namatukangdetail)
@@ -46,43 +65,44 @@ class DetailHistory : AppCompatActivity() {
         val tanggalDibuat = intent.getStringExtra(tanggalDibuat)
         val idTRansaksksis = intent.getStringExtra(idTRansaksksi)
 
+        viewmodel.fetchStruk(idTRansaksksis.toString())
+
+        viewmodel.isLoading.observe(this){loading ->
+            if(loading){
+                binding.Struk.visibility = View.GONE
+            }else{
+                binding.Struk.visibility = View.VISIBLE
+            }
+        }
+
+        viewmodel.data.observe(this) { struk ->
+            binding.totalBiaya.text = struk.dataTukang?.priceRupiah
+            binding.idTransaksi.text = struk.idTransaksi
+            binding.namaTukang.text = struk.dataTukang?.namatukang
+            binding.Spesialis.text = struk.dataTukang?.spesialis
+            binding.textView55.text = struk.dataTukang?.domisili
+
+            binding.tanggal.text = parseFormatWaltu(struk.createdAt.toString())
+            binding.namaUser.text = struk.dataUser?.namalengkap
+            binding.nomorTelpon.text = struk.dataUser?.nomortelp
+            binding.Alamat.text = struk.alamat
+
+            binding.textView61.text = struk.deskripsi
+            binding.metode.text = struk.metodePembayaran
+            binding.SubTotal.text = struk.dataTukang?.priceRupiah
+
+            binding.textView64.text = struk.dataTukang?.priceRupiah
+
+            Glide.with(this)
+                .load(struk.dataTukang?.photoUrl)
+                .into(binding.imageView9)
+
+        }
+
         val preferences = getSharedPreferences("AUTH", Context.MODE_PRIVATE)
         val namauser = preferences.getString("NAME", "")
 
-        binding.date.text = tanggal
-        binding.idTukanng.text = idtukang
-        binding.nama.text = namatukang
-        binding.method.text = metode
-        binding.totalStruk.text = total
-
-        db = Database.getDatabase(this)
-        history = db.historyDao()
-
-//         Correctly initialize GifImageView using View Binding
-        val gifImageView: GifImageView = binding.gifImageView
-
-
-        binding.backdet.setOnClickListener {
-            finish()
-        }
-
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val data = history.checkHistory(namauser.toString(), tanggalDibuat.toString())
-                withContext(Dispatchers.Main) {
-                    if (data != null) {
-                        binding.ratingBar.isEnabled = false
-                        binding.selesaihistory.isEnabled = false
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("DetailHistory", "Error while checking history: ${e.message}", e)
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@DetailHistory, "Error checking history: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+        checkRating(namauser.toString(), tanggalDibuat.toString())
 
         binding.selesaihistory.setOnClickListener {
             val rating = binding.ratingBar.rating
@@ -96,6 +116,25 @@ class DetailHistory : AppCompatActivity() {
                 )
                 updateConfirmation(idTRansaksksis.toString(), "Selesai")
                 saveStatus(tanggalDibuat.toString(), namauser.toString())
+            }
+        }
+    }
+
+    fun checkRating(namaUser: String, tanggal: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val data = history.checkHistory(namaUser.toString(), tanggal.toString())
+                withContext(Dispatchers.Main) {
+                    if (data != null) {
+                        binding.ratingBar.isEnabled = false
+                        binding.selesaihistory.isEnabled = false
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("DetailHistory", "Error while checking history: ${e.message}", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@DetailHistory, "Error checking history: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
